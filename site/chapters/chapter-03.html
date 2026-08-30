@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M03 - Dalla Activity al Task</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+<script defer src="../assets/js/back-to-top.js"></script>
+</head>
+<body>
+<header class="hero" id="top">
+ <h1>M03 - Dalla Activity al Task</h1>
+</header>
+<nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
+   <a href="../index.html">Home</a>
+   <a href="chapter-02.html">Modulo precedente (M02)</a>
+   <a href="chapter-03.html" aria-current="page">M03 - Dalla Activity al Task</a>
+   <a href="chapter-04.html">Modulo successivo (M04)</a>
+</nav>
+<main class="content">
+ <article>
+  <section class="section-toc">
+   <h2>Indice del modulo</h2>
+   <ul>
+    <li><a href="#s01">1 Il livello Activity</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Definizione secondo il PCF</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Leggere codice e identificativo</a></li><li><a href="#s04">2 Il livello Task</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Perché il PCF si ferma alla Activity</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Criteri per individuare Task elementari</a></li><li><a href="#s07">3 Scomposizione pratica</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Dal verbo della Activity ai passi operativi</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Granularità: quando fermarsi</a></li><li><a href="#s10">4 Laboratorio</a></li>
+   </ul>
+  </section>
+<section class="study-section" id="s01">
+  <h2>1 Il livello Activity</h2>
+  <p>La Activity è il quarto livello del PCF: un passo del Process che produce un risultato intermedio riconoscibile. «Analyze problems, requests, and inquiries» è una Activity del processo di customer service.</p>
+  <p>Le Activity sono descritte dal PCF con un verbo e un oggetto e con un identificativo numerico.</p>
+</section>
+<section class="study-section" id="s02">
+  <h3>1.1 Definizione secondo il PCF</h3>
+  <p>Ogni Process del PCF è scomposto in un elenco ordinato di Activity. L&#x27;elenco è un riferimento, non un vincolo: un&#x27;organizzazione può eseguirne solo una parte o aggiungerne di proprie, mantenendo la tracciabilità verso il codice PCF.</p>
+</section>
+<section class="study-section" id="s03">
+  <h3>1.2 Leggere codice e identificativo</h3>
+  <p>Una Activity si presenta come «6.2.2.2 Analyze problems, requests, and inquiries (13482)». Il codice 6.2.2.2 indica la posizione gerarchica; il numero tra parentesi è l&#x27;identificativo univoco APQC, utile per riferimenti stabili nel tempo.</p>
+</section>
+<section class="study-section" id="s04">
+  <h2>2 Il livello Task</h2>
+  <p>Il Task è l&#x27;azione elementare che compone una Activity. Il PCF si ferma alla Activity perché i Task dipendono dall&#x27;organizzazione, dagli strumenti e dalle prassi locali. Individuare i Task è compito dell&#x27;analista di processo.</p>
+</section>
+<section class="study-section" id="s05">
+  <h3>2.1 Perché il PCF si ferma alla Activity</h3>
+  <p>Sotto la Activity la variabilità tra organizzazioni diventa troppo alta per una tassonomia comune. Fissare i Task nel framework lo renderebbe rigido e poco riusabile.</p>
+  <p>La separazione mantiene stabile la parte condivisa e lascia libera quella specifica.</p>
+</section>
+<section class="study-section" id="s06">
+  <h3>2.2 Criteri per individuare Task elementari</h3>
+  <p>Un Task è ben definito quando ha un esecutore unico, un esito verificabile e una durata breve rispetto alla Activity.</p>
+  <p>Se un presunto Task richiede più ruoli o più decisioni, va scomposto ulteriormente. Se due Task si eseguono sempre insieme e dallo stesso ruolo, possono essere accorpati.</p>
+</section>
+<section class="study-section" id="s07">
+  <h2>3 Scomposizione pratica</h2>
+  <p>La scomposizione parte dal verbo della Activity e lo articola nei passi necessari a completarla, nell&#x27;ordine in cui si presentano.</p>
+</section>
+<section class="study-section" id="s08">
+  <h3>3.1 Dal verbo della Activity ai passi operativi</h3>
+  <p>Per «Analyze problems, requests, and inquiries» i Task possono essere: classificare la richiesta per tipologia e priorità; verificare storico cliente e SLA applicabili; determinare se serve escalation; assegnare la richiesta al ruolo competente.</p>
+  <p>Ogni Task è un&#x27;azione con esito osservabile.</p>
+</section>
+<section class="study-section" id="s09">
+  <h3>3.2 Granularità: quando fermarsi</h3>
+  <p>Si smette di scomporre quando un ulteriore dettaglio non cambia responsabilità, tempi o strumenti. La granularità giusta è quella che rende il processo eseguibile e misurabile senza trasformarsi in un manuale di istruzioni.</p>
+  <div class="note-box">In <code>esempi-apqc/</code> ogni scheda riporta un esempio di scomposizione in Task di una Activity, segnalato esplicitamente come aggiunta didattica non presente nel PCF.</div>
+</section>
+<section class="study-section" id="s10">
+  <h2>4 Laboratorio</h2>
+  <p>Prendere una Activity di uno dei domini APQC e scomporla in quattro-sei Task, indicando per ciascuno l&#x27;esecutore e l&#x27;esito verificabile.</p>
+  <p>Confrontare le scomposizioni in aula e discutere le differenze di granularità.</p>
+</section>
+  <section class="key-takeaways">
+   <h2>Punti chiave</h2>
+   <ul>
+    <li>La Activity è il quarto livello PCF: un passo del Process con esito intermedio, descritto da verbo e oggetto.</li>
+    <li>Il PCF non definisce i Task perché dipendono da organizzazione, strumenti e prassi locali.</li>
+    <li>Un Task ben definito ha esecutore unico, esito verificabile e durata breve rispetto alla Activity.</li>
+    <li>La scomposizione si ferma quando un dettaglio in più non cambia responsabilità, tempi o strumenti.</li>
+   </ul>
+  </section>
+ </article>
+</main>
+<div class="site-footer-note">
+ <p>Materiale didattico del corso <strong>processi-MOCI06 — Classificazione e analisi dei processi industriali</strong>. I diagrammi BPMN e il laboratorio Camunda servono a visualizzare e discutere gli esempi; il taglio del corso resta metodologico e non tecnico.</p>
+</div>
+<a class="back-to-top" href="#top" data-back-to-top aria-hidden="true" tabindex="-1">Torna su</a>
+</body>
+</html>

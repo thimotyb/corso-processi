@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio BPMN con Camunda e assistente MCP</title>
+<link rel="stylesheet" href="assets/css/main.css">
+<script defer src="assets/js/back-to-top.js"></script>
+</head>
+<body>
+<header class="hero" id="top">
+ <h1>Laboratorio BPMN con Camunda e assistente MCP</h1>
+</header>
+<nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
+ <a href="index.html">Home</a>
+ <a href="chapters/chapter-06.html">Modulo 6</a>
+ <a href="lab-camunda-mcp.html" aria-current="page">Guida di laboratorio</a>
+</nav>
+<main class="content">
+ <article>
+  <section class="section-toc">
+   <h2>Indice</h2>
+   <ul>
+    <li><a href="#s01">1 A cosa serve questa guida</a></li>
+    <li><a href="#s02">2 Architettura: i tre componenti</a></li>
+    <li><a href="#s03">3 Prerequisiti</a></li>
+    <li><a href="#s04">4 Motore Camunda 8 in Docker</a></li>
+    <li><a href="#s05">5 Camunda Desktop Modeler e plugin MCP</a></li>
+    <li><a href="#s06">6 Collegare Claude e primo diagramma</a></li>
+    <li><a href="#s07">7 Rete su WSL2</a></li>
+    <li><a href="#s08">8 Troubleshooting</a></li>
+   </ul>
+  </section>
+
+  <section class="study-section" id="s01">
+   <h2>1 A cosa serve questa guida</h2>
+   <p>Questo è un <strong>annesso opzionale</strong> al Modulo 6: non fa parte del programma d'aula e non è un sillabo. Serve a chi, dopo aver visto i diagrammi BPMN degli esempi APQC, vuole provare a generarne una bozza a partire da una scheda processo, coordinandosi con i prompt.</p>
+   <p>Lo strumento è un assistente (Claude) collegato al Camunda Desktop Modeler tramite un server MCP. La generazione produce una prima stesura; la revisione del diagramma resta sempre compito dell'analista.</p>
+   <div class="note-box">Il taglio del corso non cambia: la modellazione BPMN qui è un supporto alla visualizzazione e alla discussione, non un obiettivo tecnico.</div>
+  </section>
+
+  <section class="study-section" id="s02">
+   <h2>2 Architettura: i tre componenti</h2>
+   <p><strong>Claude Code</strong> — il client che chiama i tool via MCP. Gira dove lo si avvia, anche dentro WSL.</p>
+   <p><strong>Camunda Desktop Modeler + plugin <code>camunda-mcp</code></strong> — applicazione desktop. Il plugin espone un server MCP HTTP su <code>localhost:3100/mcp</code> con cui l'assistente crea e modifica il diagramma visibile a schermo. Non è containerizzabile: richiede un ambiente grafico.</p>
+   <p><strong>Motore Camunda 8</strong> — runtime che esegue i processi distribuiti. Questo componente gira in Docker ed è il bersaglio del tool <code>deploy_process</code>. È opzionale se serve solo produrre il file <code>.bpmn</code>.</p>
+  </section>
+
+  <section class="study-section" id="s03">
+   <h2>3 Prerequisiti</h2>
+   <ul class="study-bullets">
+    <li>Docker Desktop con backend WSL2 — <code>docker</code> &ge; 20.10.16, <code>docker compose</code> &ge; 2.24.</li>
+    <li>Node.js &ge; 20 e npm &ge; 9 (solo per la build del plugin dai sorgenti).</li>
+    <li>Camunda Desktop Modeler 5.x — da <a href="https://camunda.com/download/modeler/" target="_blank" rel="noopener noreferrer">camunda.com/download/modeler</a>.</li>
+    <li>Claude Code, oppure Claude Desktop con transport MCP HTTP.</li>
+    <li>Circa 4–6 GB di RAM liberi per lo stack Camunda 8.</li>
+   </ul>
+  </section>
+
+  <section class="study-section" id="s04">
+   <h2>4 Motore Camunda 8 in Docker</h2>
+   <p>Scaricare e avviare il Docker Compose ufficiale per la versione 8.9.</p>
+   <div class="code-label">bash — WSL</div>
+   <pre><code>curl -L -o docker-compose-8.9.zip \
+  https://github.com/camunda/camunda-distributions/releases/download/docker-compose-8.9/docker-compose-8.9.zip
+unzip docker-compose-8.9.zip
+cd docker-compose-8.9
+docker compose up -d
+docker compose ps
+docker compose logs -f orchestration connectors</code></pre>
+   <ul class="study-bullets">
+    <li>REST API del cluster e Zeebe: <code>http://localhost:8080</code>; gateway gRPC: <code>localhost:26500</code>.</li>
+    <li>Operate: <code>http://localhost:8080/operate</code> &middot; Tasklist: <code>http://localhost:8080/tasklist</code>.</li>
+    <li>Login di default: <code>demo</code> / <code>demo</code>.</li>
+    <li>Stop: <code>docker compose down</code> (mantiene i dati) oppure <code>docker compose down -v</code> (cancella tutto).</li>
+   </ul>
+   <div class="note-box">Il nome della cartella estratta e la mappa delle porte possono variare per patch: verificare il <code>README</code> del pacchetto compose.</div>
+  </section>
+
+  <section class="study-section" id="s05">
+   <h2>5 Camunda Desktop Modeler e plugin MCP</h2>
+   <p>Installare il Modeler 5.x, poi il plugin <code>camunda-mcp</code> (<a href="https://github.com/JesseLeresche/Camunda-mcp" target="_blank" rel="noopener noreferrer">repository</a>, licenza MIT).</p>
+   <div class="code-label">bash — build dai sorgenti</div>
+   <pre><code>git clone https://github.com/JesseLeresche/Camunda-mcp.git
+cd Camunda-mcp
+npm install
+npm run build
+ln -s "$(pwd)" ~/.config/camunda-modeler/resources/plugins/camunda-mcp</code></pre>
+   <ul class="study-bullets">
+    <li>Cartella plugin: Linux/WSLg <code>~/.config/camunda-modeler/resources/plugins/</code>; macOS <code>~/Library/Application Support/camunda-modeler/resources/plugins/</code>; Windows <code>%APPDATA%\camunda-modeler\resources\plugins\</code>.</li>
+    <li>Variabili d'ambiente (prima di avviare il Modeler): <code>MCP_PORT</code> (default 3100), <code>MCP_API_KEY</code>, <code>ZEEBE_ADDRESS=localhost:26500</code>.</li>
+    <li>Verifica: nel menu <strong>Plugins</strong> deve comparire &laquo;MCP Server: Running (port 3100)&raquo;.</li>
+   </ul>
+   <div class="code-label">verifica — il server risponde</div>
+   <pre><code>curl -s -X POST http://localhost:3100/mcp \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","method":"tools/list","id":1}'</code></pre>
+  </section>
+
+  <section class="study-section" id="s06">
+   <h2>6 Collegare Claude e primo diagramma</h2>
+   <div class="code-label">bash</div>
+   <pre><code>claude mcp add --transport http camunda-modeler http://localhost:3100/mcp</code></pre>
+   <p>In alternativa, in <code>.mcp.json</code> nella cartella di progetto:</p>
+   <div class="code-label">.mcp.json</div>
+   <pre><code>{
+  "mcpServers": {
+    "camunda-modeler": { "type": "http", "url": "http://localhost:3100/mcp" }
+  }
+}</code></pre>
+   <p>Lanciare <code>/mcp</code> in Claude Code, confermare che <code>camunda-modeler</code> è connesso e approvare il server. Con il Modeler aperto, un prompt di prova:</p>
+   <div class="note-box">Nel Camunda Modeler crea un nuovo diagramma <code>leave-request</code>: start event &laquo;Richiesta inviata&raquo; &rarr; user task &laquo;Valuta richiesta&raquo; &rarr; gateway esclusivo &laquo;Approvata?&raquo;; sul ramo sì un service task &laquo;Notifica approvazione&raquo;, sul ramo no un service task &laquo;Notifica rifiuto&raquo;; entrambi confluiscono in un end event &laquo;Richiesta chiusa&raquo;. Disponi il layout da sinistra a destra e valida.</div>
+   <p>L'assistente chiama in sequenza i tool <code>manage_diagram</code>, <code>build_process</code> o <code>add_element</code> più <code>connect</code>, <code>layout</code>, <code>query_diagram</code>. Il diagramma compare nella finestra del Modeler. Per distribuirlo: &laquo;Salva il diagramma, poi distribuiscilo sul Camunda 8 locale con <code>deploy_process</code>&raquo; (serve <code>ZEEBE_ADDRESS</code> raggiungibile).</p>
+  </section>
+
+  <section class="study-section" id="s07">
+   <h2>7 Rete su WSL2</h2>
+   <ul class="study-bullets">
+    <li>Consigliato: eseguire il Modeler dentro WSL via WSLg, così Modeler, plugin e client vedono <code>localhost:3100</code> nativamente.</li>
+    <li>Modeler su Windows e client in WSL: abilitare il mirrored networking in <code>%USERPROFILE%\.wslconfig</code> con <code>[wsl2]</code> e <code>networkingMode=mirrored</code>, poi <code>wsl --shutdown</code>; in alternativa usare l'IP dell'host Windows al posto di <code>localhost</code>.</li>
+    <li>Docker Desktop con backend WSL2: le porte pubblicate dai container compaiono su <code>localhost</code> dentro WSL.</li>
+   </ul>
+  </section>
+
+  <section class="study-section" id="s08">
+   <h2>8 Troubleshooting</h2>
+   <ul class="study-bullets">
+    <li><strong>Il menu Plugins non mostra il server</strong>: cartella plugin errata o build assente; verificare il percorso per il sistema operativo e la presenza di <code>dist/</code>, poi riavviare il Modeler.</li>
+    <li><strong><code>/mcp</code> in stato failed</strong>: Modeler non avviato oppure porta 3100 non raggiungibile dal client (caso Windows&harr;WSL: vedi sezione 7). Provare prima il <code>curl</code> di verifica.</li>
+    <li><strong><code>deploy_process</code> fallisce</strong>: <code>ZEEBE_ADDRESS</code> non impostato prima dell'avvio del Modeler, gateway 26500 non esposto, oppure autenticazione del cluster attiva senza credenziali.</li>
+    <li><strong>Porta 3100 occupata</strong>: il server ripiega su 3101–3102; aggiornare l'URL in <code>.mcp.json</code> o fissare <code>MCP_PORT</code>.</li>
+   </ul>
+   <div class="note-box">Nomi degli asset di release e mappa delle porte 8.9 vanno confermati sulle pagine ufficiali: <a href="https://github.com/JesseLeresche/Camunda-mcp" target="_blank" rel="noopener noreferrer">repository del plugin</a> e <a href="https://docs.camunda.io/docs/self-managed/quickstart/developer-quickstart/docker-compose/install-start/" target="_blank" rel="noopener noreferrer">quickstart Docker Compose di Camunda</a>.</div>
+  </section>
+ </article>
+</main>
+<div class="site-footer-note">
+ <p>Annesso di laboratorio del corso <strong>processi-MOCI06 — Classificazione e analisi dei processi industriali</strong>. Contenuto opzionale, non incluso nel programma d'aula.</p>
+</div>
+<a class="back-to-top" href="#top" data-back-to-top aria-hidden="true" tabindex="-1">Torna su</a>
+</body>
+</html>
