@@ -58,3 +58,16 @@ cd camunda
 ```
 
 Dettagli e collegamento con il Camunda Desktop Modeler: `camunda/README.md` e `site/lab-camunda-mcp.html`.
+
+## Plugin MCP nel Camunda Modeler
+
+La cartella `modeler/` contiene gli script per installare il plugin `camunda-mcp` nel Camunda Desktop Modeler (server MCP su `localhost:3100` per generare i BPMN dai prompt):
+
+```bash
+cd modeler
+./install-camunda-mcp.sh                 # da WSL (rileva %APPDATA% di Windows)
+# oppure, su Windows:
+#   powershell -ExecutionPolicy Bypass -File .\install-camunda-mcp.ps1
+```
+
+Dettagli: `modeler/README.md`.
