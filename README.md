@@ -47,6 +47,18 @@ sequenza di attività.
 Non è prevista alcuna esecuzione dei processi (nessun motore Camunda collegato): l'uso è puramente
 di modellazione/rappresentazione, coerente con il taglio metodologico e non tecnico del corso.
 
+## Anteprime PNG
+
+Ogni cartella `esempi-apqc/<dominio>/` contiene anche `processo.png`: uno snapshot del diagramma
+generato aprendo il relativo `processo.bpmn` nel Camunda Modeler collegato via MCP (plugin
+`camunda-mcp`, vedi `modeler/`) ed esportandolo in immagine. Utile per inserire i diagrammi
+direttamente nelle slide del corso senza dover riaprire il Modeler.
+
+> Nota tecnica: la funzione di auto-layout del plugin MCP (`layout auto`) in questa versione non
+> gestisce correttamente le corsie (lane) — sovrappone le due lane invece di impilarle verticalmente.
+> Per questo i file `.bpmn` di questa cartella usano un layout calcolato manualmente (verificato senza
+> sovrapposizioni) e vengono solo importati/esportati via MCP, senza applicare l'auto-layout.
+
 ## Ambiente Camunda 8 per il laboratorio
 
 La cartella `camunda/` contiene una configurazione Docker Compose minima di Camunda 8.9 Self-Managed (Orchestration Cluster + Connectors, storage H2) per distribuire e osservare i processi in aula:

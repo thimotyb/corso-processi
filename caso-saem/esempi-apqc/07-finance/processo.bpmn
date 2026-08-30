@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_SaemFinance" targetNamespace="http://corso-processi.local/apqc">
+  <bpmn:process id="Process_SaemFinance" name="9.2.2 Invoice customer — caso SAEM" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_CONT" name="Contabilità (RCONT)">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T3b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_MAG" name="Magazzino / Traffico (RTRAF)">
+        <bpmn:flowNodeRef>T3a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T3c</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" name="Evento di cadenza settimanale">
+
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="T1" name="Verificare bolle evase non ancora fatturate">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T2" name="Elaborare e stampare le fatture">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW1" name="Canale di invio?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T3a" name="Spedire fattura singola per posta normale">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T3b" name="Invio file fatture a Postel (stampa/imbusto/spedizione)">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T3c" name="Allegare fattura in contrassegno alla merce in uscita">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T4" name="Trasferire le fatture in prima nota contabile">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End" name="Ciclo di fatturazione settimanale chiuso">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="T1" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T1" targetRef="T2" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="T2" targetRef="GW1" />
+    <bpmn:sequenceFlow id="Flow_4" name="Posta" sourceRef="GW1" targetRef="T3a" />
+    <bpmn:sequenceFlow id="Flow_5" name="Postel" sourceRef="GW1" targetRef="T3b" />
+    <bpmn:sequenceFlow id="Flow_6" name="Contrassegno" sourceRef="GW1" targetRef="T3c" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="T3a" targetRef="T4" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="T3b" targetRef="T4" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="T3c" targetRef="T4" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="T4" targetRef="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_SaemFinance">
+      <bpmndi:BPMNShape id="Lane_CONT_di" bpmnElement="Lane_CONT" isHorizontal="true">
+        <dc:Bounds x="120" y="100" width="1560" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_MAG_di" bpmnElement="Lane_MAG" isHorizontal="true">
+        <dc:Bounds x="120" y="320" width="1560" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="232" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T1_di" bpmnElement="T1">
+        <dc:Bounds x="380" y="170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T2_di" bpmnElement="T2">
+        <dc:Bounds x="570" y="170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW1_di" bpmnElement="GW1">
+        <dc:Bounds x="795" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3a_di" bpmnElement="T3a">
+        <dc:Bounds x="950" y="335" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3b_di" bpmnElement="T3b">
+        <dc:Bounds x="950" y="170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3c_di" bpmnElement="T3c">
+        <dc:Bounds x="950" y="445" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T4_di" bpmnElement="T4">
+        <dc:Bounds x="1140" y="170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="1372" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="268" y="210" /><di:waypoint x="380" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="500" y="210" /><di:waypoint x="570" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="690" y="210" /><di:waypoint x="795" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="845" y="210" /><di:waypoint x="898" y="210" /><di:waypoint x="898" y="375" /><di:waypoint x="950" y="375" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="845" y="210" /><di:waypoint x="950" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="845" y="210" /><di:waypoint x="898" y="210" /><di:waypoint x="898" y="485" /><di:waypoint x="950" y="485" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1070" y="375" /><di:waypoint x="1105" y="375" /><di:waypoint x="1105" y="210" /><di:waypoint x="1140" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="1070" y="210" /><di:waypoint x="1140" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1070" y="485" /><di:waypoint x="1105" y="485" /><di:waypoint x="1105" y="210" /><di:waypoint x="1140" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="1260" y="210" /><di:waypoint x="1372" y="210" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

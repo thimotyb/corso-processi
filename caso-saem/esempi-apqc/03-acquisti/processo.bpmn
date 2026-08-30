@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_SaemAcquisti" targetNamespace="http://corso-processi.local/apqc">
+  <bpmn:process id="Process_SaemAcquisti" name="4.2.3 Select suppliers and develop/maintain contracts — caso SAEM" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_DIRV" name="Direttore Vendite (DIRV)">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndKO</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_SYS" name="Sistema Informativo / Anagrafiche">
+        <bpmn:flowNodeRef>T4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndOK</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" name="Fabbisogno di nuovo fornitore o nuova linea prodotti">
+
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="T1" name="Select suppliers (anche tramite consorzio europeo)">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T2" name="Certify and validate suppliers (questionario + visita + vendor rating)">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW1" name="Vendor rating positivo?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T3" name="Negotiate and establish contracts">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T4" name="Manage contracts / creare anagrafica a sistema">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndOK" name="Fornitore qualificato e attivo a sistema">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndKO" name="Fornitore scartato / non qualificato">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="T1" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T1" targetRef="T2" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="T2" targetRef="GW1" />
+    <bpmn:sequenceFlow id="Flow_4" name="Sì" sourceRef="GW1" targetRef="T3" />
+    <bpmn:sequenceFlow id="Flow_5" name="No" sourceRef="GW1" targetRef="EndKO" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="T3" targetRef="T4" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="T4" targetRef="EndOK" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_SaemAcquisti">
+      <bpmndi:BPMNShape id="Lane_DIRV_di" bpmnElement="Lane_DIRV" isHorizontal="true">
+        <dc:Bounds x="120" y="100" width="1560" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_SYS_di" bpmnElement="Lane_SYS" isHorizontal="true">
+        <dc:Bounds x="120" y="320" width="1560" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="232" y="137" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T1_di" bpmnElement="T1">
+        <dc:Bounds x="380" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T2_di" bpmnElement="T2">
+        <dc:Bounds x="570" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW1_di" bpmnElement="GW1">
+        <dc:Bounds x="795" y="130" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3_di" bpmnElement="T3">
+        <dc:Bounds x="950" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T4_di" bpmnElement="T4">
+        <dc:Bounds x="1140" y="390" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndOK_di" bpmnElement="EndOK">
+        <dc:Bounds x="1372" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndKO_di" bpmnElement="EndKO">
+        <dc:Bounds x="992" y="247" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="268" y="155" /><di:waypoint x="380" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="500" y="155" /><di:waypoint x="570" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="690" y="155" /><di:waypoint x="795" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="845" y="155" /><di:waypoint x="950" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="845" y="155" /><di:waypoint x="918" y="155" /><di:waypoint x="918" y="265" /><di:waypoint x="992" y="265" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="1070" y="155" /><di:waypoint x="1105" y="155" /><di:waypoint x="1105" y="430" /><di:waypoint x="1140" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1260" y="430" /><di:waypoint x="1372" y="430" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

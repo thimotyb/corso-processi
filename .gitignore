@@ -10,3 +10,6 @@ Thumbs.db
 
 # Office lock files
 ~$*
+
+# Windows download metadata (alternate data stream sidecar files)
+*:Zone.Identifier

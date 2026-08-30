@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_SaemCustomerService" targetNamespace="http://corso-processi.local/apqc">
+  <bpmn:process id="Process_SaemCustomerService" name="6.2.2 Manage customer service problems, requests, and inquiries — caso SAEM" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_FC" name="FC / RGC">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T4a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T4b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_DIRV" name="DIRV">
+        <bpmn:flowNodeRef>T3a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_MAG" name="Magazzino (RMAG/SMAG)">
+        <bpmn:flowNodeRef>T5a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T3b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T5b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndNoRep</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" name="Reso segnalato o deceleratore restituito">
+
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="T1" name="Receive customer problem/request">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T2" name="Analyze problem/request">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW1" name="Tipo di richiesta?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T3a" name="Richiedere autorizzazione al DIRV">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T4a" name="Aprire Non Conformità (se errore SAEM)">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T5a" name="Il magazzino riceve e alloca il materiale">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T3b" name="Magazzino riceve e diagnostica il guasto">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="T4b" name="FC prepara offerta di riparazione">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW2" name="Cliente accetta il preventivo?">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="T5b" name="Riparazione (sede/fornitore) e restituzione al cliente">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndNoRep" name="Prodotto restituito senza riparazione">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End" name="Reso gestito / prodotto riparato e restituito">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="T1" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T1" targetRef="T2" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="T2" targetRef="GW1" />
+    <bpmn:sequenceFlow id="Flow_4" name="Reso" sourceRef="GW1" targetRef="T3a" />
+    <bpmn:sequenceFlow id="Flow_5" name="Riparazione" sourceRef="GW1" targetRef="T3b" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="T3a" targetRef="T4a" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="T4a" targetRef="T5a" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="T5a" targetRef="End" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="T3b" targetRef="T4b" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="T4b" targetRef="GW2" />
+    <bpmn:sequenceFlow id="Flow_11" name="Sì" sourceRef="GW2" targetRef="T5b" />
+    <bpmn:sequenceFlow id="Flow_12" name="No" sourceRef="GW2" targetRef="EndNoRep" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="T5b" targetRef="End" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="EndNoRep" targetRef="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_SaemCustomerService">
+      <bpmndi:BPMNShape id="Lane_FC_di" bpmnElement="Lane_FC" isHorizontal="true">
+        <dc:Bounds x="120" y="100" width="1940" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_DIRV_di" bpmnElement="Lane_DIRV" isHorizontal="true">
+        <dc:Bounds x="120" y="320" width="1940" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_MAG_di" bpmnElement="Lane_MAG" isHorizontal="true">
+        <dc:Bounds x="120" y="540" width="1940" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="232" y="137" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T1_di" bpmnElement="T1">
+        <dc:Bounds x="380" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T2_di" bpmnElement="T2">
+        <dc:Bounds x="570" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW1_di" bpmnElement="GW1">
+        <dc:Bounds x="795" y="130" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3a_di" bpmnElement="T3a">
+        <dc:Bounds x="950" y="390" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T4a_di" bpmnElement="T4a">
+        <dc:Bounds x="1140" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T5a_di" bpmnElement="T5a">
+        <dc:Bounds x="1330" y="555" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T3b_di" bpmnElement="T3b">
+        <dc:Bounds x="950" y="665" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T4b_di" bpmnElement="T4b">
+        <dc:Bounds x="1140" y="225" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW2_di" bpmnElement="GW2">
+        <dc:Bounds x="1365" y="130" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T5b_di" bpmnElement="T5b">
+        <dc:Bounds x="1520" y="665" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndNoRep_di" bpmnElement="EndNoRep">
+        <dc:Bounds x="1562" y="577" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="1752" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="268" y="155" /><di:waypoint x="380" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="500" y="155" /><di:waypoint x="570" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="690" y="155" /><di:waypoint x="795" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="845" y="155" /><di:waypoint x="898" y="155" /><di:waypoint x="898" y="430" /><di:waypoint x="950" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="845" y="155" /><di:waypoint x="898" y="155" /><di:waypoint x="898" y="705" /><di:waypoint x="950" y="705" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="1070" y="430" /><di:waypoint x="1105" y="430" /><di:waypoint x="1105" y="155" /><di:waypoint x="1140" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1260" y="155" /><di:waypoint x="1295" y="155" /><di:waypoint x="1295" y="595" /><di:waypoint x="1330" y="595" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="1450" y="595" /><di:waypoint x="1601" y="595" /><di:waypoint x="1601" y="430" /><di:waypoint x="1752" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1070" y="705" /><di:waypoint x="1105" y="705" /><di:waypoint x="1105" y="265" /><di:waypoint x="1140" y="265" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="1260" y="265" /><di:waypoint x="1312" y="265" /><di:waypoint x="1312" y="155" /><di:waypoint x="1365" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11"><di:waypoint x="1415" y="155" /><di:waypoint x="1468" y="155" /><di:waypoint x="1468" y="705" /><di:waypoint x="1520" y="705" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12"><di:waypoint x="1415" y="155" /><di:waypoint x="1488" y="155" /><di:waypoint x="1488" y="595" /><di:waypoint x="1562" y="595" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13"><di:waypoint x="1640" y="705" /><di:waypoint x="1696" y="705" /><di:waypoint x="1696" y="430" /><di:waypoint x="1752" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14"><di:waypoint x="1598" y="595" /><di:waypoint x="1675" y="595" /><di:waypoint x="1675" y="430" /><di:waypoint x="1752" y="430" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

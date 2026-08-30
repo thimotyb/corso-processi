@@ -524,6 +524,7 @@ def index_html():
 <nav id="primary-nav" class="primary-nav" aria-label="Navigazione">
  <a href="index.html" aria-current="page">Home</a>
  <a href="#moduli">Moduli</a>
+ <a href="#caso-studio">Caso di studio</a>
  <a href="#laboratori">Laboratori</a>
  <a href="#riferimenti">Riferimenti</a>
 </nav>
@@ -557,6 +558,16 @@ def index_html():
   <ul class="chapter-list">
 {mod_items}
   </ul>
+ </section>
+
+ <section id="caso-studio">
+  <h2>Caso di studio — SAEM S.p.A.</h2>
+  <p>Un caso aziendale reale, usato come filo conduttore per rendere concreti tre dei sette esempi APQC. SAEM S.p.A. è un distributore italiano di prodotti industriali che, all'inizio degli anni 2000, ha reingegnerizzato il proprio processo di gestione ordini introducendo un portale di e-commerce B2B, per risolvere criticità sistematiche legate a doppia codifica degli articoli e conversione delle unità di misura tra cliente e fornitore.</p>
+  <p>Le versioni astratte degli esempi APQC restano il riferimento primario del corso; le versioni SAEM, parallele e più ricche, servono a discutere ruoli, sistemi e rischi reali sullo stesso schema di analisi.</p>
+  <a class="lab-card" href="caso-studio-saem.html">
+    <h3>Caso di studio completo — SAEM S.p.A.</h3>
+    <p>Profilo azienda, problema che ha innescato il progetto, tabella dei processi mappati su APQC e link alle tre schede arricchite (acquisti, customer service, finance).</p>
+  </a>
  </section>
 
  <section id="laboratori">
@@ -725,6 +736,94 @@ ln -s "$(pwd)" ~/.config/camunda-modeler/resources/plugins/camunda-mcp</code></p
 </div>"""
     return page("Laboratorio BPMN con Camunda e assistente MCP", body, depth=0)
 
+# ---- caso di studio: SAEM S.p.A. ------------------------------------------
+
+def caso_studio_html():
+    body = f"""<header class="hero" id="top">
+ <h1>Caso di studio — SAEM S.p.A.</h1>
+</header>
+<nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
+ <a href="index.html">Home</a>
+ <a href="caso-studio-saem.html" aria-current="page">Caso di studio</a>
+</nav>
+<main class="content">
+ <article>
+  <section class="section-toc">
+   <h2>Indice</h2>
+   <ul>
+    <li><a href="#s01">1 Perché questo caso di studio</a></li>
+    <li><a href="#s02">2 L'azienda SAEM S.p.A.</a></li>
+    <li><a href="#s03">3 Il problema che ha innescato il progetto</a></li>
+    <li><a href="#s04">4 I tre processi già sviluppati sul caso</a></li>
+    <li><a href="#s05">5 Altri processi SAEM (candidati non ancora sviluppati)</a></li>
+    <li><a href="#s06">6 Come usarlo in aula</a></li>
+    <li><a href="#s07">7 Fonti</a></li>
+   </ul>
+  </section>
+
+  <section class="study-section" id="s01">
+   <h2>1 Perché questo caso di studio</h2>
+   <p>Gli esempi APQC del corso (<code>esempi-apqc/</code>) sono volutamente astratti: gerarchia PCF corretta, ma azienda e ruoli generici. SAEM S.p.A. è un caso aziendale reale (tesi di laurea, Politecnico di Milano, A.A. 2004-2005) che permette di ripetere lo stesso esercizio di classificazione e mappatura su un'organizzazione con ruoli, sistemi e criticità documentati.</p>
+   <p>Le versioni SAEM non sostituiscono gli esempi astratti: li affiancano, sotto <code>caso-saem/esempi-apqc/</code>, come varianti più ricche sulla stessa gerarchia PCF e lo stesso Process.</p>
+  </section>
+
+  <section class="study-section" id="s02">
+   <h2>2 L'azienda SAEM S.p.A.</h2>
+   <p>Fondata nel 1904, SAEM è un <strong>distributore</strong> italiano di prodotti industriali ad alto contenuto tecnologico (adesivi e sigillanti, lubrificanti speciali, macchine utensili, componenti per automazione): non produce, importa e distribuisce prodotti di case produttrici internazionali di cui è rappresentante esclusivo.</p>
+   <ul class="study-bullets">
+    <li><strong>Fatturato</strong>: 12,5-25 milioni di euro; <strong>organico</strong>: ~57 dipendenti + 16 agenti + rete di ~340 distributori.</li>
+    <li><strong>Clienti</strong>: oltre 3.500 attivi, in 25 settori industriali. <strong>Fornitori</strong>: oltre 100 case produttrici.</li>
+    <li><strong>Struttura</strong>: funzionale al primo livello, 4 divisioni (Chimica, Macchine, Componenti, Hi-Tech); organizzazione vendite a matrice (Responsabili Prodotto, Industria, Area).</li>
+    <li><strong>Certificazioni</strong>: ISO 9001 e ISO 14001. <strong>Posizionamento competitivo</strong>: la tecnologia non basta più a differenziare — contano tempestività, personalizzazione e assistenza pre/post vendita.</li>
+    <li><strong>Sistemi storici</strong>: Pragma (Client/Server a caratteri, DOS) e MaxGestCS (Java + PostgreSQL), sincronizzati ogni notte.</li>
+   </ul>
+   <div class="note-box">Ruoli citati nei processi: DIRV (Direttore Vendite), FC (Funzionario Commerciale), RGC (Responsabile Gestione Commerciale), RTRAF (Responsabile Traffico), RMAG/SMAG (Responsabile/Segretario Magazzino), RCONT (Responsabile Contabilità).</div>
+  </section>
+
+  <section class="study-section" id="s03">
+   <h2>3 Il problema che ha innescato il progetto</h2>
+   <p>Il processo di gestione ordini (offerta &rarr; ordine &rarr; evasione &rarr; fatturazione), interamente manuale, generava due criticità sistematiche:</p>
+   <ol class="study-bullets">
+    <li><strong>Conversione delle unità di misura</strong>: i clienti ordinano in unità proprie (es. grammi), SAEM vende in confezioni indivisibili (fusti, cartucce) &rarr; conversione manuale a rischio d'errore.</li>
+    <li><strong>Doppia codifica articolo</strong>: ogni cliente usa un proprio codice interno diverso da quello SAEM &rarr; l'operatore deve tradurre a mano dalla descrizione.</li>
+   </ol>
+   <p>Questi errori generavano costi di gestione resi, ritardi di consegna e un peggioramento del servizio percepito — da cui la decisione della direzione di reingegnerizzare il processo introducendo un portale di inserimento ordini diretto da parte del cliente (progetto "Maxnet").</p>
+  </section>
+
+  <section class="study-section" id="s04">
+   <h2>4 I tre processi già sviluppati sul caso</h2>
+   <ul class="study-bullets">
+    <li><strong>Selezione e qualifica fornitori</strong> &mdash; 4.0 &rarr; 4.2.3 Select suppliers and develop/maintain contracts &mdash; <a href="../caso-saem/esempi-apqc/03-acquisti/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/03-acquisti/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Ritiro prodotti, resi e riparazione deceleratori</strong> &mdash; 6.0 &rarr; 6.2.2 Manage customer service problems, requests, and inquiries &mdash; <a href="../caso-saem/esempi-apqc/05-customer-service/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/05-customer-service/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Fatturazione settimanale</strong> &mdash; 9.0 &rarr; 9.2.2 Invoice customer &mdash; <a href="../caso-saem/esempi-apqc/07-finance/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/07-finance/processo.bpmn">processo.bpmn</a></li>
+   </ul>
+   <p>Ogni scheda ripete la stessa struttura degli esempi astratti (collocazione PCF, Activity, scomposizione in Task, SIPOC, matrice delle variabili, scheda sintetica, BPMN) ma con scenario, ruoli e flusso presi dal caso reale — i diagrammi BPMN qui includono anche gateway che nella versione astratta non c'erano (es. esito del vendor rating, tipo di richiesta reso/riparazione, canale di fatturazione).</p>
+  </section>
+
+  <section class="study-section" id="s05">
+   <h2>5 Altri processi SAEM (candidati non ancora sviluppati)</h2>
+   <p>Il caso ne descrive molti altri, con un match APQC meno diretto o non ancora verificato sul PCF completo: programmazione ordini a fornitore, controllo qualità in ingresso, gestione reso a fornitore, preparazione offerta al cliente, selezione spedizioniere, generazione bolle/carico veicolo, gestione sistema informativo legacy, progetto di reengineering/e-commerce, posizionamento strategico, sistema qualità/ambiente. Sono candidati per estensioni future del materiale, se il corso vorrà arricchire anche i domini Vendite, Vision&amp;Strategy o IT con questo stesso caso.</p>
+  </section>
+
+  <section class="study-section" id="s06">
+   <h2>6 Come usarlo in aula</h2>
+   <p>Per ciascuno dei tre processi si può ripetere l'esercizio già impostato per gli esempi APQC astratti: individuare Category/Process Group/Process/Activity nel PCF, scomporre in Task, costruire SIPOC e matrice delle variabili, leggere il BPMN con le corsie per ruolo. A differenza degli esempi puri, qui i partecipanti lavorano su un caso con <strong>criticità reali già documentate</strong> (doppia codifica articoli, autorizzazioni di prezzo/reso, shelf life breve) da usare come base per la discussione su rischi e colli di bottiglia.</p>
+  </section>
+
+  <section class="study-section" id="s07">
+   <h2>7 Fonti</h2>
+   <ul class="reference-list">
+    <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="../resources/casoSAEM.pdf">PDF completo</a>.</li>
+    <li><a href="../caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
+   </ul>
+  </section>
+ </article>
+</main>
+<div class="site-footer-note">
+ <p>Caso di studio del corso <strong>{esc(COURSE)}</strong>. Affianca, senza sostituire, gli esempi APQC astratti.</p>
+</div>"""
+    return page("Caso di studio — SAEM S.p.A.", body, depth=0)
+
 # ---- scrittura ------------------------------------------------------------
 
 # prima i moduli (popolano LAB_ANCHOR), poi la home che li referenzia
@@ -735,6 +834,7 @@ for i, (code, title) in enumerate(MODULES):
         chapter_html(code, title, prev_m, next_m, CONTENT[code]), encoding="utf-8")
 (ROOT / "index.html").write_text(index_html(), encoding="utf-8")
 (ROOT / "lab-camunda-mcp.html").write_text(lab_html(), encoding="utf-8")
+(ROOT / "caso-studio-saem.html").write_text(caso_studio_html(), encoding="utf-8")
 
 print("scritti:")
 for p in sorted(ROOT.rglob("*.html")):
