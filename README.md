@@ -46,3 +46,15 @@ sequenza di attività.
 
 Non è prevista alcuna esecuzione dei processi (nessun motore Camunda collegato): l'uso è puramente
 di modellazione/rappresentazione, coerente con il taglio metodologico e non tecnico del corso.
+
+## Ambiente Camunda 8 per il laboratorio
+
+La cartella `camunda/` contiene una configurazione Docker Compose minima di Camunda 8.9 Self-Managed (Orchestration Cluster + Connectors, storage H2) per distribuire e osservare i processi in aula:
+
+```bash
+cd camunda
+./camunda-up.sh      # avvia (Operate/Tasklist su http://localhost:8080, demo/demo)
+./camunda-down.sh    # ferma
+```
+
+Dettagli e collegamento con il Camunda Desktop Modeler: `camunda/README.md` e `site/lab-camunda-mcp.html`.
