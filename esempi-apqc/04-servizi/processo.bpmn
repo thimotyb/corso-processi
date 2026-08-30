@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_Servizi" targetNamespace="http://corso-processi.local/apqc">
   <bpmn:process id="Process_Servizi" name="5.2.2 Create and manage resource plan" isExecutable="false">
+    <bpmn:documentation>Category 5.0 Deliver Services
+Process Group 5.2 Manage service delivery resources (20040)
+Process 5.2.2 Create and manage resource plan (20050)
+
+Definizione APQC: Identifying the need for and creating a resource plan. Understand resource demand and align with capacity, skills, and capabilities. Enlist suppliers and partners to supplement needed skills and capabilities. Monitor and manage capabilities and skills with an eye on critical resources and supplier capacity.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_1">
       <bpmn:lane id="Lane_RM" name="Resource/Capacity Manager">
         <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
@@ -18,23 +28,53 @@
 
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="T1" name="Define and manage skills taxonomy">
+    <bpmn:task id="T1" name="5.2.2.1 Define and manage skills taxonomy (20051)">
+      <bpmn:documentation>Definizione APQC: Analyzing the skills needed to perform services to be delivered. Classify and organize these skills requirements.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T2" name="Create resource plan">
+    <bpmn:task id="T2" name="5.2.2.2 Create resource plan (20052)">
+      <bpmn:documentation>Definizione APQC: Creating a plan to ensure that all resources are available to carry out services required for the customer. This can include physical resources and personnel.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T3" name="Match resource demand with capacity and skills">
+    <bpmn:task id="T3" name="5.2.2.3 Match resource demand with capacity, skills, and capabilities (20053)">
+      <bpmn:documentation>Definizione APQC: Matching demand with skills and capability. Enlisting suppliers and partners to help with demand when needed.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T4" name="Collaborate with suppliers/partners">
+    <bpmn:task id="T4" name="5.2.2.4 Collaborate with suppliers and partners to supplement skills and capabilities (20054)">
+      <bpmn:documentation>Definizione APQC: Understanding organizational need to enlist suppliers to provide resources for gaps in skills and capabilities. Identify where additional skills are needed and collaborate with third parties to fill those demands.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T5" name="Monitor and manage resource capacity">
+    <bpmn:task id="T5" name="5.2.2.6 Monitor and manage resource capacity and availability (20056)">
+      <bpmn:documentation>Definizione APQC: Directing and managing workforce needs. Ensure that resources are at full capacity. Monitor that all resources are able to skilled in their respective rolls. Make sure that necessary resources are available to provide the needed services.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 5.0 Deliver Services (K012578).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/04-servizi/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>

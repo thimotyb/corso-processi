@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_IT" targetNamespace="http://corso-processi.local/apqc">
   <bpmn:process id="Process_IT" name="8.7.8 Operate IT user support" isExecutable="false">
+    <bpmn:documentation>Category 8.0 Manage Information Technology (IT)
+Process Group 8.7 Create and manage support services/solutions (20866)
+Process 8.7.8 Operate IT user support (20921)
+
+Definizione APQC: Managing systematic user support functionality and capability through defined procedures. Determine, record, and monitor user requests. Execute issue/request resolution. Utilize escalation path when needed. Resolve issue/request.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_1">
       <bpmn:lane id="Lane_L1" name="Service Desk (1° livello)">
         <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
@@ -21,38 +31,82 @@
 
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="T1" name="Triage IT issues/requests">
+    <bpmn:task id="T1" name="8.7.8.1 Triage IT issues/requests (20922)">
+      <bpmn:documentation>Definizione APQC: Evaluate and assign IT issues/requests accordingly to allow for the correct routing of IT issues to the relevant support teams.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW1" name="Risolvibile al 1° livello?">
+      <bpmn:documentation>Punto di decisione introdotto a scopo didattico (non è un elemento del PCF): distingue il ramo di risoluzione al primo livello dal ramo di escalation (Activity 8.7.8.4).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="T2a" name="Provide IT resolution capabilities">
+    <bpmn:task id="T2a" name="8.7.8.2 Provide IT resolution capabilities (20923)">
+      <bpmn:documentation>Definizione APQC: Providing the necessary skills and competencies required to efficiently provide IT resolution through the support structure.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T2b" name="Escalate IT requests">
+    <bpmn:task id="T2b" name="8.7.8.4 Escalate IT requests (20926)">
+      <bpmn:documentation>Definizione APQC: Follow processes and procedures to escalate IT requests to required levels for resolution or effective decision making when necessary.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T3" name="Manage IT user request">
+    <bpmn:task id="T3" name="8.7.8.3 Manage IT user requests (20925)">
+      <bpmn:documentation>Definizione APQC: Creating an effective plan and structure to address and resolve requests of IT users. Determine, record, and monitor user requests.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T4" name="Resolve IT issue/request">
+    <bpmn:task id="T4" name="8.7.8.5 Resolve IT issues/requests (20927)">
+      <bpmn:documentation>Definizione APQC: Creating a structure to resolve issues/requests of IT services using different mechanisms.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW2" name="Servizio critico impattato?">
+      <bpmn:documentation>Punto di decisione introdotto a scopo didattico (non è un elemento del PCF): distingue l'attivazione della continuità/recovery (Activity 8.7.8.6) dalla semplice chiusura del ticket.
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="T5" name="Execute IT continuity and recovery action">
+    <bpmn:task id="T5" name="8.7.8.6 Execute IT continuity and recovery action (20928)">
+      <bpmn:documentation>Definizione APQC: Successfully implement preventive measures to manage IT risk of exposure to internal and external threats. Integrating the disciplines of Emergency Response, Crisis Management, Disaster Recovery (technology continuity) and Business Continuity for IT.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 8.0 Manage Information Technology (IT) (K012581).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/06-it/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_9</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:task>

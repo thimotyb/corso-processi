@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_CustomerService" targetNamespace="http://corso-processi.local/apqc" exporter="Camunda Modeler" exporterVersion="5.50.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_CustomerService" targetNamespace="http://corso-processi.local/apqc">
   <bpmn:process id="Process_CustomerService" name="6.2.2 Manage customer service problems, requests, and inquiries" isExecutable="false">
+    <bpmn:documentation>Category 6.0 Manage Customer Service
+Process Group 6.2 Plan and manage customer service contacts (10379)
+Process 6.2.2 Manage customer service problems, requests, and inquiries (10388)
+
+Definizione APQC: Handling the requests and inquiries from customers that seek information regarding the organization's products/services. Obtain the customer requests online and by phone. Direct these requests to higher-level representatives. Approve requests, and respond to customers.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_1">
       <bpmn:lane id="Lane_CS" name="Customer Service Representative">
         <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
@@ -17,40 +27,82 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start" name="Richiesta/problema del cliente ricevuto">
+
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="T1" name="Receive customer problem/request/inquiry">
+    <bpmn:task id="T1" name="6.2.2.1 Receive customer problems, requests, and inquiries (10394)">
+      <bpmn:documentation>Definizione APQC: Receiving requests for information from customers over multiple channels. Receive various requests and inquiries from customers regarding products/services. Accept these inquiries through channels such as email, telephone, online forms, text messages, social media, and in person. Supply dedicated equipment, systems, and personnel.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T2" name="Analyze problem/request/inquiry">
+    <bpmn:task id="T2" name="6.2.2.2 Analyze problems, requests, and inquiries (13482)">
+      <bpmn:documentation>Definizione APQC: Analyzing various requests and inquiries from customers regarding products/services. Provide answers and offerings to satisfy the customer's needs.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW1" name="Opportunità di upsell/cross-sell?">
+      <bpmn:documentation>Punto di decisione introdotto a scopo didattico (non è un elemento del PCF): distingue il ramo di risoluzione diretta (Activity 6.2.2.3) dal ramo con opportunità di upsell/cross-sell (Activity 6.2.2.5-6.2.2.6).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="T3a" name="Resolve customer problem/request/inquiry">
+    <bpmn:task id="T3a" name="6.2.2.3 Resolve customer problems, requests, and inquiries (10395)">
+      <bpmn:documentation>Definizione APQC: Routing customer inquiries in order to service them with the most apposite response. Direct customer inquires to the best suited personnel or system. Have a system or procedure capable of efficiently channeling these requests.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T3b" name="Identify and capture upsell/cross-sell opportunity">
+    <bpmn:task id="T3b" name="6.2.2.5 Identify and capture upsell/cross-sell opportunities (16928)">
+      <bpmn:documentation>Definizione APQC: Utilizing customer inquiries as opportunities to either provide a comparable service to the one in question, offer additional complimentary service, or suggest a service that is better than what was initially offered.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T4b" name="Deliver opportunity to sales team">
+    <bpmn:task id="T4b" name="6.2.2.6 Deliver opportunity to sales team (16937)">
+      <bpmn:documentation>Definizione APQC: Providing possible sales leads to the sales team in an effort to garner more business opportunities.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T5" name="Respond to customer problem/request/inquiry">
+    <bpmn:task id="T5" name="6.2.2.4 Respond to customer problems, requests, and inquiries (10396)">
+      <bpmn:documentation>Definizione APQC: Responding to customer requests by email, conversation, interactive voice response, mail, etc. with the most appropriate reply. Instill a robust process to locate the right information for a solution to a customer's problem.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 6.0 Manage Customer Service (K012579).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/05-customer-service/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
     </bpmn:task>
     <bpmn:endEvent id="End" name="Risposta fornita al cliente">
       <bpmn:incoming>Flow_9</bpmn:incoming>
+
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="T1" />
     <bpmn:sequenceFlow id="Flow_2" sourceRef="T1" targetRef="T2" />
@@ -64,11 +116,11 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_CustomerService">
-      <bpmndi:BPMNShape id="Lane_Sales_di" bpmnElement="Lane_Sales" isHorizontal="true">
-        <dc:Bounds x="120" y="320" width="1750" height="220" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_CS_di" bpmnElement="Lane_CS" isHorizontal="true">
         <dc:Bounds x="120" y="100" width="1750" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Sales_di" bpmnElement="Lane_Sales" isHorizontal="true">
+        <dc:Bounds x="120" y="320" width="1750" height="220" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
         <dc:Bounds x="232" y="137" width="36" height="36" />
@@ -79,7 +131,7 @@
       <bpmndi:BPMNShape id="T2_di" bpmnElement="T2">
         <dc:Bounds x="570" y="115" width="120" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW1_di" bpmnElement="GW1" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="GW1_di" bpmnElement="GW1">
         <dc:Bounds x="795" y="130" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T3a_di" bpmnElement="T3a">
@@ -97,48 +149,15 @@
       <bpmndi:BPMNShape id="End_di" bpmnElement="End">
         <dc:Bounds x="1562" y="137" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
-        <di:waypoint x="268" y="155" />
-        <di:waypoint x="380" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
-        <di:waypoint x="500" y="155" />
-        <di:waypoint x="570" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
-        <di:waypoint x="690" y="155" />
-        <di:waypoint x="795" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
-        <di:waypoint x="845" y="155" />
-        <di:waypoint x="950" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
-        <di:waypoint x="845" y="155" />
-        <di:waypoint x="898" y="155" />
-        <di:waypoint x="898" y="265" />
-        <di:waypoint x="950" y="265" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
-        <di:waypoint x="1070" y="265" />
-        <di:waypoint x="1105" y="265" />
-        <di:waypoint x="1105" y="430" />
-        <di:waypoint x="1140" y="430" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
-        <di:waypoint x="1070" y="155" />
-        <di:waypoint x="1330" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
-        <di:waypoint x="1260" y="430" />
-        <di:waypoint x="1295" y="430" />
-        <di:waypoint x="1295" y="155" />
-        <di:waypoint x="1330" y="155" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
-        <di:waypoint x="1450" y="155" />
-        <di:waypoint x="1562" y="155" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="268" y="155" /><di:waypoint x="380" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="500" y="155" /><di:waypoint x="570" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="690" y="155" /><di:waypoint x="795" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="845" y="155" /><di:waypoint x="950" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="845" y="155" /><di:waypoint x="898" y="155" /><di:waypoint x="898" y="265" /><di:waypoint x="950" y="265" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="1070" y="265" /><di:waypoint x="1105" y="265" /><di:waypoint x="1105" y="430" /><di:waypoint x="1140" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1070" y="155" /><di:waypoint x="1330" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="1260" y="430" /><di:waypoint x="1295" y="430" /><di:waypoint x="1295" y="155" /><di:waypoint x="1330" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1450" y="155" /><di:waypoint x="1562" y="155" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

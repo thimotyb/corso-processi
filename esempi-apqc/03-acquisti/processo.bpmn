@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_Acquisti" targetNamespace="http://corso-processi.local/apqc">
   <bpmn:process id="Process_Acquisti" name="4.2.3 Select suppliers and develop/maintain contracts" isExecutable="false">
+    <bpmn:documentation>Category 4.0 Manage Supply Chain for Physical Products
+Process Group 4.2 Procure materials and services (10216)
+Process 4.2.3 Select suppliers and develop/maintain contracts (10278)
+
+Definizione APQC: Evaluating supplier options to select the most effective and efficient suppliers. Validate selected suppliers. Establish and manage supplier contracts.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_1">
       <bpmn:lane id="Lane_PM" name="Procurement/Category Manager">
         <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
@@ -18,23 +28,57 @@
 
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="T1" name="Select suppliers">
+    <bpmn:task id="T1" name="4.2.3.1 Select suppliers (10288)">
+      <bpmn:documentation>Definizione APQC: Evaluating the pros and cons of various suppliers. Choose the most appropriate and cost-effective suppliers on the basis of their material quality, delivery schedules, and costs.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T2" name="Certify and validate suppliers">
+    <bpmn:task id="T2" name="4.2.3.2 Certify and validate suppliers (10289)">
+      <bpmn:documentation>Definizione APQC: Validating the supply sources, and provide certification as an official supplier.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T3" name="Negotiate contract terms">
+    <bpmn:task id="T3" name="4.2.3.3 Negotiate contract terms (10290)">
+      <bpmn:documentation>Attivita' 4.2.3.3 Negotiate and establish contracts (10290) — fase di negoziazione (in SAEM/versione astratta, la negoziazione e l'approvazione legale sono rappresentate come due task separati sulla stessa Activity).
+
+Definizione APQC: Legally binding suppliers with the company. Negotiate contracts individually with all the suppliers that include the promised material delivery, the delivery dates and duration, etc.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T4" name="Establish and approve contract">
+    <bpmn:task id="T4" name="4.2.3.3 Establish and approve contract (10290)">
+      <bpmn:documentation>Attivita' 4.2.3.3 Negotiate and establish contracts (10290) — fase di approvazione legale (in SAEM/versione astratta, la negoziazione e l'approvazione legale sono rappresentate come due task separati sulla stessa Activity).
+
+Definizione APQC: Legally binding suppliers with the company. Negotiate contracts individually with all the suppliers that include the promised material delivery, the delivery dates and duration, etc.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T5" name="Manage contracts">
+    <bpmn:task id="T5" name="4.2.3.4 Manage contracts (10291)">
+      <bpmn:documentation>Definizione APQC: Keeping contracts up-to-date with routine evaluation. Maintain order and discipline with the contracts in order to avoid any loss of information and mishaps.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 4.0 Manage Supply Chain for Physical Products (K012577).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/03-acquisti/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>

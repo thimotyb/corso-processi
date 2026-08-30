@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Process_Finance" targetNamespace="http://corso-processi.local/apqc">
   <bpmn:process id="Process_Finance" name="9.2.2 Invoice customer" isExecutable="false">
+    <bpmn:documentation>Category 9.0 Manage Financial Resources
+Process Group 9.2 Perform revenue accounting (10729)
+Process 9.2.2 Invoice customer (10743)
+
+Definizione APQC: Preparing detailed reports of customer purchases. Prepare a commercial document between the seller and customer with details about transaction. Detail the quantity purchased, price of products/services, date, parties involved, unique invoice number, and tax information.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_1">
       <bpmn:lane id="Lane_Bill" name="Billing Specialist">
         <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
@@ -18,23 +28,53 @@
 
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="T1" name="Maintain customer/product master files">
+    <bpmn:task id="T1" name="9.2.2.1 Maintain customer/product master files (10794)">
+      <bpmn:documentation>Definizione APQC: Creating and updating a record of customers and the products being purchased by them in a database. Such a master-file can be used to ensure customer touch point, enhance customer satisfaction, explore cross selling opportunities, and identify future trends.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T2" name="Generate customer billing data">
+    <bpmn:task id="T2" name="9.2.2.2 Generate customer billing data (10795)">
+      <bpmn:documentation>Definizione APQC: Preparing detailed reports about products purchased by customers. Record and generate a detailed account of transactions made by customers at a particular time and location. Include all details about products such as price, quantity, and name.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T3" name="Transmit billing data to customer">
+    <bpmn:task id="T3" name="9.2.2.3 Transmit billing data to customers (10796)">
+      <bpmn:documentation>Definizione APQC: Providing information to customers about purchases made by them. Communicate the details of purchases. Provide customers with a copy of details for their reference.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T4" name="Post receivable entries">
+    <bpmn:task id="T4" name="9.2.2.4 Post receivable entries (10797)">
+      <bpmn:documentation>Definizione APQC: Registering transactions and their scheduled payments.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="T5" name="Resolve customer billing inquiries">
+    <bpmn:task id="T5" name="9.2.2.5 Resolve customer billing inquiries (10798)">
+      <bpmn:documentation>Definizione APQC: Checking and solving billing queries raised by customers.
+
+Fonte: APQC PCF Cross-Industry v8.0 — Definitions and Key Measures, Category 9.0 Manage Financial Resources (K012582).
+
+Documentazione completa del processo (SIPOC, matrice variabili, scheda sintetica): esempi-apqc/07-finance/processo.md
+Framework: APQC Process Classification Framework (PCF) Cross-Industry v8.0 — https://www.apqc.org/process-frameworks</bpmn:documentation>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
