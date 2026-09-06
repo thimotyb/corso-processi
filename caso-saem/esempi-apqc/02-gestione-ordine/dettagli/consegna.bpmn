@@ -1,0 +1,2591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_SAEM_Consegna" targetNamespace="https://saem.example/teaching" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:dataStore id="Data_L_Corriere_store_0_store" name="Archivi logici dell&#39;attività L_Corriere">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_Prepara_store_0_store" name="Archivi logici dell&#39;attività L_Prepara">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_Sblocca_store_0_store" name="Archivi logici dell&#39;attività L_Sblocca">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_Prelievo_store_0_store" name="Archivi logici dell&#39;attività L_Prelievo">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_ADRProd_store_0_store" name="Archivi logici dell&#39;attività L_ADRProd">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_Arrivo_store_0_store" name="Archivi logici dell&#39;attività L_Arrivo">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_L_Partenza_store_0_store" name="Archivi logici dell&#39;attività L_Partenza">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Verifica_store_0_store" name="Archivi logici dell&#39;attività F_Verifica">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Recupera_store_0_store" name="Archivi logici dell&#39;attività F_Recupera">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Emetti_store_0_store" name="Archivi logici dell&#39;attività F_Emetti">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Posta_store_0_store" name="Archivi logici dell&#39;attività F_Posta">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Archivia_store_0_store" name="Archivi logici dell&#39;attività F_Archivia">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_PrimaNota_store_0_store" name="Archivi logici dell&#39;attività F_PrimaNota">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_RegManuale_store_0_store" name="Archivi logici dell&#39;attività F_RegManuale">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:process id="Consegna" name="Consegna pianificata · Evasione e fatturazione" isExecutable="false">
+    <bpmn:documentation>TO-BE · logistica mantenuta; orchestrazione per consegna didattica. PDF 37, 95, 113–117 / stampate 25, 83, 101–105. Modello didattico completo nel perimetro ordine→spedizione→fatturazione; vedere processo.md per fonti e assunzioni.</bpmn:documentation>
+    <bpmn:laneSet id="Lanes_Consegna">
+      <bpmn:lane id="Lane_Consegna_1" name="RGC / contabilità · Ciclo fatturazione">
+        <bpmn:flowNodeRef>Sub_Fattura</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>C_Settimana</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>C_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Consegna_0" name="RGC / magazzino · Calendario consegna">
+        <bpmn:flowNodeRef>C_Ripiano</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Sub_Logistica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>C_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>C_Data</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>C_Spedita</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="C_Start" name="Consegna del piano">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / magazzino · Calendario consegna.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:outgoing>Flow_Consegna_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="C_Data" name="Data preparazione concordata">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / magazzino · Calendario consegna.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_0</bpmn:incoming>
+      <bpmn:incoming>Flow_Consegna_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_1</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="Timer_C_Data">
+        <bpmn:timeDate xsi:type="bpmn:tFormalExpression">dataPreparazione</bpmn:timeDate>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:dataObject id="Data_Sub_Logistica_object_0" />
+    <bpmn:dataObjectReference id="Data_Sub_Logistica_object_0_ref" name="Piano consegna [data / quantità]" dataObjectRef="Data_Sub_Logistica_object_0">
+      <bpmn:documentation>R: Piano consegna [data / quantità]. Lotto e data corrente; preparazione bolle prima del ritiro. Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="Data_Sub_Logistica_object_1" />
+    <bpmn:dataObjectReference id="Data_Sub_Logistica_object_1_ref" name="Bolla [evasa]" dataObjectRef="Data_Sub_Logistica_object_1">
+      <bpmn:documentation>C: Bolla [evasa]. Bolla evasa e dati di partenza. Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:subProcess id="Sub_Logistica" name="D.7 / D.9 / D.10 · Preparare e spedire">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / magazzino · Calendario consegna.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Piano consegna [data / quantità] | Lotto e data corrente; preparazione bolle prima del ritiro. | Fonte PDF 37, 95, 113–117 / stampate 25, 83, 101–105
+C | Bolla [evasa] | Bolla evasa e dati di partenza. | Fonte PDF 37, 95, 113–117 / stampate 25, 83, 101–105
+Sottoprocesso completo: aprire il dettaglio con il pulsante di navigazione del Modeler.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_2</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_Sub_Logistica_object_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_Sub_Logistica_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_Sub_Logistica">
+          <bpmn:dataInputRefs>Data_Sub_Logistica_object_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_Sub_Logistica">
+          <bpmn:dataOutputRefs>Data_Sub_Logistica_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_03dogns" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_Sub_Logistica_object_0_in">
+        <bpmn:sourceRef>Data_Sub_Logistica_object_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_03dogns</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_Sub_Logistica_object_1_out">
+        <bpmn:sourceRef>Data_Sub_Logistica_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_Sub_Logistica_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:laneSet id="Lanes_Logistica">
+        <bpmn:lane id="Lane_Logistica_0" name="RGC / EDP / CONT / DIRV · Autorizzazione e bolle">
+          <bpmn:flowNodeRef>L_Start</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Porto</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Corriere</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Prepara</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Blocchi</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Sblocca</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Sblocco</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Stop</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Autorizza</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Stampa</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="Lane_Logistica_1" name="MAG / RMAG / SMAG · Prelievo e documenti">
+          <bpmn:flowNodeRef>L_Prelievo</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Conforme</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_NC</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Sostituisci</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Rimedio</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Sospesa</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_ADRProd</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Doc</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Allegati</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Imballa</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="Lane_Logistica_2" name="MAG / spedizioniere · Carico e partenza">
+          <bpmn:flowNodeRef>L_Arrivo</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_ADR</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_CheckADR</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Idoneo</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Cambia</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Paga</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Incasso</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Carica</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_Partenza</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>L_End</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="L_Start" name="Consegna da preparare">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:outgoing>Flow_Logistica_0</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="L_Porto" name="Porto franco?" default="Flow_Logistica_2">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_0</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_1</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_2</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_L_Corriere_store_0_ref" name="Archivio spedizionieri qualificati Tabella non specificata" dataStoreRef="Data_L_Corriere_store_0_store">
+        <bpmn:documentation>R: Archivio spedizionieri qualificati
+Tabella non specificata. Spedizionieri qualificati, zona e condizioni. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="L_Corriere" name="Selezionare spedizioniere qualificato per zona">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Archivio spedizionieri qualificati Tabella non specificata | Spedizionieri qualificati, zona e condizioni. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_1</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_3</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Corriere_store_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Corriere">
+            <bpmn:dataInputRefs>Data_L_Corriere_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Corriere" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Corriere_store_0_in">
+          <bpmn:sourceRef>Data_L_Corriere_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Corriere_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:dataStoreReference id="Data_L_Prepara_store_0_ref" name="Gestionale · ordini, bolle, anagrafiche, scorte, contabilità / listini · tabelle non specificate" dataStoreRef="Data_L_Prepara_store_0_store">
+        <bpmn:documentation>R: Gestionale · ordini, bolle, anagrafiche,
+scorte, contabilità / listini · tabelle non specificate. Ordini, cliente, scorte, bolle, insoluti, condizioni commerciali. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_L_Prepara_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Prepara_object_1_ref" name="Bolla [prelievo]" dataObjectRef="Data_L_Prepara_object_1">
+        <bpmn:documentation>C: Bolla [prelievo]. Elaborazione preliminare bolle. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:serviceTask id="L_Prepara" name="EDP · Elaborare bolle e controlli economici">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Gestionale · ordini, bolle, anagrafiche, scorte, contabilità / listini · tabelle non specificate | Ordini, cliente, scorte, bolle, insoluti, condizioni commerciali. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+C | Bolla [prelievo] | Elaborazione preliminare bolle. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_2</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_3</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_8</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_4</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Prepara_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Prepara_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Prepara">
+            <bpmn:dataInputRefs>Data_L_Prepara_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Prepara">
+            <bpmn:dataOutputRefs>Data_L_Prepara_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Prepara_store_0_in">
+          <bpmn:sourceRef>Data_L_Prepara_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Prepara_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Prepara_object_1_out">
+          <bpmn:sourceRef>Data_L_Prepara_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Prepara_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="L_Blocchi" name="Controlli superati?" default="Flow_Logistica_5">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_4</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_5</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_9</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_L_Sblocca_store_0_ref" name="Gestionale · ordini, bolle, anagrafiche, scorte, contabilità / listini · tabelle non specificate" dataStoreRef="Data_L_Sblocca_store_0_store">
+        <bpmn:documentation>R: Gestionale · ordini, bolle, anagrafiche,
+scorte, contabilità / listini · tabelle non specificate. Insoluti / prezzi / autorizzazioni; fonte D.9A. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_L_Sblocca_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Sblocca_object_1_ref" name="Autorizzazione evasione / riesame" dataObjectRef="Data_L_Sblocca_object_1">
+        <bpmn:documentation>C: Autorizzazione evasione / riesame. Esito riesame; CRUD di tabelle non specificato. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Sblocca" name="CONT / DIRV · Riesaminare insoluti e autorizzazioni">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Gestionale · ordini, bolle, anagrafiche, scorte, contabilità / listini · tabelle non specificate | Insoluti / prezzi / autorizzazioni; fonte D.9A. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+C | Autorizzazione evasione / riesame | Esito riesame; CRUD di tabelle non specificato. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_5</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_6</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Sblocca_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Sblocca_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Sblocca">
+            <bpmn:dataInputRefs>Data_L_Sblocca_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Sblocca">
+            <bpmn:dataOutputRefs>Data_L_Sblocca_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Sblocca_store_0_in">
+          <bpmn:sourceRef>Data_L_Sblocca_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Sblocca_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Sblocca_object_1_out">
+          <bpmn:sourceRef>Data_L_Sblocca_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Sblocca_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_Sblocco" name="Blocco risolto?" default="Flow_Logistica_7">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_6</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_7</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_8</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="L_Stop" name="Partenza non autorizzata">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_7</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:dataObject id="Data_L_Autorizza_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Autorizza_object_0_ref" name="Autorizzazione evasione / riesame" dataObjectRef="Data_L_Autorizza_object_0">
+        <bpmn:documentation>R/U: Autorizzazione evasione / riesame. Autorizzazione evasione e dati per stampa. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="Data_L_Autorizza_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Autorizza_object_1_ref" name="Bolla [prelievo]" dataObjectRef="Data_L_Autorizza_object_1">
+        <bpmn:documentation>R/U: Bolla [prelievo]. Completamento bolle / trasporto. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Autorizza" name="RGC · Completare dati e autorizzare stampa bolle">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Autorizzazione evasione / riesame | Autorizzazione evasione e dati per stampa. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+R/U | Bolla [prelievo] | Completamento bolle / trasporto. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_9</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_10</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Autorizza_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataInput id="Data_L_Autorizza_object_1_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Autorizza_object_0_output" name="Dati prodotti / modificati" />
+          <bpmn:dataOutput id="Data_L_Autorizza_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Autorizza">
+            <bpmn:dataInputRefs>Data_L_Autorizza_object_0_input</bpmn:dataInputRefs>
+            <bpmn:dataInputRefs>Data_L_Autorizza_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Autorizza">
+            <bpmn:dataOutputRefs>Data_L_Autorizza_object_0_output</bpmn:dataOutputRefs>
+            <bpmn:dataOutputRefs>Data_L_Autorizza_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Autorizza_object_0_in">
+          <bpmn:sourceRef>Data_L_Autorizza_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Autorizza_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataInputAssociation id="Data_L_Autorizza_object_1_in">
+          <bpmn:sourceRef>Data_L_Autorizza_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Autorizza_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Autorizza_object_0_out">
+          <bpmn:sourceRef>Data_L_Autorizza_object_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Autorizza_object_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Autorizza_object_1_out">
+          <bpmn:sourceRef>Data_L_Autorizza_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Autorizza_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_L_Stampa_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Stampa_object_0_ref" name="Bolla [prelievo]" dataObjectRef="Data_L_Stampa_object_0">
+        <bpmn:documentation>R: Bolla [prelievo]. Stampa delle bolle autorizzate. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Stampa" name="SMAG · Stampare bolle di prelievo">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: RGC / EDP / CONT / DIRV · Autorizzazione e bolle.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Bolla [prelievo] | Stampa delle bolle autorizzate. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_10</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_11</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Stampa_object_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Stampa">
+            <bpmn:dataInputRefs>Data_L_Stampa_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Stampa" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Stampa_object_0_in">
+          <bpmn:sourceRef>Data_L_Stampa_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Stampa_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:dataStoreReference id="Data_L_Prelievo_store_0_ref" name="Anagrafica prodotti / scorte Tabella non specificata" dataStoreRef="Data_L_Prelievo_store_0_store">
+        <bpmn:documentation>R: Anagrafica prodotti / scorte
+Tabella non specificata. Prodotti, scorte, lotti/scadenze; dettaglio tabelle non specificato. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_L_Prelievo_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Prelievo_object_1_ref" name="Bolla [prelievo]" dataObjectRef="Data_L_Prelievo_object_1">
+        <bpmn:documentation>R: Bolla [prelievo]. Righe e quantità da prelevare. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:manualTask id="L_Prelievo" name="Prelevare merce e verificare corrispondenza / scadenze">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Bolla [prelievo] | Righe e quantità da prelevare. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+R | Anagrafica prodotti / scorte Tabella non specificata | Prodotti, scorte, lotti/scadenze; dettaglio tabelle non specificato. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_11</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_17</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_12</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Prelievo_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataInput id="Data_L_Prelievo_object_1_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Prelievo">
+            <bpmn:dataInputRefs>Data_L_Prelievo_store_0_input</bpmn:dataInputRefs>
+            <bpmn:dataInputRefs>Data_L_Prelievo_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Prelievo" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Prelievo_store_0_in">
+          <bpmn:sourceRef>Data_L_Prelievo_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Prelievo_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataInputAssociation id="Data_L_Prelievo_object_1_in">
+          <bpmn:sourceRef>Data_L_Prelievo_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Prelievo_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:manualTask>
+      <bpmn:exclusiveGateway id="L_Conforme" name="Prodotti conformi?" default="Flow_Logistica_13">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_12</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_13</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_18</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataObject id="Data_L_NC_object_0" />
+      <bpmn:dataObjectReference id="Data_L_NC_object_0_ref" name="Non conformità" dataObjectRef="Data_L_NC_object_0">
+        <bpmn:documentation>C: Non conformità. Segnalazione non conformità; isolamento fisico non è Data Object. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_NC" name="Aprire non conformità e isolare merce">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+C | Non conformità | Segnalazione non conformità; isolamento fisico non è Data Object. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_13</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_14</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataOutput id="Data_L_NC_object_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_NC" />
+          <bpmn:outputSet id="Outputs_L_NC">
+            <bpmn:dataOutputRefs>Data_L_NC_object_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataOutputAssociation id="Data_L_NC_object_0_out">
+          <bpmn:sourceRef>Data_L_NC_object_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_NC_object_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_L_Sostituisci_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Sostituisci_object_0_ref" name="Non conformità" dataObjectRef="Data_L_Sostituisci_object_0">
+        <bpmn:documentation>R: Non conformità. Non conformità e rimedio; ramo didattico. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Sostituisci" name="RGC / MAG · Reperire merce conforme o ripianificare">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Risoluzione didattica dopo non conformità documentata.
+R | Non conformità | Non conformità e rimedio; ramo didattico. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_14</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_15</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Sostituisci_object_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Sostituisci">
+            <bpmn:dataInputRefs>Data_L_Sostituisci_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Sostituisci" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Sostituisci_object_0_in">
+          <bpmn:sourceRef>Data_L_Sostituisci_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Sostituisci_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_Rimedio" name="Sostituzione disponibile?" default="Flow_Logistica_16">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_15</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_16</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_17</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="L_Sospesa" name="Consegna da ripianificare">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:dataStoreReference id="Data_L_ADRProd_store_0_ref" name="Schede prodotto / prescrizioni ADR Archivio documentale" dataStoreRef="Data_L_ADRProd_store_0_store">
+        <bpmn:documentation>R: Schede prodotto / prescrizioni ADR
+Archivio documentale. Controllo documentale nel caso storico, non istruzioni normative attuali. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="L_ADRProd" name="Verificare schede e conformità ADR del prodotto">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Schede prodotto / prescrizioni ADR Archivio documentale | Controllo documentale nel caso storico, non istruzioni normative attuali. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_18</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_19</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_ADRProd_store_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_ADRProd">
+            <bpmn:dataInputRefs>Data_L_ADRProd_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_ADRProd" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_ADRProd_store_0_in">
+          <bpmn:sourceRef>Data_L_ADRProd_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_ADRProd_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_Doc" name="Allegati richiesti?" default="Flow_Logistica_21">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_19</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_20</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_21</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataObject id="Data_L_Allegati_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Allegati_object_0_ref" name="Bolla [prelievo]" dataObjectRef="Data_L_Allegati_object_0">
+        <bpmn:documentation>R: Bolla [prelievo]. Note e richieste di allegati. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="Data_L_Allegati_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Allegati_object_1_ref" name="Schede tecniche / certificati" dataObjectRef="Data_L_Allegati_object_1">
+        <bpmn:documentation>C: Schede tecniche / certificati. Richiedere documenti a RGC/RTRAF e stampare certificati. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Allegati" name="Richiedere schede e stampare certificati">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Bolla [prelievo] | Note e richieste di allegati. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+C | Schede tecniche / certificati | Richiedere documenti a RGC/RTRAF e stampare certificati. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_20</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_22</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Allegati_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Allegati_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Allegati">
+            <bpmn:dataInputRefs>Data_L_Allegati_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Allegati">
+            <bpmn:dataOutputRefs>Data_L_Allegati_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Allegati_object_0_in">
+          <bpmn:sourceRef>Data_L_Allegati_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Allegati_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Allegati_object_1_out">
+          <bpmn:sourceRef>Data_L_Allegati_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Allegati_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_L_Imballa_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Imballa_object_0_ref" name="Schede tecniche / certificati" dataObjectRef="Data_L_Imballa_object_0">
+        <bpmn:documentation>R: Schede tecniche / certificati. Allegare documenti quando richiesti. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="Data_L_Imballa_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Imballa_object_1_ref" name="Etichette / documenti di consegna" dataObjectRef="Data_L_Imballa_object_1">
+        <bpmn:documentation>C: Etichette / documenti di consegna. Etichette / documenti accompagnamento. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:manualTask id="L_Imballa" name="Allegare documenti, imballare ed etichettare">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / RMAG / SMAG · Prelievo e documenti.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Schede tecniche / certificati | Allegare documenti quando richiesti. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+C | Etichette / documenti di consegna | Etichette / documenti accompagnamento. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_21</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_22</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_23</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Imballa_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Imballa_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Imballa">
+            <bpmn:dataInputRefs>Data_L_Imballa_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Imballa">
+            <bpmn:dataOutputRefs>Data_L_Imballa_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Imballa_object_0_in">
+          <bpmn:sourceRef>Data_L_Imballa_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Imballa_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Imballa_object_1_out">
+          <bpmn:sourceRef>Data_L_Imballa_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Imballa_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:manualTask>
+      <bpmn:dataStoreReference id="Data_L_Arrivo_store_0_ref" name="Archivio spedizionieri qualificati Tabella non specificata" dataStoreRef="Data_L_Arrivo_store_0_store">
+        <bpmn:documentation>R: Archivio spedizionieri qualificati
+Tabella non specificata. Identità ritirante e spedizioniere. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_L_Arrivo_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Arrivo_object_1_ref" name="Etichette / documenti di consegna" dataObjectRef="Data_L_Arrivo_object_1">
+        <bpmn:documentation>R: Etichette / documenti di consegna. Identificare colli, ritirante e destinazione. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Arrivo" name="Identificare ritirante, colli e veicolo">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Etichette / documenti di consegna | Identificare colli, ritirante e destinazione. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+R | Archivio spedizionieri qualificati Tabella non specificata | Identità ritirante e spedizioniere. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_23</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_24</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Arrivo_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataInput id="Data_L_Arrivo_object_1_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Arrivo">
+            <bpmn:dataInputRefs>Data_L_Arrivo_store_0_input</bpmn:dataInputRefs>
+            <bpmn:dataInputRefs>Data_L_Arrivo_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Arrivo" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Arrivo_store_0_in">
+          <bpmn:sourceRef>Data_L_Arrivo_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Arrivo_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataInputAssociation id="Data_L_Arrivo_object_1_in">
+          <bpmn:sourceRef>Data_L_Arrivo_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Arrivo_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_ADR" name="Merce ADR?" default="Flow_Logistica_26">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_24</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_25</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_26</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataObject id="Data_L_CheckADR_object_0" />
+      <bpmn:dataObjectReference id="Data_L_CheckADR_object_0_ref" name="Documenti veicolo / conducente" dataObjectRef="Data_L_CheckADR_object_0">
+        <bpmn:documentation>R: Documenti veicolo / conducente. Documenti veicolo/conducente; controllo storico SAEM. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_CheckADR" name="Verificare idoneità veicolo e conducente ADR">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Documenti veicolo / conducente | Documenti veicolo/conducente; controllo storico SAEM. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_25</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_29</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_27</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_CheckADR_object_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_CheckADR">
+            <bpmn:dataInputRefs>Data_L_CheckADR_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_CheckADR" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_CheckADR_object_0_in">
+          <bpmn:sourceRef>Data_L_CheckADR_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_CheckADR_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_Idoneo" name="Idonei?" default="Flow_Logistica_28">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_27</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_28</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_30</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataObject id="Data_L_Cambia_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Cambia_object_0_ref" name="Documenti veicolo / conducente" dataObjectRef="Data_L_Cambia_object_0">
+        <bpmn:documentation>R: Documenti veicolo / conducente. Esito non idoneo, nuovo controllo obbligatorio. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Cambia" name="Richiedere mezzo / conducente idonei">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Ramo di rimedio didattico al controllo ADR documentato; nessuna partenza su esito negativo.
+R | Documenti veicolo / conducente | Esito non idoneo, nuovo controllo obbligatorio. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_28</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_29</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Cambia_object_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_L_Cambia">
+            <bpmn:dataInputRefs>Data_L_Cambia_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Cambia" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Cambia_object_0_in">
+          <bpmn:sourceRef>Data_L_Cambia_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Cambia_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="L_Paga" name="Incasso al ritiro / contrassegno?" default="Flow_Logistica_32">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_26</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_30</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_31</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Logistica_32</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataObject id="Data_L_Incasso_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Incasso_object_0_ref" name="Documenti incasso / contrassegno" dataObjectRef="Data_L_Incasso_object_0">
+        <bpmn:documentation>R/U: Documenti incasso / contrassegno. Verificare incasso o contrassegno; tabelle non specificate. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Incasso" name="Verificare incasso o documenti di contrassegno">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Documenti incasso / contrassegno | Verificare incasso o contrassegno; tabelle non specificate. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_31</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_33</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Incasso_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Incasso_object_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Incasso">
+            <bpmn:dataInputRefs>Data_L_Incasso_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Incasso">
+            <bpmn:dataOutputRefs>Data_L_Incasso_object_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Incasso_object_0_in">
+          <bpmn:sourceRef>Data_L_Incasso_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Incasso_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Incasso_object_0_out">
+          <bpmn:sourceRef>Data_L_Incasso_object_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Incasso_object_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_L_Carica_object_0" />
+      <bpmn:dataObjectReference id="Data_L_Carica_object_0_ref" name="Bolla [completata / evasa]" dataObjectRef="Data_L_Carica_object_0">
+        <bpmn:documentation>C: Bolla [completata / evasa]. Completare dati consegna / targa e bolla. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="Data_L_Carica_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Carica_object_1_ref" name="Etichette / documenti di consegna" dataObjectRef="Data_L_Carica_object_1">
+        <bpmn:documentation>R: Etichette / documenti di consegna. Colli / etichette / documenti. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:manualTask id="L_Carica" name="Completare bolla, caricare e consegnare merce">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+C | Bolla [completata / evasa] | Completare dati consegna / targa e bolla. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+R | Etichette / documenti di consegna | Colli / etichette / documenti. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_32</bpmn:incoming>
+        <bpmn:incoming>Flow_Logistica_33</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_34</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Carica_object_1_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Carica_object_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Carica">
+            <bpmn:dataInputRefs>Data_L_Carica_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Carica">
+            <bpmn:dataOutputRefs>Data_L_Carica_object_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Carica_object_1_in">
+          <bpmn:sourceRef>Data_L_Carica_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Carica_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Carica_object_0_out">
+          <bpmn:sourceRef>Data_L_Carica_object_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Carica_object_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:manualTask>
+      <bpmn:dataStoreReference id="Data_L_Partenza_store_0_ref" name="Archivio bolle / stato ordine Gestionale · tabella non specificata" dataStoreRef="Data_L_Partenza_store_0_store">
+        <bpmn:documentation>U: Archivio bolle / stato ordine
+Gestionale · tabella non specificata. Aggiornare archivio bolle e stato ordine. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_L_Partenza_object_1" />
+      <bpmn:dataObjectReference id="Data_L_Partenza_object_1_ref" name="Bolla [completata / evasa]" dataObjectRef="Data_L_Partenza_object_1">
+        <bpmn:documentation>R: Bolla [completata / evasa]. Dati effettivi di partenza. Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="L_Partenza" name="RMAG / SMAG · Registrare dati di partenza">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Bolla [completata / evasa] | Dati effettivi di partenza. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83
+U | Archivio bolle / stato ordine Gestionale · tabella non specificata | Aggiornare archivio bolle e stato ordine. | Fonte PDF 37, 72–74, 95 / stampate 25, 60–62, 83</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_34</bpmn:incoming>
+        <bpmn:outgoing>Flow_Logistica_35</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_L_Partenza_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataInput id="Data_L_Partenza_object_1_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_L_Partenza_store_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_L_Partenza">
+            <bpmn:dataInputRefs>Data_L_Partenza_store_0_input</bpmn:dataInputRefs>
+            <bpmn:dataInputRefs>Data_L_Partenza_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_L_Partenza">
+            <bpmn:dataOutputRefs>Data_L_Partenza_store_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_L_Partenza_store_0_in">
+          <bpmn:sourceRef>Data_L_Partenza_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Partenza_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataInputAssociation id="Data_L_Partenza_object_1_in">
+          <bpmn:sourceRef>Data_L_Partenza_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Partenza_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_L_Partenza_store_0_out">
+          <bpmn:sourceRef>Data_L_Partenza_store_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_L_Partenza_store_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:endEvent id="L_End" name="Merce partita · bolla evasa">
+        <bpmn:documentation>Scenario: TO-BE · attività logistiche mantenute dal processo originale. Responsabilità: MAG / spedizioniere · Carico e partenza.
+Fonte: PDF 37, 72–74, 95 / stampate 25, 60–62, 83.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Logistica_35</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_Logistica_0" sourceRef="L_Start" targetRef="L_Porto" />
+      <bpmn:sequenceFlow id="Flow_Logistica_1" name="Sì" sourceRef="L_Porto" targetRef="L_Corriere">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_2" name="No · ritiro cliente" sourceRef="L_Porto" targetRef="L_Prepara" />
+      <bpmn:sequenceFlow id="Flow_Logistica_3" sourceRef="L_Corriere" targetRef="L_Prepara" />
+      <bpmn:sequenceFlow id="Flow_Logistica_4" sourceRef="L_Prepara" targetRef="L_Blocchi" />
+      <bpmn:sequenceFlow id="Flow_Logistica_5" name="No" sourceRef="L_Blocchi" targetRef="L_Sblocca" />
+      <bpmn:sequenceFlow id="Flow_Logistica_6" sourceRef="L_Sblocca" targetRef="L_Sblocco" />
+      <bpmn:sequenceFlow id="Flow_Logistica_7" name="No" sourceRef="L_Sblocco" targetRef="L_Stop" />
+      <bpmn:sequenceFlow id="Flow_Logistica_8" name="Sì · ricontrollare" sourceRef="L_Sblocco" targetRef="L_Prepara">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì · ricontrollare</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_9" name="Sì" sourceRef="L_Blocchi" targetRef="L_Autorizza">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_10" sourceRef="L_Autorizza" targetRef="L_Stampa" />
+      <bpmn:sequenceFlow id="Flow_Logistica_11" sourceRef="L_Stampa" targetRef="L_Prelievo" />
+      <bpmn:sequenceFlow id="Flow_Logistica_12" sourceRef="L_Prelievo" targetRef="L_Conforme" />
+      <bpmn:sequenceFlow id="Flow_Logistica_13" name="No" sourceRef="L_Conforme" targetRef="L_NC" />
+      <bpmn:sequenceFlow id="Flow_Logistica_14" sourceRef="L_NC" targetRef="L_Sostituisci" />
+      <bpmn:sequenceFlow id="Flow_Logistica_15" sourceRef="L_Sostituisci" targetRef="L_Rimedio" />
+      <bpmn:sequenceFlow id="Flow_Logistica_16" name="No" sourceRef="L_Rimedio" targetRef="L_Sospesa" />
+      <bpmn:sequenceFlow id="Flow_Logistica_17" name="Sì" sourceRef="L_Rimedio" targetRef="L_Prelievo">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_18" name="Sì" sourceRef="L_Conforme" targetRef="L_ADRProd">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_19" sourceRef="L_ADRProd" targetRef="L_Doc" />
+      <bpmn:sequenceFlow id="Flow_Logistica_20" name="Sì" sourceRef="L_Doc" targetRef="L_Allegati">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_21" name="No" sourceRef="L_Doc" targetRef="L_Imballa" />
+      <bpmn:sequenceFlow id="Flow_Logistica_22" sourceRef="L_Allegati" targetRef="L_Imballa" />
+      <bpmn:sequenceFlow id="Flow_Logistica_23" sourceRef="L_Imballa" targetRef="L_Arrivo" />
+      <bpmn:sequenceFlow id="Flow_Logistica_24" sourceRef="L_Arrivo" targetRef="L_ADR" />
+      <bpmn:sequenceFlow id="Flow_Logistica_25" name="Sì" sourceRef="L_ADR" targetRef="L_CheckADR">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_26" name="No" sourceRef="L_ADR" targetRef="L_Paga" />
+      <bpmn:sequenceFlow id="Flow_Logistica_27" sourceRef="L_CheckADR" targetRef="L_Idoneo" />
+      <bpmn:sequenceFlow id="Flow_Logistica_28" name="No" sourceRef="L_Idoneo" targetRef="L_Cambia" />
+      <bpmn:sequenceFlow id="Flow_Logistica_29" name="Ripetere controllo" sourceRef="L_Cambia" targetRef="L_CheckADR" />
+      <bpmn:sequenceFlow id="Flow_Logistica_30" name="Sì" sourceRef="L_Idoneo" targetRef="L_Paga">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_31" name="Sì" sourceRef="L_Paga" targetRef="L_Incasso">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Logistica_32" name="No" sourceRef="L_Paga" targetRef="L_Carica" />
+      <bpmn:sequenceFlow id="Flow_Logistica_33" sourceRef="L_Incasso" targetRef="L_Carica" />
+      <bpmn:sequenceFlow id="Flow_Logistica_34" sourceRef="L_Carica" targetRef="L_Partenza" />
+      <bpmn:sequenceFlow id="Flow_Logistica_35" sourceRef="L_Partenza" targetRef="L_End" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="C_Spedita" name="Merce partita?" default="Flow_Consegna_6">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / magazzino · Calendario consegna.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Consegna_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="C_Settimana" name="Prossimo ciclo settimanale">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / contabilità · Ciclo fatturazione.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_4</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="Timer_C_Settimana">
+        <bpmn:timeDate xsi:type="bpmn:tFormalExpression">dataProssimoCicloFatturazione</bpmn:timeDate>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:dataObject id="Data_Sub_Fattura_object_0" />
+    <bpmn:dataObjectReference id="Data_Sub_Fattura_object_0_ref" name="Bolla [evasa]" dataObjectRef="Data_Sub_Fattura_object_0">
+      <bpmn:documentation>R: Bolla [evasa]. Solo bolle evase non già fatturate. Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="Data_Sub_Fattura_object_1" />
+    <bpmn:dataObjectReference id="Data_Sub_Fattura_object_1_ref" name="Fattura / prima nota" dataObjectRef="Data_Sub_Fattura_object_1">
+      <bpmn:documentation>C: Fattura / prima nota. Fattura e registrazione; raggruppamento settimanale è nel processo contabile. Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:subProcess id="Sub_Fattura" name="D.11 · Fatturare bolle e registrare">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / contabilità · Ciclo fatturazione.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Bolla [evasa] | Solo bolle evase non già fatturate. | Fonte PDF 37, 95, 113–117 / stampate 25, 83, 101–105
+C | Fattura / prima nota | Fattura e registrazione; raggruppamento settimanale è nel processo contabile. | Fonte PDF 37, 95, 113–117 / stampate 25, 83, 101–105
+Sottoprocesso completo: aprire il dettaglio con il pulsante di navigazione del Modeler.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_5</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_Sub_Fattura_object_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_Sub_Fattura_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_Sub_Fattura">
+          <bpmn:dataInputRefs>Data_Sub_Fattura_object_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_Sub_Fattura">
+          <bpmn:dataOutputRefs>Data_Sub_Fattura_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1r3ua8z" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_Sub_Fattura_object_0_in">
+        <bpmn:sourceRef>Data_Sub_Fattura_object_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1r3ua8z</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_Sub_Fattura_object_1_out">
+        <bpmn:sourceRef>Data_Sub_Fattura_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_Sub_Fattura_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:laneSet id="Lanes_Fattura">
+        <bpmn:lane id="Lane_Fattura_0" name="RGC / RCONT · Verifica ed emissione">
+          <bpmn:flowNodeRef>F_Start</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Verifica</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Gia</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Recupera</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Emetti</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Fork</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="Lane_Fattura_1" name="RGC / EDP / RTRAF / MAG · Invio e archivi">
+          <bpmn:flowNodeRef>F_Canale</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Posta</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Postel</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Contrassegno</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Merge</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Archivia</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="Lane_Fattura_2" name="CONT · Prima nota">
+          <bpmn:flowNodeRef>F_PrimaNota</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_Join</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_End</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_GiaRegistrata</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_RegManuale</bpmn:flowNodeRef>
+          <bpmn:flowNodeRef>F_EndManuale</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="F_Start" name="Ciclo settimanale · bolla evasa">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:outgoing>Flow_Fattura_0</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:dataStoreReference id="Data_F_Verifica_store_0_ref" name="Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate" dataStoreRef="Data_F_Verifica_store_0_store">
+        <bpmn:documentation>R: Archivio bolle evase / bolle fatturate
+Gestionale · tabelle non specificate. Tutte le bolle evase caricate; esclusione già fatturate manualmente. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="F_Verifica" name="Verificare caricamento bolle ed escludere già fatturate">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate | Tutte le bolle evase caricate; esclusione già fatturate manualmente. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_0</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_1</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Verifica_store_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_F_Verifica">
+            <bpmn:dataInputRefs>Data_F_Verifica_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Verifica" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Verifica_store_0_in">
+          <bpmn:sourceRef>Data_F_Verifica_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Verifica_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="F_Gia" name="Già fatturata manualmente?" default="Flow_Fattura_7">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_1</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_2</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Fattura_7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_F_Recupera_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_Recupera_store_0_store">
+        <bpmn:documentation>R: Archivio fatture emesse
+Tabella non specificata. Fattura già emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+R: Prima nota contabile
+Tabella non specificata. Stato registrazione per evitare duplicati; raccordo didattico. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="F_Recupera" name="Recuperare fattura emessa e relativo stato contabile">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Raccordo didattico: esclusione bolle già fatturate esplicita, verifica contabile evita duplicazioni.
+R | Archivio fatture emesse Tabella non specificata | Fattura già emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+R | Prima nota contabile Tabella non specificata | Stato registrazione per evitare duplicati; raccordo didattico. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_2</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_3</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Recupera_store_0_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_F_Recupera">
+            <bpmn:dataInputRefs>Data_F_Recupera_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Recupera" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Recupera_store_0_in">
+          <bpmn:sourceRef>Data_F_Recupera_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Recupera_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:dataStoreReference id="Data_F_Emetti_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_Emetti_store_0_store">
+        <bpmn:documentation>R/U: Archivio bolle evase / bolle fatturate
+Gestionale · tabelle non specificate. Bolle da fatturare; stato di fatturazione è inferenza funzionale, tabella non specificata. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+C: Archivio fatture emesse
+Tabella non specificata. Fattura prodotta; struttura fisica non specificata. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_F_Emetti_object_1" />
+      <bpmn:dataObjectReference id="Data_F_Emetti_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Emetti_object_1">
+        <bpmn:documentation>C: Fattura [emessa]. Fattura emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="F_Emetti" name="Elaborare e stampare fattura">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate | Bolle da fatturare; stato di fatturazione è inferenza funzionale, tabella non specificata. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Archivio fatture emesse Tabella non specificata | Fattura prodotta; struttura fisica non specificata. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Fattura [emessa] | Fattura emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_7</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_8</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Emetti_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_Emetti_store_0_output" name="Dati prodotti / modificati" />
+          <bpmn:dataOutput id="Data_F_Emetti_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_Emetti">
+            <bpmn:dataInputRefs>Data_F_Emetti_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Emetti">
+            <bpmn:dataOutputRefs>Data_F_Emetti_store_0_output</bpmn:dataOutputRefs>
+            <bpmn:dataOutputRefs>Data_F_Emetti_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Emetti_store_0_in">
+          <bpmn:sourceRef>Data_F_Emetti_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Emetti_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_Emetti_store_0_out">
+          <bpmn:sourceRef>Data_F_Emetti_store_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Emetti_store_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_Emetti_object_1_out">
+          <bpmn:sourceRef>Data_F_Emetti_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Emetti_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:parallelGateway id="F_Fork" name="Invio e registrazione">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_8</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_9</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Fattura_10</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:exclusiveGateway id="F_Canale" name="Canale cliente?">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_9</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_11</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Fattura_12</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Fattura_13</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_F_Posta_store_0_ref" name="Anagrafica cliente · canale invio Tabella non specificata" dataStoreRef="Data_F_Posta_store_0_store">
+        <bpmn:documentation>R: Anagrafica cliente · canale invio
+Tabella non specificata. Indirizzo destinatario. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_F_Posta_object_1" />
+      <bpmn:dataObjectReference id="Data_F_Posta_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Posta_object_1">
+        <bpmn:documentation>R: Fattura [emessa]. Smistare / spedire fattura. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="F_Posta" name="Smistare e spedire fattura per posta">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Smistare / spedire fattura. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+R | Anagrafica cliente · canale invio Tabella non specificata | Indirizzo destinatario. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_11</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_14</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Posta_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataInput id="Data_F_Posta_object_1_input" name="Dati in ingresso" />
+          <bpmn:inputSet id="Inputs_F_Posta">
+            <bpmn:dataInputRefs>Data_F_Posta_store_0_input</bpmn:dataInputRefs>
+            <bpmn:dataInputRefs>Data_F_Posta_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Posta" />
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Posta_store_0_in">
+          <bpmn:sourceRef>Data_F_Posta_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Posta_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataInputAssociation id="Data_F_Posta_object_1_in">
+          <bpmn:sourceRef>Data_F_Posta_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Posta_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_F_Postel_object_0" />
+      <bpmn:dataObjectReference id="Data_F_Postel_object_0_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Postel_object_0">
+        <bpmn:documentation>R: Fattura [emessa]. Dati fattura. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:dataObject id="Data_F_Postel_object_1" />
+      <bpmn:dataObjectReference id="Data_F_Postel_object_1_ref" name="File fatture Postel" dataObjectRef="Data_F_Postel_object_1">
+        <bpmn:documentation>C: File fatture Postel. File fatture Postel. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="F_Postel" name="EDP · Generare e trasmettere file Postel">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Dati fattura. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | File fatture Postel | File fatture Postel. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_12</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_15</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Postel_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_Postel_object_1_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_Postel">
+            <bpmn:dataInputRefs>Data_F_Postel_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Postel">
+            <bpmn:dataOutputRefs>Data_F_Postel_object_1_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Postel_object_0_in">
+          <bpmn:sourceRef>Data_F_Postel_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Postel_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_Postel_object_1_out">
+          <bpmn:sourceRef>Data_F_Postel_object_1_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Postel_object_1_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataObject id="Data_F_Contrassegno_object_0" />
+      <bpmn:dataObjectReference id="Data_F_Contrassegno_object_0_ref" name="Fattura [contrassegno]" dataObjectRef="Data_F_Contrassegno_object_0">
+        <bpmn:documentation>R/U: Fattura [contrassegno]. Invio documenti a magazzino e archiviazione secondo D.11. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="F_Contrassegno" name="RTRAF / MAG · Gestire fattura contrassegno">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Fattura [contrassegno] | Invio documenti a magazzino e archiviazione secondo D.11. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_13</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_16</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Contrassegno_object_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_Contrassegno_object_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_Contrassegno">
+            <bpmn:dataInputRefs>Data_F_Contrassegno_object_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Contrassegno">
+            <bpmn:dataOutputRefs>Data_F_Contrassegno_object_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Contrassegno_object_0_in">
+          <bpmn:sourceRef>Data_F_Contrassegno_object_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Contrassegno_object_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_Contrassegno_object_0_out">
+          <bpmn:sourceRef>Data_F_Contrassegno_object_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Contrassegno_object_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:exclusiveGateway id="F_Merge" name="Canale completato">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_14</bpmn:incoming>
+        <bpmn:incoming>Flow_Fattura_15</bpmn:incoming>
+        <bpmn:incoming>Flow_Fattura_16</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_17</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_F_Archivia_store_0_ref" name="Catalogatore / archivio fatture" dataStoreRef="Data_F_Archivia_store_0_store">
+        <bpmn:documentation>U: Catalogatore / archivio fatture. Archivio fatture e catalogatore. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="F_Archivia" name="Archiviare fattura / aggiornare catalogatore">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+U | Catalogatore / archivio fatture | Archivio fatture e catalogatore. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_17</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_18</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_Archivia_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_Archivia_store_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_Archivia">
+            <bpmn:dataInputRefs>Data_F_Archivia_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_Archivia">
+            <bpmn:dataOutputRefs>Data_F_Archivia_store_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_Archivia_store_0_in">
+          <bpmn:sourceRef>Data_F_Archivia_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Archivia_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_Archivia_store_0_out">
+          <bpmn:sourceRef>Data_F_Archivia_store_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_Archivia_store_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:dataStoreReference id="Data_F_PrimaNota_store_0_ref" name="Prima nota contabile Tabella non specificata" dataStoreRef="Data_F_PrimaNota_store_0_store">
+        <bpmn:documentation>C: Prima nota contabile
+Tabella non specificata. Trasferimento fattura in prima nota. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:dataObject id="Data_F_PrimaNota_object_1" />
+      <bpmn:dataObjectReference id="Data_F_PrimaNota_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_PrimaNota_object_1">
+        <bpmn:documentation>R: Fattura [emessa]. Dati fattura emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataObjectReference>
+      <bpmn:task id="F_PrimaNota" name="Trasferire fattura in prima nota">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Dati fattura emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Prima nota contabile Tabella non specificata | Trasferimento fattura in prima nota. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_10</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_19</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_PrimaNota_object_1_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_PrimaNota_store_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_PrimaNota">
+            <bpmn:dataInputRefs>Data_F_PrimaNota_object_1_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_PrimaNota">
+            <bpmn:dataOutputRefs>Data_F_PrimaNota_store_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_PrimaNota_object_1_in">
+          <bpmn:sourceRef>Data_F_PrimaNota_object_1_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_PrimaNota_object_1_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_PrimaNota_store_0_out">
+          <bpmn:sourceRef>Data_F_PrimaNota_store_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_PrimaNota_store_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:parallelGateway id="F_Join" name="Invio e contabilità completati">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_18</bpmn:incoming>
+        <bpmn:incoming>Flow_Fattura_19</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_20</bpmn:outgoing>
+      </bpmn:parallelGateway>
+      <bpmn:endEvent id="F_End" name="Fatturazione completata">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:exclusiveGateway id="F_GiaRegistrata" name="Già in prima nota?" default="Flow_Fattura_4">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_3</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_4</bpmn:outgoing>
+        <bpmn:outgoing>Flow_Fattura_5</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:dataStoreReference id="Data_F_RegManuale_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_RegManuale_store_0_store">
+        <bpmn:documentation>R: Archivio fatture emesse
+Tabella non specificata. Fattura manuale già esistente. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+C: Prima nota contabile
+Tabella non specificata. Solo quando non già registrata; raccordo didattico. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      </bpmn:dataStoreReference>
+      <bpmn:task id="F_RegManuale" name="Registrare fattura manuale in prima nota">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Raccordo didattico per documento già emesso; prevenzione della doppia registrazione.
+R | Archivio fatture emesse Tabella non specificata | Fattura manuale già esistente. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Prima nota contabile Tabella non specificata | Solo quando non già registrata; raccordo didattico. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_4</bpmn:incoming>
+        <bpmn:outgoing>Flow_Fattura_6</bpmn:outgoing>
+        <bpmn:ioSpecification>
+          <bpmn:dataInput id="Data_F_RegManuale_store_0_input" name="Dati in ingresso" />
+          <bpmn:dataOutput id="Data_F_RegManuale_store_0_output" name="Dati prodotti / modificati" />
+          <bpmn:inputSet id="Inputs_F_RegManuale">
+            <bpmn:dataInputRefs>Data_F_RegManuale_store_0_input</bpmn:dataInputRefs>
+          </bpmn:inputSet>
+          <bpmn:outputSet id="Outputs_F_RegManuale">
+            <bpmn:dataOutputRefs>Data_F_RegManuale_store_0_output</bpmn:dataOutputRefs>
+          </bpmn:outputSet>
+        </bpmn:ioSpecification>
+        <bpmn:dataInputAssociation id="Data_F_RegManuale_store_0_in">
+          <bpmn:sourceRef>Data_F_RegManuale_store_0_ref</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_RegManuale_store_0_input</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="Data_F_RegManuale_store_0_out">
+          <bpmn:sourceRef>Data_F_RegManuale_store_0_output</bpmn:sourceRef>
+          <bpmn:targetRef>Data_F_RegManuale_store_0_ref</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+      <bpmn:endEvent id="F_EndManuale" name="Bolla già fatturata · contabilità verificata">
+        <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+        <bpmn:incoming>Flow_Fattura_5</bpmn:incoming>
+        <bpmn:incoming>Flow_Fattura_6</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_Fattura_0" sourceRef="F_Start" targetRef="F_Verifica" />
+      <bpmn:sequenceFlow id="Flow_Fattura_1" sourceRef="F_Verifica" targetRef="F_Gia" />
+      <bpmn:sequenceFlow id="Flow_Fattura_2" name="Sì" sourceRef="F_Gia" targetRef="F_Recupera">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Fattura_3" sourceRef="F_Recupera" targetRef="F_GiaRegistrata" />
+      <bpmn:sequenceFlow id="Flow_Fattura_4" name="No" sourceRef="F_GiaRegistrata" targetRef="F_RegManuale" />
+      <bpmn:sequenceFlow id="Flow_Fattura_5" name="Sì" sourceRef="F_GiaRegistrata" targetRef="F_EndManuale">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Fattura_6" sourceRef="F_RegManuale" targetRef="F_EndManuale" />
+      <bpmn:sequenceFlow id="Flow_Fattura_7" name="No" sourceRef="F_Gia" targetRef="F_Emetti" />
+      <bpmn:sequenceFlow id="Flow_Fattura_8" sourceRef="F_Emetti" targetRef="F_Fork" />
+      <bpmn:sequenceFlow id="Flow_Fattura_9" sourceRef="F_Fork" targetRef="F_Canale" />
+      <bpmn:sequenceFlow id="Flow_Fattura_10" sourceRef="F_Fork" targetRef="F_PrimaNota" />
+      <bpmn:sequenceFlow id="Flow_Fattura_11" name="Posta" sourceRef="F_Canale" targetRef="F_Posta">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Posta</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Fattura_12" name="Postel" sourceRef="F_Canale" targetRef="F_Postel">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Postel</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Fattura_13" name="Contrassegno" sourceRef="F_Canale" targetRef="F_Contrassegno">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Contrassegno</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_Fattura_14" sourceRef="F_Posta" targetRef="F_Merge" />
+      <bpmn:sequenceFlow id="Flow_Fattura_15" sourceRef="F_Postel" targetRef="F_Merge" />
+      <bpmn:sequenceFlow id="Flow_Fattura_16" sourceRef="F_Contrassegno" targetRef="F_Merge" />
+      <bpmn:sequenceFlow id="Flow_Fattura_17" sourceRef="F_Merge" targetRef="F_Archivia" />
+      <bpmn:sequenceFlow id="Flow_Fattura_18" sourceRef="F_Archivia" targetRef="F_Join" />
+      <bpmn:sequenceFlow id="Flow_Fattura_19" sourceRef="F_PrimaNota" targetRef="F_Join" />
+      <bpmn:sequenceFlow id="Flow_Fattura_20" sourceRef="F_Join" targetRef="F_End" />
+    </bpmn:subProcess>
+    <bpmn:endEvent id="C_End" name="Consegna fatturata">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / contabilità · Ciclo fatturazione.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObject id="Data_C_Ripiano_object_0" />
+    <bpmn:dataObjectReference id="Data_C_Ripiano_object_0_ref" name="Piano consegna [data / quantità]" dataObjectRef="Data_C_Ripiano_object_0">
+      <bpmn:documentation>R/U: Piano consegna [data / quantità]. Nuova data concordata; dettagli di tabella non specificati. Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="C_Ripiano" name="RGC · Ripianificare consegna e data">
+      <bpmn:documentation>Scenario: TO-BE · logistica mantenuta; orchestrazione per consegna didattica. Responsabilità: RGC / magazzino · Calendario consegna.
+Fonte: PDF 37, 95, 113–117 / stampate 25, 83, 101–105.
+Evidenza: Ritorno operativo didattico per mancata partenza; non chiude la consegna come fatturata.
+R/U | Piano consegna [data / quantità] | Nuova data concordata; dettagli di tabella non specificati. | Fonte PDF 37, 95, 113–117 / stampate 25, 83, 101–105</bpmn:documentation>
+      <bpmn:incoming>Flow_Consegna_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_Consegna_7</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_C_Ripiano_object_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_C_Ripiano_object_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_C_Ripiano">
+          <bpmn:dataInputRefs>Data_C_Ripiano_object_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_C_Ripiano">
+          <bpmn:dataOutputRefs>Data_C_Ripiano_object_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0enb9rb" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_C_Ripiano_object_0_in">
+        <bpmn:sourceRef>Data_C_Ripiano_object_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0enb9rb</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_C_Ripiano_object_0_out">
+        <bpmn:sourceRef>Data_C_Ripiano_object_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_C_Ripiano_object_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_Consegna_0" sourceRef="C_Start" targetRef="C_Data" />
+    <bpmn:sequenceFlow id="Flow_Consegna_1" sourceRef="C_Data" targetRef="Sub_Logistica" />
+    <bpmn:sequenceFlow id="Flow_Consegna_2" sourceRef="Sub_Logistica" targetRef="C_Spedita" />
+    <bpmn:sequenceFlow id="Flow_Consegna_3" name="Sì" sourceRef="C_Spedita" targetRef="C_Settimana">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Consegna_4" sourceRef="C_Settimana" targetRef="Sub_Fattura" />
+    <bpmn:sequenceFlow id="Flow_Consegna_5" sourceRef="Sub_Fattura" targetRef="C_End" />
+    <bpmn:sequenceFlow id="Flow_Consegna_6" name="No" sourceRef="C_Spedita" targetRef="C_Ripiano" />
+    <bpmn:sequenceFlow id="Flow_Consegna_7" name="Nuova data" sourceRef="C_Ripiano" targetRef="C_Data" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Consegna">
+    <bpmndi:BPMNPlane id="Plane_Consegna" bpmnElement="Consegna">
+      <bpmndi:BPMNShape id="Lane_Consegna_1_di_Consegna" bpmnElement="Lane_Consegna_1" isHorizontal="true">
+        <dc:Bounds x="150" y="880" width="1560" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Consegna_0_di_Consegna" bpmnElement="Lane_Consegna_0" isHorizontal="true">
+        <dc:Bounds x="150" y="80" width="1560" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_Start_di_Consegna" bpmnElement="C_Start">
+        <dc:Bounds x="272" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="241" y="407" width="98" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_Data_di_Consegna" bpmnElement="C_Data">
+        <dc:Bounds x="522" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="495" y="407" width="91" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_Sub_Logistica_object_0_ref_di_Consegna" bpmnElement="Data_Sub_Logistica_object_0_ref">
+        <dc:Bounds x="704" y="200" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="666" y="255" width="113" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_Sub_Logistica_object_1_ref_di_Consegna" bpmnElement="Data_Sub_Logistica_object_1_ref">
+        <dc:Bounds x="840" y="200" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="827" y="255" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Logistica_di_Consegna" bpmnElement="Sub_Logistica" isExpanded="false">
+        <dc:Bounds x="700" y="335" width="180" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_Spedita_di_Consegna" bpmnElement="C_Spedita" isMarkerVisible="true">
+        <dc:Bounds x="1015" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1005" y="414" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_Settimana_di_Consegna" bpmnElement="C_Settimana">
+        <dc:Bounds x="1022" y="1162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1005" y="1207" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_Sub_Fattura_object_0_ref_di_Consegna" bpmnElement="Data_Sub_Fattura_object_0_ref">
+        <dc:Bounds x="1204" y="1000" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1191" y="1055" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_Sub_Fattura_object_1_ref_di_Consegna" bpmnElement="Data_Sub_Fattura_object_1_ref">
+        <dc:Bounds x="1340" y="1000" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1310" y="1055" width="96" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Fattura_di_Consegna" bpmnElement="Sub_Fattura" isExpanded="false">
+        <dc:Bounds x="1200" y="1135" width="180" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_End_di_Consegna" bpmnElement="C_End">
+        <dc:Bounds x="1522" y="1162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1493" y="1207" width="94" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_C_Ripiano_object_0_ref_di_Consegna" bpmnElement="Data_C_Ripiano_object_0_ref">
+        <dc:Bounds x="1272" y="520" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1211" y="575" width="158" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="C_Ripiano_di_Consegna" bpmnElement="C_Ripiano">
+        <dc:Bounds x="1205" y="655" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Data_Sub_Logistica_object_0_in_di_Consegna" bpmnElement="Data_Sub_Logistica_object_0_in">
+        <di:waypoint x="713" y="250" />
+        <di:waypoint x="713" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_Sub_Logistica_object_1_out_di_Consegna" bpmnElement="Data_Sub_Logistica_object_1_out">
+        <di:waypoint x="867" y="335" />
+        <di:waypoint x="867" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_Sub_Fattura_object_0_in_di_Consegna" bpmnElement="Data_Sub_Fattura_object_0_in">
+        <di:waypoint x="1213" y="1050" />
+        <di:waypoint x="1213" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_Sub_Fattura_object_1_out_di_Consegna" bpmnElement="Data_Sub_Fattura_object_1_out">
+        <di:waypoint x="1367" y="1135" />
+        <di:waypoint x="1367" y="1050" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_C_Ripiano_object_0_in_di_Consegna" bpmnElement="Data_C_Ripiano_object_0_in">
+        <di:waypoint x="1281" y="570" />
+        <di:waypoint x="1281" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_C_Ripiano_object_0_out_di_Consegna" bpmnElement="Data_C_Ripiano_object_0_out">
+        <di:waypoint x="1299" y="655" />
+        <di:waypoint x="1299" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_0_di_Consegna" bpmnElement="Flow_Consegna_0">
+        <di:waypoint x="308" y="380" />
+        <di:waypoint x="522" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_1_di_Consegna" bpmnElement="Flow_Consegna_1">
+        <di:waypoint x="558" y="380" />
+        <di:waypoint x="700" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_2_di_Consegna" bpmnElement="Flow_Consegna_2">
+        <di:waypoint x="880" y="380" />
+        <di:waypoint x="1015" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_3_di_Consegna" bpmnElement="Flow_Consegna_3">
+        <di:waypoint x="1065" y="380" />
+        <di:waypoint x="1081" y="380" />
+        <di:waypoint x="1081" y="410" />
+        <di:waypoint x="963" y="410" />
+        <di:waypoint x="963" y="1180" />
+        <di:waypoint x="1022" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="958" y="758" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_4_di_Consegna" bpmnElement="Flow_Consegna_4">
+        <di:waypoint x="1058" y="1180" />
+        <di:waypoint x="1200" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_5_di_Consegna" bpmnElement="Flow_Consegna_5">
+        <di:waypoint x="1380" y="1180" />
+        <di:waypoint x="1522" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_6_di_Consegna" bpmnElement="Flow_Consegna_6">
+        <di:waypoint x="1015" y="380" />
+        <di:waypoint x="999" y="380" />
+        <di:waypoint x="999" y="410" />
+        <di:waypoint x="1189" y="410" />
+        <di:waypoint x="1189" y="700" />
+        <di:waypoint x="1205" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="518" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Consegna_7_di_Consegna" bpmnElement="Flow_Consegna_7">
+        <di:waypoint x="1205" y="700" />
+        <di:waypoint x="617" y="700" />
+        <di:waypoint x="617" y="380" />
+        <di:waypoint x="558" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="883" y="663" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="Diagram_Fattura">
+    <bpmndi:BPMNPlane id="Plane_Fattura" bpmnElement="Sub_Fattura">
+      <bpmndi:BPMNShape id="Lane_Fattura_2_di_Fattura" bpmnElement="Lane_Fattura_2" isHorizontal="true">
+        <dc:Bounds x="40" y="1600" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fattura_1_di_Fattura" bpmnElement="Lane_Fattura_1" isHorizontal="true">
+        <dc:Bounds x="40" y="800" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fattura_0_di_Fattura" bpmnElement="Lane_Fattura_0" isHorizontal="true">
+        <dc:Bounds x="40" y="0" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Start_di_Fattura" bpmnElement="F_Start">
+        <dc:Bounds x="162" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="115" y="327" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Verifica_store_0_ref_di_Fattura" bpmnElement="Data_F_Verifica_store_0_ref">
+        <dc:Bounds x="405" y="121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="330" y="175" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Verifica_di_Fattura" bpmnElement="F_Verifica">
+        <dc:Bounds x="345" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Gia_di_Fattura" bpmnElement="F_Gia" isMarkerVisible="true">
+        <dc:Bounds x="655" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="615" y="334" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Recupera_store_0_ref_di_Fattura" bpmnElement="Data_F_Recupera_store_0_ref">
+        <dc:Bounds x="655" y="441" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="580" y="495" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Recupera_di_Fattura" bpmnElement="F_Recupera">
+        <dc:Bounds x="595" y="575" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Emetti_store_0_ref_di_Fattura" bpmnElement="Data_F_Emetti_store_0_ref">
+        <dc:Bounds x="837" y="121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="795" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Emetti_object_1_ref_di_Fattura" bpmnElement="Data_F_Emetti_object_1_ref">
+        <dc:Bounds x="980" y="120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="931" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Emetti_di_Fattura" bpmnElement="F_Emetti">
+        <dc:Bounds x="845" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Fork_di_Fattura" bpmnElement="F_Fork">
+        <dc:Bounds x="1155" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1115" y="334" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Canale_di_Fattura" bpmnElement="F_Canale" isMarkerVisible="true">
+        <dc:Bounds x="1405" y="1075" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1365" y="1134" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Posta_store_0_ref_di_Fattura" bpmnElement="Data_F_Posta_store_0_ref">
+        <dc:Bounds x="1587" y="921" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1545" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Posta_object_1_ref_di_Fattura" bpmnElement="Data_F_Posta_object_1_ref">
+        <dc:Bounds x="1730" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Posta_di_Fattura" bpmnElement="F_Posta">
+        <dc:Bounds x="1595" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Postel_object_0_ref_di_Fattura" bpmnElement="Data_F_Postel_object_0_ref">
+        <dc:Bounds x="1594" y="1240" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1545" y="1295" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Postel_object_1_ref_di_Fattura" bpmnElement="Data_F_Postel_object_1_ref">
+        <dc:Bounds x="1730" y="1240" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="1295" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Postel_di_Fattura" bpmnElement="F_Postel">
+        <dc:Bounds x="1595" y="1375" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Contrassegno_object_0_ref_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_ref">
+        <dc:Bounds x="1912" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1830" y="975" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Contrassegno_di_Fattura" bpmnElement="F_Contrassegno">
+        <dc:Bounds x="1845" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Merge_di_Fattura" bpmnElement="F_Merge" isMarkerVisible="true">
+        <dc:Bounds x="2155" y="1075" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2115" y="1134" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Archivia_store_0_ref_di_Fattura" bpmnElement="Data_F_Archivia_store_0_ref">
+        <dc:Bounds x="2405" y="921" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2330" y="975" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Archivia_di_Fattura" bpmnElement="F_Archivia">
+        <dc:Bounds x="2345" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_PrimaNota_store_0_ref_di_Fattura" bpmnElement="Data_F_PrimaNota_store_0_ref">
+        <dc:Bounds x="1587" y="1721" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1545" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_PrimaNota_object_1_ref_di_Fattura" bpmnElement="Data_F_PrimaNota_object_1_ref">
+        <dc:Bounds x="1730" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_PrimaNota_di_Fattura" bpmnElement="F_PrimaNota">
+        <dc:Bounds x="1595" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Join_di_Fattura" bpmnElement="F_Join">
+        <dc:Bounds x="2655" y="1875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2615" y="1934" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_End_di_Fattura" bpmnElement="F_End">
+        <dc:Bounds x="2912" y="1882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2865" y="1927" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_GiaRegistrata_di_Fattura" bpmnElement="F_GiaRegistrata" isMarkerVisible="true">
+        <dc:Bounds x="905" y="1875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="865" y="1934" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_RegManuale_store_0_ref_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_ref">
+        <dc:Bounds x="1155" y="2041" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1080" y="2095" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_RegManuale_di_Fattura" bpmnElement="F_RegManuale">
+        <dc:Bounds x="1095" y="2175" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_EndManuale_di_Fattura" bpmnElement="F_EndManuale">
+        <dc:Bounds x="1412" y="2202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1365" y="2247" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Data_F_Verifica_store_0_in_di_Fattura" bpmnElement="Data_F_Verifica_store_0_in">
+        <di:waypoint x="421" y="169" />
+        <di:waypoint x="421" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Recupera_store_0_in_di_Fattura" bpmnElement="Data_F_Recupera_store_0_in">
+        <di:waypoint x="671" y="489" />
+        <di:waypoint x="671" y="575" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_store_0_in_di_Fattura" bpmnElement="Data_F_Emetti_store_0_in">
+        <di:waypoint x="853" y="169" />
+        <di:waypoint x="853" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_store_0_out_di_Fattura" bpmnElement="Data_F_Emetti_store_0_out">
+        <di:waypoint x="871" y="255" />
+        <di:waypoint x="871" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_object_1_out_di_Fattura" bpmnElement="Data_F_Emetti_object_1_out">
+        <di:waypoint x="1007" y="255" />
+        <di:waypoint x="1007" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Posta_store_0_in_di_Fattura" bpmnElement="Data_F_Posta_store_0_in">
+        <di:waypoint x="1603" y="969" />
+        <di:waypoint x="1603" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Posta_object_1_in_di_Fattura" bpmnElement="Data_F_Posta_object_1_in">
+        <di:waypoint x="1739" y="970" />
+        <di:waypoint x="1739" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Postel_object_0_in_di_Fattura" bpmnElement="Data_F_Postel_object_0_in">
+        <di:waypoint x="1603" y="1290" />
+        <di:waypoint x="1603" y="1375" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Postel_object_1_out_di_Fattura" bpmnElement="Data_F_Postel_object_1_out">
+        <di:waypoint x="1757" y="1375" />
+        <di:waypoint x="1757" y="1290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Contrassegno_object_0_in_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_in">
+        <di:waypoint x="1921" y="970" />
+        <di:waypoint x="1921" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Contrassegno_object_0_out_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_out">
+        <di:waypoint x="1939" y="1055" />
+        <di:waypoint x="1939" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Archivia_store_0_in_di_Fattura" bpmnElement="Data_F_Archivia_store_0_in">
+        <di:waypoint x="2421" y="969" />
+        <di:waypoint x="2421" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Archivia_store_0_out_di_Fattura" bpmnElement="Data_F_Archivia_store_0_out">
+        <di:waypoint x="2439" y="1055" />
+        <di:waypoint x="2439" y="969" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_PrimaNota_object_1_in_di_Fattura" bpmnElement="Data_F_PrimaNota_object_1_in">
+        <di:waypoint x="1739" y="1770" />
+        <di:waypoint x="1739" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_PrimaNota_store_0_out_di_Fattura" bpmnElement="Data_F_PrimaNota_store_0_out">
+        <di:waypoint x="1621" y="1855" />
+        <di:waypoint x="1621" y="1769" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_RegManuale_store_0_in_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_in">
+        <di:waypoint x="1171" y="2089" />
+        <di:waypoint x="1171" y="2175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_RegManuale_store_0_out_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_out">
+        <di:waypoint x="1189" y="2175" />
+        <di:waypoint x="1189" y="2089" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_0_di_Fattura" bpmnElement="Flow_Fattura_0">
+        <di:waypoint x="198" y="300" />
+        <di:waypoint x="345" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_1_di_Fattura" bpmnElement="Flow_Fattura_1">
+        <di:waypoint x="515" y="300" />
+        <di:waypoint x="655" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_2_di_Fattura" bpmnElement="Flow_Fattura_2">
+        <di:waypoint x="705" y="300" />
+        <di:waypoint x="721" y="300" />
+        <di:waypoint x="721" y="330" />
+        <di:waypoint x="579" y="330" />
+        <di:waypoint x="579" y="620" />
+        <di:waypoint x="595" y="620" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="544" y="438" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_3_di_Fattura" bpmnElement="Flow_Fattura_3">
+        <di:waypoint x="765" y="620" />
+        <di:waypoint x="781" y="620" />
+        <di:waypoint x="781" y="1900" />
+        <di:waypoint x="905" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_4_di_Fattura" bpmnElement="Flow_Fattura_4">
+        <di:waypoint x="955" y="1900" />
+        <di:waypoint x="1079" y="1900" />
+        <di:waypoint x="1079" y="2220" />
+        <di:waypoint x="1095" y="2220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1044" y="2023" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_5_di_Fattura" bpmnElement="Flow_Fattura_5">
+        <di:waypoint x="905" y="1900" />
+        <di:waypoint x="889" y="1900" />
+        <di:waypoint x="889" y="1930" />
+        <di:waypoint x="1396" y="1930" />
+        <di:waypoint x="1396" y="2220" />
+        <di:waypoint x="1412" y="2220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1107.5" y="1893" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_6_di_Fattura" bpmnElement="Flow_Fattura_6">
+        <di:waypoint x="1265" y="2220" />
+        <di:waypoint x="1412" y="2220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_7_di_Fattura" bpmnElement="Flow_Fattura_7">
+        <di:waypoint x="655" y="300" />
+        <di:waypoint x="639" y="300" />
+        <di:waypoint x="639" y="330" />
+        <di:waypoint x="829" y="330" />
+        <di:waypoint x="829" y="300" />
+        <di:waypoint x="845" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="746.5" y="293" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_8_di_Fattura" bpmnElement="Flow_Fattura_8">
+        <di:waypoint x="1015" y="300" />
+        <di:waypoint x="1155" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_9_di_Fattura" bpmnElement="Flow_Fattura_9">
+        <di:waypoint x="1205" y="300" />
+        <di:waypoint x="1389" y="300" />
+        <di:waypoint x="1389" y="1100" />
+        <di:waypoint x="1405" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_10_di_Fattura" bpmnElement="Flow_Fattura_10">
+        <di:waypoint x="1205" y="300" />
+        <di:waypoint x="1533" y="300" />
+        <di:waypoint x="1533" y="1900" />
+        <di:waypoint x="1595" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_11_di_Fattura" bpmnElement="Flow_Fattura_11">
+        <di:waypoint x="1455" y="1100" />
+        <di:waypoint x="1595" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1490" y="1063" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_12_di_Fattura" bpmnElement="Flow_Fattura_12">
+        <di:waypoint x="1405" y="1100" />
+        <di:waypoint x="1389" y="1100" />
+        <di:waypoint x="1389" y="1122" />
+        <di:waypoint x="1353" y="1122" />
+        <di:waypoint x="1353" y="1420" />
+        <di:waypoint x="1595" y="1420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1318" y="1234" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_13_di_Fattura" bpmnElement="Flow_Fattura_13">
+        <di:waypoint x="1455" y="1100" />
+        <di:waypoint x="1583" y="1100" />
+        <di:waypoint x="1583" y="1052" />
+        <di:waypoint x="1829" y="1052" />
+        <di:waypoint x="1829" y="1100" />
+        <di:waypoint x="1845" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1467" y="1060" width="125" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_14_di_Fattura" bpmnElement="Flow_Fattura_14">
+        <di:waypoint x="1765" y="1100" />
+        <di:waypoint x="1833" y="1100" />
+        <di:waypoint x="1833" y="1052" />
+        <di:waypoint x="2139" y="1052" />
+        <di:waypoint x="2139" y="1100" />
+        <di:waypoint x="2155" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_15_di_Fattura" bpmnElement="Flow_Fattura_15">
+        <di:waypoint x="1765" y="1420" />
+        <di:waypoint x="2103" y="1420" />
+        <di:waypoint x="2103" y="1100" />
+        <di:waypoint x="2155" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_16_di_Fattura" bpmnElement="Flow_Fattura_16">
+        <di:waypoint x="2015" y="1100" />
+        <di:waypoint x="2155" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_17_di_Fattura" bpmnElement="Flow_Fattura_17">
+        <di:waypoint x="2205" y="1100" />
+        <di:waypoint x="2345" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_18_di_Fattura" bpmnElement="Flow_Fattura_18">
+        <di:waypoint x="2515" y="1100" />
+        <di:waypoint x="2531" y="1100" />
+        <di:waypoint x="2531" y="1900" />
+        <di:waypoint x="2655" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_19_di_Fattura" bpmnElement="Flow_Fattura_19">
+        <di:waypoint x="1765" y="1900" />
+        <di:waypoint x="2655" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_20_di_Fattura" bpmnElement="Flow_Fattura_20">
+        <di:waypoint x="2705" y="1900" />
+        <di:waypoint x="2912" y="1900" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="Diagram_Logistica">
+    <bpmndi:BPMNPlane id="Plane_Logistica" bpmnElement="Sub_Logistica">
+      <bpmndi:BPMNShape id="Lane_Logistica_2_di_Logistica" bpmnElement="Lane_Logistica_2" isHorizontal="true">
+        <dc:Bounds x="40" y="1600" width="5060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Logistica_1_di_Logistica" bpmnElement="Lane_Logistica_1" isHorizontal="true">
+        <dc:Bounds x="40" y="800" width="5060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Logistica_0_di_Logistica" bpmnElement="Lane_Logistica_0" isHorizontal="true">
+        <dc:Bounds x="40" y="0" width="5060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Start_di_Logistica" bpmnElement="L_Start">
+        <dc:Bounds x="162" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="115" y="327" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Porto_di_Logistica" bpmnElement="L_Porto" isMarkerVisible="true">
+        <dc:Bounds x="405" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="365" y="334" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Corriere_store_0_ref_di_Logistica" bpmnElement="Data_L_Corriere_store_0_ref">
+        <dc:Bounds x="655" y="121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="580" y="175" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Corriere_di_Logistica" bpmnElement="L_Corriere">
+        <dc:Bounds x="595" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Prepara_store_0_ref_di_Logistica" bpmnElement="Data_L_Prepara_store_0_ref">
+        <dc:Bounds x="837" y="121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="795" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Prepara_object_1_ref_di_Logistica" bpmnElement="Data_L_Prepara_object_1_ref">
+        <dc:Bounds x="980" y="120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="931" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Prepara_di_Logistica" bpmnElement="L_Prepara">
+        <dc:Bounds x="845" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Blocchi_di_Logistica" bpmnElement="L_Blocchi" isMarkerVisible="true">
+        <dc:Bounds x="1155" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1115" y="334" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Sblocca_store_0_ref_di_Logistica" bpmnElement="Data_L_Sblocca_store_0_ref">
+        <dc:Bounds x="1087" y="441" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1045" y="495" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Sblocca_object_1_ref_di_Logistica" bpmnElement="Data_L_Sblocca_object_1_ref">
+        <dc:Bounds x="1230" y="440" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1181" y="495" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Sblocca_di_Logistica" bpmnElement="L_Sblocca">
+        <dc:Bounds x="1095" y="575" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Sblocco_di_Logistica" bpmnElement="L_Sblocco" isMarkerVisible="true">
+        <dc:Bounds x="1405" y="595" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1365" y="654" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Stop_di_Logistica" bpmnElement="L_Stop">
+        <dc:Bounds x="1662" y="602" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1615" y="647" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Autorizza_object_0_ref_di_Logistica" bpmnElement="Data_L_Autorizza_object_0_ref">
+        <dc:Bounds x="1344" y="120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1295" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Autorizza_object_1_ref_di_Logistica" bpmnElement="Data_L_Autorizza_object_1_ref">
+        <dc:Bounds x="1480" y="120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1431" y="175" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Autorizza_di_Logistica" bpmnElement="L_Autorizza">
+        <dc:Bounds x="1345" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Stampa_object_0_ref_di_Logistica" bpmnElement="Data_L_Stampa_object_0_ref">
+        <dc:Bounds x="1662" y="120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1580" y="175" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Stampa_di_Logistica" bpmnElement="L_Stampa">
+        <dc:Bounds x="1595" y="255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Prelievo_store_0_ref_di_Logistica" bpmnElement="Data_L_Prelievo_store_0_ref">
+        <dc:Bounds x="1587" y="921" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1545" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Prelievo_object_1_ref_di_Logistica" bpmnElement="Data_L_Prelievo_object_1_ref">
+        <dc:Bounds x="1730" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Prelievo_di_Logistica" bpmnElement="L_Prelievo">
+        <dc:Bounds x="1595" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Conforme_di_Logistica" bpmnElement="L_Conforme" isMarkerVisible="true">
+        <dc:Bounds x="1905" y="1075" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1865" y="1134" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_NC_object_0_ref_di_Logistica" bpmnElement="Data_L_NC_object_0_ref">
+        <dc:Bounds x="1912" y="1240" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1830" y="1295" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_NC_di_Logistica" bpmnElement="L_NC">
+        <dc:Bounds x="1845" y="1375" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Sostituisci_object_0_ref_di_Logistica" bpmnElement="Data_L_Sostituisci_object_0_ref">
+        <dc:Bounds x="2162" y="1240" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2080" y="1295" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Sostituisci_di_Logistica" bpmnElement="L_Sostituisci">
+        <dc:Bounds x="2095" y="1375" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Rimedio_di_Logistica" bpmnElement="L_Rimedio" isMarkerVisible="true">
+        <dc:Bounds x="2405" y="1395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2365" y="1454" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Sospesa_di_Logistica" bpmnElement="L_Sospesa">
+        <dc:Bounds x="2662" y="1402" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2615" y="1447" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_ADRProd_store_0_ref_di_Logistica" bpmnElement="Data_L_ADRProd_store_0_ref">
+        <dc:Bounds x="2155" y="921" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2080" y="975" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_ADRProd_di_Logistica" bpmnElement="L_ADRProd">
+        <dc:Bounds x="2095" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Doc_di_Logistica" bpmnElement="L_Doc" isMarkerVisible="true">
+        <dc:Bounds x="2405" y="1075" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2365" y="1134" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Allegati_object_0_ref_di_Logistica" bpmnElement="Data_L_Allegati_object_0_ref">
+        <dc:Bounds x="2594" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2545" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Allegati_object_1_ref_di_Logistica" bpmnElement="Data_L_Allegati_object_1_ref">
+        <dc:Bounds x="2730" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2681" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Allegati_di_Logistica" bpmnElement="L_Allegati">
+        <dc:Bounds x="2595" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Imballa_object_0_ref_di_Logistica" bpmnElement="Data_L_Imballa_object_0_ref">
+        <dc:Bounds x="2844" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2795" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Imballa_object_1_ref_di_Logistica" bpmnElement="Data_L_Imballa_object_1_ref">
+        <dc:Bounds x="2980" y="920" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2931" y="975" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Imballa_di_Logistica" bpmnElement="L_Imballa">
+        <dc:Bounds x="2845" y="1055" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Arrivo_store_0_ref_di_Logistica" bpmnElement="Data_L_Arrivo_store_0_ref">
+        <dc:Bounds x="2837" y="1721" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2795" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Arrivo_object_1_ref_di_Logistica" bpmnElement="Data_L_Arrivo_object_1_ref">
+        <dc:Bounds x="2980" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2931" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Arrivo_di_Logistica" bpmnElement="L_Arrivo">
+        <dc:Bounds x="2845" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_ADR_di_Logistica" bpmnElement="L_ADR" isMarkerVisible="true">
+        <dc:Bounds x="3155" y="1875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3115" y="1934" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_CheckADR_object_0_ref_di_Logistica" bpmnElement="Data_L_CheckADR_object_0_ref">
+        <dc:Bounds x="3412" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3330" y="1775" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_CheckADR_di_Logistica" bpmnElement="L_CheckADR">
+        <dc:Bounds x="3345" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Idoneo_di_Logistica" bpmnElement="L_Idoneo" isMarkerVisible="true">
+        <dc:Bounds x="3655" y="1875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3615" y="1934" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Cambia_object_0_ref_di_Logistica" bpmnElement="Data_L_Cambia_object_0_ref">
+        <dc:Bounds x="3662" y="2040" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3580" y="2095" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Cambia_di_Logistica" bpmnElement="L_Cambia">
+        <dc:Bounds x="3595" y="2175" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Paga_di_Logistica" bpmnElement="L_Paga" isMarkerVisible="true">
+        <dc:Bounds x="3905" y="1875" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3865" y="1934" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Incasso_object_0_ref_di_Logistica" bpmnElement="Data_L_Incasso_object_0_ref">
+        <dc:Bounds x="4162" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4080" y="1775" width="200" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Incasso_di_Logistica" bpmnElement="L_Incasso">
+        <dc:Bounds x="4095" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Carica_object_0_ref_di_Logistica" bpmnElement="Data_L_Carica_object_0_ref">
+        <dc:Bounds x="4344" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4295" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Carica_object_1_ref_di_Logistica" bpmnElement="Data_L_Carica_object_1_ref">
+        <dc:Bounds x="4480" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4431" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Carica_di_Logistica" bpmnElement="L_Carica">
+        <dc:Bounds x="4345" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Partenza_store_0_ref_di_Logistica" bpmnElement="Data_L_Partenza_store_0_ref">
+        <dc:Bounds x="4587" y="1721" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4545" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_L_Partenza_object_1_ref_di_Logistica" bpmnElement="Data_L_Partenza_object_1_ref">
+        <dc:Bounds x="4730" y="1720" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4681" y="1775" width="134" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Partenza_di_Logistica" bpmnElement="L_Partenza">
+        <dc:Bounds x="4595" y="1855" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_End_di_Logistica" bpmnElement="L_End">
+        <dc:Bounds x="4912" y="1882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4865" y="1927" width="130" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Data_L_Corriere_store_0_in_di_Logistica" bpmnElement="Data_L_Corriere_store_0_in">
+        <di:waypoint x="671" y="169" />
+        <di:waypoint x="671" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Prepara_store_0_in_di_Logistica" bpmnElement="Data_L_Prepara_store_0_in">
+        <di:waypoint x="853" y="169" />
+        <di:waypoint x="853" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Prepara_object_1_out_di_Logistica" bpmnElement="Data_L_Prepara_object_1_out">
+        <di:waypoint x="1007" y="255" />
+        <di:waypoint x="1007" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Sblocca_store_0_in_di_Logistica" bpmnElement="Data_L_Sblocca_store_0_in">
+        <di:waypoint x="1103" y="489" />
+        <di:waypoint x="1103" y="575" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Sblocca_object_1_out_di_Logistica" bpmnElement="Data_L_Sblocca_object_1_out">
+        <di:waypoint x="1257" y="575" />
+        <di:waypoint x="1257" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Autorizza_object_0_in_di_Logistica" bpmnElement="Data_L_Autorizza_object_0_in">
+        <di:waypoint x="1353" y="170" />
+        <di:waypoint x="1353" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Autorizza_object_1_in_di_Logistica" bpmnElement="Data_L_Autorizza_object_1_in">
+        <di:waypoint x="1489" y="170" />
+        <di:waypoint x="1489" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Autorizza_object_0_out_di_Logistica" bpmnElement="Data_L_Autorizza_object_0_out">
+        <di:waypoint x="1371" y="255" />
+        <di:waypoint x="1371" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Autorizza_object_1_out_di_Logistica" bpmnElement="Data_L_Autorizza_object_1_out">
+        <di:waypoint x="1507" y="255" />
+        <di:waypoint x="1507" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Stampa_object_0_in_di_Logistica" bpmnElement="Data_L_Stampa_object_0_in">
+        <di:waypoint x="1671" y="170" />
+        <di:waypoint x="1671" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Prelievo_store_0_in_di_Logistica" bpmnElement="Data_L_Prelievo_store_0_in">
+        <di:waypoint x="1603" y="969" />
+        <di:waypoint x="1603" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Prelievo_object_1_in_di_Logistica" bpmnElement="Data_L_Prelievo_object_1_in">
+        <di:waypoint x="1739" y="970" />
+        <di:waypoint x="1739" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_NC_object_0_out_di_Logistica" bpmnElement="Data_L_NC_object_0_out">
+        <di:waypoint x="1939" y="1375" />
+        <di:waypoint x="1939" y="1290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Sostituisci_object_0_in_di_Logistica" bpmnElement="Data_L_Sostituisci_object_0_in">
+        <di:waypoint x="2171" y="1290" />
+        <di:waypoint x="2171" y="1375" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_ADRProd_store_0_in_di_Logistica" bpmnElement="Data_L_ADRProd_store_0_in">
+        <di:waypoint x="2171" y="969" />
+        <di:waypoint x="2171" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Allegati_object_0_in_di_Logistica" bpmnElement="Data_L_Allegati_object_0_in">
+        <di:waypoint x="2603" y="970" />
+        <di:waypoint x="2603" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Allegati_object_1_out_di_Logistica" bpmnElement="Data_L_Allegati_object_1_out">
+        <di:waypoint x="2757" y="1055" />
+        <di:waypoint x="2757" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Imballa_object_0_in_di_Logistica" bpmnElement="Data_L_Imballa_object_0_in">
+        <di:waypoint x="2853" y="970" />
+        <di:waypoint x="2853" y="1055" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Imballa_object_1_out_di_Logistica" bpmnElement="Data_L_Imballa_object_1_out">
+        <di:waypoint x="3007" y="1055" />
+        <di:waypoint x="3007" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Arrivo_store_0_in_di_Logistica" bpmnElement="Data_L_Arrivo_store_0_in">
+        <di:waypoint x="2853" y="1769" />
+        <di:waypoint x="2853" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Arrivo_object_1_in_di_Logistica" bpmnElement="Data_L_Arrivo_object_1_in">
+        <di:waypoint x="2989" y="1770" />
+        <di:waypoint x="2989" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_CheckADR_object_0_in_di_Logistica" bpmnElement="Data_L_CheckADR_object_0_in">
+        <di:waypoint x="3421" y="1770" />
+        <di:waypoint x="3421" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Cambia_object_0_in_di_Logistica" bpmnElement="Data_L_Cambia_object_0_in">
+        <di:waypoint x="3671" y="2090" />
+        <di:waypoint x="3671" y="2175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Incasso_object_0_in_di_Logistica" bpmnElement="Data_L_Incasso_object_0_in">
+        <di:waypoint x="4171" y="1770" />
+        <di:waypoint x="4171" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Incasso_object_0_out_di_Logistica" bpmnElement="Data_L_Incasso_object_0_out">
+        <di:waypoint x="4189" y="1855" />
+        <di:waypoint x="4189" y="1770" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Carica_object_1_in_di_Logistica" bpmnElement="Data_L_Carica_object_1_in">
+        <di:waypoint x="4489" y="1770" />
+        <di:waypoint x="4489" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Carica_object_0_out_di_Logistica" bpmnElement="Data_L_Carica_object_0_out">
+        <di:waypoint x="4371" y="1855" />
+        <di:waypoint x="4371" y="1770" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Partenza_store_0_in_di_Logistica" bpmnElement="Data_L_Partenza_store_0_in">
+        <di:waypoint x="4603" y="1769" />
+        <di:waypoint x="4603" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Partenza_object_1_in_di_Logistica" bpmnElement="Data_L_Partenza_object_1_in">
+        <di:waypoint x="4739" y="1770" />
+        <di:waypoint x="4739" y="1855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_L_Partenza_store_0_out_di_Logistica" bpmnElement="Data_L_Partenza_store_0_out">
+        <di:waypoint x="4621" y="1855" />
+        <di:waypoint x="4621" y="1769" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_0_di_Logistica" bpmnElement="Flow_Logistica_0">
+        <di:waypoint x="198" y="300" />
+        <di:waypoint x="405" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_1_di_Logistica" bpmnElement="Flow_Logistica_1">
+        <di:waypoint x="455" y="300" />
+        <di:waypoint x="595" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="490" y="263" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_2_di_Logistica" bpmnElement="Flow_Logistica_2">
+        <di:waypoint x="405" y="300" />
+        <di:waypoint x="389" y="300" />
+        <di:waypoint x="389" y="252" />
+        <di:waypoint x="829" y="252" />
+        <di:waypoint x="829" y="300" />
+        <di:waypoint x="845" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="436.5" y="215" width="125" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_3_di_Logistica" bpmnElement="Flow_Logistica_3">
+        <di:waypoint x="765" y="300" />
+        <di:waypoint x="845" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_4_di_Logistica" bpmnElement="Flow_Logistica_4">
+        <di:waypoint x="1015" y="300" />
+        <di:waypoint x="1155" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_5_di_Logistica" bpmnElement="Flow_Logistica_5">
+        <di:waypoint x="1205" y="300" />
+        <di:waypoint x="1221" y="300" />
+        <di:waypoint x="1221" y="330" />
+        <di:waypoint x="1033" y="330" />
+        <di:waypoint x="1033" y="620" />
+        <di:waypoint x="1095" y="620" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="998" y="438" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_6_di_Logistica" bpmnElement="Flow_Logistica_6">
+        <di:waypoint x="1265" y="620" />
+        <di:waypoint x="1405" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_7_di_Logistica" bpmnElement="Flow_Logistica_7">
+        <di:waypoint x="1455" y="620" />
+        <di:waypoint x="1662" y="620" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1523.5" y="583" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_8_di_Logistica" bpmnElement="Flow_Logistica_8">
+        <di:waypoint x="1455" y="620" />
+        <di:waypoint x="1471" y="620" />
+        <di:waypoint x="1471" y="394" />
+        <di:waypoint x="1031" y="394" />
+        <di:waypoint x="1031" y="300" />
+        <di:waypoint x="1015" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1260" y="380" width="125" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_9_di_Logistica" bpmnElement="Flow_Logistica_9">
+        <di:waypoint x="1155" y="300" />
+        <di:waypoint x="1149" y="300" />
+        <di:waypoint x="1149" y="270" />
+        <di:waypoint x="1329" y="270" />
+        <di:waypoint x="1329" y="300" />
+        <di:waypoint x="1345" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1204" y="233" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_10_di_Logistica" bpmnElement="Flow_Logistica_10">
+        <di:waypoint x="1515" y="300" />
+        <di:waypoint x="1595" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_11_di_Logistica" bpmnElement="Flow_Logistica_11">
+        <di:waypoint x="1765" y="300" />
+        <di:waypoint x="1781" y="300" />
+        <di:waypoint x="1781" y="909" />
+        <di:waypoint x="1533" y="909" />
+        <di:waypoint x="1533" y="1100" />
+        <di:waypoint x="1595" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_12_di_Logistica" bpmnElement="Flow_Logistica_12">
+        <di:waypoint x="1765" y="1100" />
+        <di:waypoint x="1905" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_13_di_Logistica" bpmnElement="Flow_Logistica_13">
+        <di:waypoint x="1955" y="1100" />
+        <di:waypoint x="1971" y="1100" />
+        <di:waypoint x="1971" y="1122" />
+        <di:waypoint x="2007" y="1122" />
+        <di:waypoint x="2007" y="1228" />
+        <di:waypoint x="1829" y="1228" />
+        <di:waypoint x="1829" y="1420" />
+        <di:waypoint x="1845" y="1420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1794" y="1239" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_14_di_Logistica" bpmnElement="Flow_Logistica_14">
+        <di:waypoint x="2015" y="1420" />
+        <di:waypoint x="2095" y="1420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_15_di_Logistica" bpmnElement="Flow_Logistica_15">
+        <di:waypoint x="2265" y="1420" />
+        <di:waypoint x="2405" y="1420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_16_di_Logistica" bpmnElement="Flow_Logistica_16">
+        <di:waypoint x="2455" y="1420" />
+        <di:waypoint x="2662" y="1420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2523.5" y="1383" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_17_di_Logistica" bpmnElement="Flow_Logistica_17">
+        <di:waypoint x="2455" y="1420" />
+        <di:waypoint x="2471" y="1420" />
+        <di:waypoint x="2471" y="1201" />
+        <di:waypoint x="1781" y="1201" />
+        <di:waypoint x="1781" y="1100" />
+        <di:waypoint x="1765" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2091" y="1164" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_18_di_Logistica" bpmnElement="Flow_Logistica_18">
+        <di:waypoint x="1905" y="1100" />
+        <di:waypoint x="1900" y="1100" />
+        <di:waypoint x="1900" y="1063" />
+        <di:waypoint x="2079" y="1063" />
+        <di:waypoint x="2079" y="1100" />
+        <di:waypoint x="2095" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1954.5" y="1026" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_19_di_Logistica" bpmnElement="Flow_Logistica_19">
+        <di:waypoint x="2265" y="1100" />
+        <di:waypoint x="2405" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_20_di_Logistica" bpmnElement="Flow_Logistica_20">
+        <di:waypoint x="2455" y="1100" />
+        <di:waypoint x="2595" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2490" y="1063" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_21_di_Logistica" bpmnElement="Flow_Logistica_21">
+        <di:waypoint x="2405" y="1100" />
+        <di:waypoint x="2389" y="1100" />
+        <di:waypoint x="2389" y="1052" />
+        <di:waypoint x="2829" y="1052" />
+        <di:waypoint x="2829" y="1100" />
+        <di:waypoint x="2845" y="1100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2464" y="1015" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_22_di_Logistica" bpmnElement="Flow_Logistica_22">
+        <di:waypoint x="2765" y="1100" />
+        <di:waypoint x="2845" y="1100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_23_di_Logistica" bpmnElement="Flow_Logistica_23">
+        <di:waypoint x="3015" y="1100" />
+        <di:waypoint x="3031" y="1100" />
+        <di:waypoint x="3031" y="1709" />
+        <di:waypoint x="2783" y="1709" />
+        <di:waypoint x="2783" y="1900" />
+        <di:waypoint x="2845" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_24_di_Logistica" bpmnElement="Flow_Logistica_24">
+        <di:waypoint x="3015" y="1900" />
+        <di:waypoint x="3155" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_25_di_Logistica" bpmnElement="Flow_Logistica_25">
+        <di:waypoint x="3205" y="1900" />
+        <di:waypoint x="3345" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3240" y="1863" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_26_di_Logistica" bpmnElement="Flow_Logistica_26">
+        <di:waypoint x="3155" y="1900" />
+        <di:waypoint x="3139" y="1900" />
+        <di:waypoint x="3139" y="1852" />
+        <di:waypoint x="3889" y="1852" />
+        <di:waypoint x="3889" y="1900" />
+        <di:waypoint x="3905" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3666.5" y="1815" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_27_di_Logistica" bpmnElement="Flow_Logistica_27">
+        <di:waypoint x="3515" y="1900" />
+        <di:waypoint x="3655" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_28_di_Logistica" bpmnElement="Flow_Logistica_28">
+        <di:waypoint x="3705" y="1900" />
+        <di:waypoint x="3721" y="1900" />
+        <di:waypoint x="3721" y="1930" />
+        <di:waypoint x="3579" y="1930" />
+        <di:waypoint x="3579" y="2220" />
+        <di:waypoint x="3595" y="2220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3544" y="2038" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_29_di_Logistica" bpmnElement="Flow_Logistica_29">
+        <di:waypoint x="3595" y="2220" />
+        <di:waypoint x="3579" y="2220" />
+        <di:waypoint x="3579" y="1900" />
+        <di:waypoint x="3515" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3607" y="2180" width="125" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_30_di_Logistica" bpmnElement="Flow_Logistica_30">
+        <di:waypoint x="3655" y="1900" />
+        <di:waypoint x="3650" y="1900" />
+        <di:waypoint x="3650" y="1870" />
+        <di:waypoint x="3889" y="1870" />
+        <di:waypoint x="3889" y="1900" />
+        <di:waypoint x="3905" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3778.5" y="1856" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_31_di_Logistica" bpmnElement="Flow_Logistica_31">
+        <di:waypoint x="3955" y="1900" />
+        <di:waypoint x="4095" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3990" y="1863" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_32_di_Logistica" bpmnElement="Flow_Logistica_32">
+        <di:waypoint x="3905" y="1900" />
+        <di:waypoint x="3889" y="1900" />
+        <di:waypoint x="3889" y="1852" />
+        <di:waypoint x="4329" y="1852" />
+        <di:waypoint x="4329" y="1900" />
+        <di:waypoint x="4345" y="1900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3964" y="1815" width="70" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_33_di_Logistica" bpmnElement="Flow_Logistica_33">
+        <di:waypoint x="4265" y="1900" />
+        <di:waypoint x="4345" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_34_di_Logistica" bpmnElement="Flow_Logistica_34">
+        <di:waypoint x="4515" y="1900" />
+        <di:waypoint x="4595" y="1900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Logistica_35_di_Logistica" bpmnElement="Flow_Logistica_35">
+        <di:waypoint x="4765" y="1900" />
+        <di:waypoint x="4912" y="1900" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

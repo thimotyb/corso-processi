@@ -489,6 +489,7 @@ def index_html():
     siti = [
         ("APQC — Process Classification Framework", "https://www.apqc.org/process-frameworks"),
         ("APQC — Cross Industry PCF (PDF 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-8"),
+        ("ASCM — SCOR Digital Standard (supply chain)", "https://www.ascm.org/corporate-solutions/standards-tools/scor-ds/"),
         ("Object Management Group — BPMN", "https://www.omg.org/spec/BPMN/"),
         ("BPMN.org — risorse introduttive", "https://www.bpmn.org/"),
         ("Camunda — BPMN tutorial e process modeling", "https://camunda.com/bpmn/"),
@@ -756,8 +757,9 @@ def caso_studio_html():
     <li><a href="#s03">3 Il problema che ha innescato il progetto</a></li>
     <li><a href="#s04">4 I tre processi già sviluppati sul caso</a></li>
     <li><a href="#s05">5 Altri processi SAEM (candidati non ancora sviluppati)</a></li>
-    <li><a href="#s06">6 Come usarlo in aula</a></li>
-    <li><a href="#s07">7 Fonti</a></li>
+    <li><a href="#s06">6 SCOR: il framework usato dal caso originale</a></li>
+    <li><a href="#s07">7 Come usarlo in aula</a></li>
+    <li><a href="#s08">8 Fonti</a></li>
    </ul>
   </section>
 
@@ -802,19 +804,49 @@ def caso_studio_html():
 
   <section class="study-section" id="s05">
    <h2>5 Altri processi SAEM (candidati non ancora sviluppati)</h2>
-   <p>Il caso ne descrive molti altri, con un match APQC meno diretto o non ancora verificato sul PCF completo: programmazione ordini a fornitore, controllo qualità in ingresso, gestione reso a fornitore, preparazione offerta al cliente, selezione spedizioniere, generazione bolle/carico veicolo, gestione sistema informativo legacy, progetto di reengineering/e-commerce, posizionamento strategico, sistema qualità/ambiente. Sono candidati per estensioni future del materiale, se il corso vorrà arricchire anche i domini Vendite, Vision&amp;Strategy o IT con questo stesso caso.</p>
+   <p>Il caso ne descrive molti altri. Per ciascuno, un'ipotesi di collocazione sull'APQC PCF (con livello di confidenza) e, per confronto, sul modello SCOR — più nativo per un'azienda distributrice di prodotti fisici come SAEM (v. sezione 6).</p>
+   <div class="data-table-wrap">
+    <table class="data-table">
+     <caption>Processi SAEM non ancora sviluppati come scheda/BPMN completa</caption>
+     <thead>
+      <tr><th>Processo SAEM</th><th>Process APQC candidato</th><th>Confidenza</th><th>Processo SCOR candidato</th></tr>
+     </thead>
+     <tbody>
+      <tr><td>Programmazione ordini a fornitore</td><td>4.2.4 Order materials and services (4.2.4.4 Create/Distribute purchase orders)</td><td>Alta</td><td>S2.1&ndash;S2.2 Direct Procure</td></tr>
+      <tr><td>Controllo qualità in ingresso</td><td>4.4.3.2 Receive, inspect, and store inbound deliveries</td><td>Alta</td><td>S2.5 Inspect and Verify</td></tr>
+      <tr><td>Gestione reso a fornitore</td><td>4.4.2.4&ndash;4.4.2.5 Manage flow/disposition of returned products</td><td>Alta</td><td>S4 Source Return</td></tr>
+      <tr><td>Preparazione offerta al cliente</td><td>3.5.3 Develop and manage sales proposals, bids, and quotes</td><td>Alta</td><td>O2.1 Process Inquiry and Quote</td></tr>
+      <tr><td>Selezione spedizioniere, generazione bolle/carico veicolo</td><td>4.4.4.1 Plan, transport, and deliver outbound product</td><td>Alta</td><td>F2.6&ndash;F2.8 Schedule Transportation / Load Vehicle and Generate Shipping Document</td></tr>
+      <tr><td>Gestione sistema informativo legacy (Pragma/MaxGestCS)</td><td>8.5/8.6 Develop and manage / Deploy services-solutions (categoria, non verificata a livello Process)</td><td>Media</td><td>&mdash; (SCOR non copre l'IT interno)</td></tr>
+      <tr><td>Progetto di reengineering/e-commerce (Maxnet)</td><td>13.0 Develop and Manage Business Capabilities (categoria, non verificata)</td><td>Bassa</td><td>&mdash;</td></tr>
+      <tr><td>Posizionamento strategico competitivo</td><td>1.2.2 Define and evaluate strategic options to achieve the mission</td><td>Media</td><td>OE1 Supply Chain Strategy (Orchestration Enabler)</td></tr>
+      <tr><td>Sistema qualità/ambiente (ISO 9001/14001)</td><td>11.0 Manage Enterprise Risk, Compliance, Remediation and Resiliency (categoria, non verificata)</td><td>Bassa</td><td>OE8 Regulatory and Compliance (Orchestration Enabler)</td></tr>
+     </tbody>
+    </table>
+   </div>
+   <p>Sono candidati per estensioni future del materiale, se il corso vorrà arricchire anche i domini Vendite, Vision&amp;Strategy o IT con questo stesso caso. Le confidenze "Media"/"Bassa" segnalano codici verificati solo a livello di Category/Process Group sul PCF completo (K016809), non ancora a livello di Activity con i PDF "Definitions and Key Measures" corrispondenti (non tutti disponibili in <code>resources/</code>).</p>
   </section>
 
   <section class="study-section" id="s06">
-   <h2>6 Come usarlo in aula</h2>
-   <p>Per ciascuno dei tre processi si può ripetere l'esercizio già impostato per gli esempi APQC astratti: individuare Category/Process Group/Process/Activity nel PCF, scomporre in Task, costruire SIPOC e matrice delle variabili, leggere il BPMN con le corsie per ruolo. A differenza degli esempi puri, qui i partecipanti lavorano su un caso con <strong>criticità reali già documentate</strong> (doppia codifica articoli, autorizzazioni di prezzo/reso, shelf life breve) da usare come base per la discussione su rischi e colli di bottiglia.</p>
+   <h2>6 SCOR: il framework usato dal caso originale</h2>
+   <p>La tesi originale su cui è basato questo caso (Bozzoli, 2004-2005) non usava l'APQC PCF, ma il modello <strong>SCOR (Supply Chain Operations Reference)</strong> insieme a diagrammi UML — scelta naturale per un distributore di prodotti fisici, dato che SCOR è specializzato sui processi di supply chain (pianificazione, approvvigionamento, produzione, evasione ordini, logistica, resi), mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain (vendite, HR, IT, finance...).</p>
+   <p>SCOR è mantenuto oggi dalla <strong>Association for Supply Chain Management (ASCM)</strong>, erede del Supply-Chain Council che lo creò nel 1996, sotto il nome di <strong>SCOR Digital Standard (SCOR-DS)</strong>. Il modello attuale organizza i processi su un livello Orchestrate (le tredici funzioni trasversali di governo della supply chain) e sei processi di primo livello: <strong>Plan, Order, Source, Transform, Fulfill, Return</strong> — la versione "classica" nota alla tesi del 2004-2005 aveva invece cinque processi macro (Plan, Source, Make, Deliver, Return).</p>
+   <p>Una sintesi completa dei processi SCOR-DS (livelli, categorie, elementi di processo) e una mappatura di prima approssimazione dei processi SAEM sui processi SCOR sono in <a href="../resources/scor-overview.md">resources/scor-overview.md</a>.</p>
   </section>
 
   <section class="study-section" id="s07">
-   <h2>7 Fonti</h2>
+   <h2>7 Come usarlo in aula</h2>
+   <p>Per ciascuno dei tre processi si può ripetere l'esercizio già impostato per gli esempi APQC astratti: individuare Category/Process Group/Process/Activity nel PCF, scomporre in Task, costruire SIPOC e matrice delle variabili, leggere il BPMN con le corsie per ruolo. A differenza degli esempi puri, qui i partecipanti lavorano su un caso con <strong>criticità reali già documentate</strong> (doppia codifica articoli, autorizzazioni di prezzo/reso, shelf life breve) da usare come base per la discussione su rischi e colli di bottiglia.</p>
+   <p>Esercizio di confronto tra framework: far classificare uno o due processi SAEM sia su APQC PCF sia su SCOR (v. sezione 6), discutendo dove i due framework isolano lo stesso confine di processo e dove no, e perché.</p>
+  </section>
+
+  <section class="study-section" id="s08">
+   <h2>8 Fonti</h2>
    <ul class="reference-list">
     <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="../resources/casoSAEM.pdf">PDF completo</a>.</li>
     <li><a href="../caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
+    <li>ASCM, <em>"SCOR Digital Standard — Quick Reference Guide"</em>, © 2025, CC BY-NC-ND 4.0 — <a href="../resources/scor-ds-digital-guide_final.pdf">PDF completo</a>. Framework interattivo: <a href="https://scor.ascm.org" target="_blank" rel="noopener noreferrer">scor.ascm.org</a>.</li>
+    <li><a href="../resources/scor-overview.md">Sintesi SCOR ad uso didattico</a> (gerarchia dei processi, mappatura SAEM &rarr; SCOR).</li>
    </ul>
   </section>
  </article>

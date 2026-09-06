@@ -60,6 +60,34 @@ Caso particolare — **riparazione dei deceleratori**: il magazzino riceve il pe
 
 Con cadenza **settimanale**, si verifica che tutte le bolle evase siano state caricate a sistema (escludendo quelle già fatturate manualmente), si elabora e stampa la fattura. Le fatture seguono canali diversi a seconda del cliente: invio postale tradizionale, invio a mezzo file elettronico tramite Postel (servizio di stampa/imbustamento/spedizione per conto di SAEM), o gestione a parte per le vendite in contrassegno. Le fatture vengono infine trasferite in prima nota contabile.
 
-## 4. Come usarlo in aula
+## 4. Altri processi SAEM (candidati non ancora sviluppati)
 
-Per ciascuno dei quattro processi sopra descritti si può ripetere l'esercizio già impostato per gli esempi APQC: individuare Category/Process Group/Process/Activity nel PCF, scomporre in Task, costruire SIPOC e matrice delle variabili, disegnare il BPMN con le corsie per ruolo (DIRV, FC, RGC, RTRAF, RMAG). A differenza degli esempi "puri" già preparati, qui i partecipanti lavorano su un caso con **criticità reali già documentate** (doppia codifica articoli, autorizzazioni di prezzo/reso, shelf life breve) da usare come base per la discussione su rischi e colli di bottiglia.
+Il caso originale ne descrive molti altri. Ipotesi di collocazione sull'APQC PCF (con confidenza) e, per confronto, sul modello SCOR — più nativo per un'azienda distributrice di prodotti fisici come SAEM (v. § 5):
+
+| Processo SAEM | Process APQC candidato | Confidenza | Processo SCOR candidato |
+|---|---|---|---|
+| Programmazione ordini a fornitore | 4.2.4 Order materials and services (4.2.4.4 Create/Distribute purchase orders) | Alta | S2.1-S2.2 Direct Procure |
+| Controllo qualità in ingresso | 4.4.3.2 Receive, inspect, and store inbound deliveries | Alta | S2.5 Inspect and Verify |
+| Gestione reso a fornitore | 4.4.2.4-4.4.2.5 Manage flow/disposition of returned products | Alta | S4 Source Return |
+| Preparazione offerta al cliente | 3.5.3 Develop and manage sales proposals, bids, and quotes | Alta | O2.1 Process Inquiry and Quote |
+| Selezione spedizioniere, generazione bolle/carico veicolo | 4.4.4.1 Plan, transport, and deliver outbound product | Alta | F2.6-F2.8 Schedule Transportation / Load Vehicle and Generate Shipping Document |
+| Gestione sistema informativo legacy (Pragma/MaxGestCS) | 8.5/8.6 Develop and manage / Deploy services-solutions (categoria, non verificata a livello Process) | Media | — (SCOR non copre l'IT interno) |
+| Progetto di reengineering/e-commerce (Maxnet) | 13.0 Develop and Manage Business Capabilities (categoria, non verificata) | Bassa | — |
+| Posizionamento strategico competitivo | 1.2.2 Define and evaluate strategic options to achieve the mission | Media | OE1 Supply Chain Strategy (Orchestration Enabler) |
+| Sistema qualità/ambiente (ISO 9001/14001) | 11.0 Manage Enterprise Risk, Compliance, Remediation and Resiliency (categoria, non verificata) | Bassa | OE8 Regulatory and Compliance (Orchestration Enabler) |
+
+Le confidenze "Media"/"Bassa" segnalano codici verificati solo a livello di Category/Process Group sul PCF completo, non ancora a livello di Activity con i PDF "Definitions and Key Measures" corrispondenti.
+
+## 5. SCOR: il framework usato dal caso originale
+
+La tesi originale (Bozzoli, 2004-2005) non usava l'APQC PCF, ma il modello **SCOR (Supply Chain Operations Reference)** insieme a diagrammi UML — scelta naturale per un distributore di prodotti fisici, dato che SCOR è specializzato sui processi di supply chain (pianificazione, approvvigionamento, produzione, evasione ordini, logistica, resi), mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain.
+
+SCOR è mantenuto oggi dall'**Association for Supply Chain Management (ASCM)** come **SCOR Digital Standard (SCOR-DS)**: Level 0 Orchestrate (tredici funzioni trasversali) + sei processi di Level 1 — Plan, Order, Source, Transform, Fulfill, Return (la versione "classica" nota alla tesi del 2004-2005 aveva cinque processi macro: Plan, Source, Make, Deliver, Return).
+
+Sintesi completa dei processi SCOR-DS e mappatura di prima approssimazione dei processi SAEM su SCOR: [`resources/scor-overview.md`](../resources/scor-overview.md). Fonte: ASCM, "SCOR Digital Standard — Quick Reference Guide", © 2025, CC BY-NC-ND 4.0 ([`resources/scor-ds-digital-guide_final.pdf`](../resources/scor-ds-digital-guide_final.pdf)).
+
+## 6. Come usarlo in aula
+
+Per ciascuno dei quattro processi descritti al § 3 si può ripetere l'esercizio già impostato per gli esempi APQC: individuare Category/Process Group/Process/Activity nel PCF, scomporre in Task, costruire SIPOC e matrice delle variabili, disegnare il BPMN con le corsie per ruolo (DIRV, FC, RGC, RTRAF, RMAG). A differenza degli esempi "puri" già preparati, qui i partecipanti lavorano su un caso con **criticità reali già documentate** (doppia codifica articoli, autorizzazioni di prezzo/reso, shelf life breve) da usare come base per la discussione su rischi e colli di bottiglia.
+
+Esercizio di confronto tra framework: far classificare uno o due processi SAEM sia su APQC PCF sia su SCOR (§ 5), discutendo dove i due framework isolano lo stesso confine di processo e dove no, e perché.

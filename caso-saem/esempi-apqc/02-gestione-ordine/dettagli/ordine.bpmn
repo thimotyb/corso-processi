@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_SAEM_Ordine" targetNamespace="https://saem.example/teaching" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:dataStore id="Store_Emaxgest5" name="Emaxgest5 · PostgreSQL">
+    <bpmn:documentation>Database documentato dal caso SAEM. Ogni riferimento mostra una proiezione delle tabelle usate dal task.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:process id="Ordine" name="D.2A/B · Inserimento ordine normale e urgente" isExecutable="false">
+    <bpmn:documentation>TO-BE MaxNet III. PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107. Modello didattico completo nel perimetro ordine→spedizione→fatturazione; vedere processo.md per fonti e assunzioni.</bpmn:documentation>
+    <bpmn:laneSet id="Lanes_Ordine">
+      <bpmn:lane id="Lane_Ordine_2" name="FC · Approvazione urgenza">
+        <bpmn:flowNodeRef>I_RichUrgenza</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_FC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Autorizza</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Respinto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Approvato</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_No</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Ordine_1" name="MaxNet · Verifiche e registrazione">
+        <bpmn:flowNodeRef>I_Verifica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Parziale</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Registra</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Codice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Esito</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Urgente</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Ordine_0" name="Front office MaxNet · Interazione cliente">
+        <bpmn:flowNodeRef>I_Login</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Testata</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Riga</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_RichOfferta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Prezzo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Conferma</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Modifica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Accesso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_NoAccesso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Offerta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Sospeso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Altre</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Correzione</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>I_Rinuncia</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="I_Start" name="Intenzione d&#39;acquisto">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:outgoing>Flow_Ordine_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:dataStoreReference id="Data_I_Login_store_0_ref" name="Emaxgest5 · Clienti" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Clienti. Autenticazione cliente attivo; diagramma descrive il sistema storico, non una raccomandazione di gestione credenziali. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Login" name="Autenticare cliente attivo">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Clienti | Autenticazione cliente attivo; diagramma descrive il sistema storico, non una raccomandazione di gestione credenziali. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_1</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Login_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_I_Login">
+          <bpmn:dataInputRefs>Data_I_Login_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Login" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_03wdc9m" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Login_store_0_in">
+        <bpmn:sourceRef>Data_I_Login_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_03wdc9m</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="I_Accesso" name="Accesso valido?" default="Flow_Ordine_2">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="I_NoAccesso" name="Accesso negato">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="Data_I_Testata_store_0_ref" name="Emaxgest5 · Clienti / Cliedesta …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Clienti. Dati cliente / codice IVA. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Cliedesta / Tabella_iva. Cliedesta: destinazione e disposizioni; Tabella_iva: parametri. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C/R/U: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Carrello_testata C; progressivo Carrello_testata_n_carrello R/U. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Testata" name="Ricevere destinazione / termini e creare carrello">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Clienti | Dati cliente / codice IVA. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Cliedesta / Tabella_iva | Cliedesta: destinazione e disposizioni; Tabella_iva: parametri. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C/R/U | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Carrello_testata C; progressivo Carrello_testata_n_carrello R/U. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_4</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Testata_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Testata_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Testata">
+          <bpmn:dataInputRefs>Data_I_Testata_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Testata">
+          <bpmn:dataOutputRefs>Data_I_Testata_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0tuqsld" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Testata_store_0_in">
+        <bpmn:sourceRef>Data_I_Testata_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0tuqsld</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Testata_store_0_out">
+        <bpmn:sourceRef>Data_I_Testata_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Testata_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="Data_I_Riga_store_0_ref" name="Emaxgest5 · Articoli / Carrello_testata …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Articoli. Codici SAEM e confezioni indivisibili. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Carrello_righe: inserimento articolo. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Riga" name="Selezionare codice SAEM e multipli di confezione">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Articoli | Codici SAEM e confezioni indivisibili. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Carrello_righe: inserimento articolo. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_4</bpmn:incoming>
+      <bpmn:incoming>Flow_Ordine_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_5</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Riga_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Riga_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Riga">
+          <bpmn:dataInputRefs>Data_I_Riga_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Riga">
+          <bpmn:dataOutputRefs>Data_I_Riga_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1bm2t21" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Riga_store_0_in">
+        <bpmn:sourceRef>Data_I_Riga_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1bm2t21</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Riga_store_0_out">
+        <bpmn:sourceRef>Data_I_Riga_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Riga_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="I_Offerta" name="Offerta valida o articolo acquistabile a catalogo?" default="Flow_Ordine_6">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_I_RichOfferta_store_0_ref" name="Emaxgest5 · Messaggi / Clienti …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>C: Emaxgest5 · Messaggi. Richiesta con riferimenti cliente/articolo. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Clienti. Riferimenti del cliente. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Articoli. Riferimenti dell'articolo. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:sendTask id="I_RichOfferta" name="Inviare richiesta offerta / rinnovo">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+C | Emaxgest5 · Messaggi | Richiesta con riferimenti cliente/articolo. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Clienti | Riferimenti del cliente. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Articoli | Riferimenti dell'articolo. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_7</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_RichOfferta_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_RichOfferta_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_RichOfferta">
+          <bpmn:dataInputRefs>Data_I_RichOfferta_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_RichOfferta">
+          <bpmn:dataOutputRefs>Data_I_RichOfferta_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0b5unb8" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_RichOfferta_store_0_in">
+        <bpmn:sourceRef>Data_I_RichOfferta_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0b5unb8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_RichOfferta_store_0_out">
+        <bpmn:sourceRef>Data_I_RichOfferta_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_RichOfferta_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="I_Sospeso" name="Acquisto sospeso · richiesta offerta inviata">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="Data_I_Prezzo_store_0_ref" name="Emaxgest5 · Offerte_articoli Articoli_listino / Clienti_sconto …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Offerte_articoli
+Articoli_listino / Clienti_sconto. Prezzo offerta oppure listino con sconto cliente. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Clienti. Codice IVA cliente. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Cliedesta / Tabella_iva. Parametri Tabella_iva. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Articoli / Articoli_storico / Scadmag. Disponibilità da anagrafica / storico / Scadmag. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:serviceTask id="I_Prezzo" name="Calcolare prezzo, sconto, IVA e disponibilità">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Offerte_articoli Articoli_listino / Clienti_sconto | Prezzo offerta oppure listino con sconto cliente. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Clienti | Codice IVA cliente. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Cliedesta / Tabella_iva | Parametri Tabella_iva. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Articoli / Articoli_storico / Scadmag | Disponibilità da anagrafica / storico / Scadmag. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_9</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Prezzo_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_I_Prezzo">
+          <bpmn:dataInputRefs>Data_I_Prezzo_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Prezzo" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1poon44" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Prezzo_store_0_in">
+        <bpmn:sourceRef>Data_I_Prezzo_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1poon44</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="I_Altre" name="Altre righe?" default="Flow_Ordine_11">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_10</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_I_Conferma_store_0_ref" name="Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Carrello sottoposto a conferma. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Conferma" name="Cliente · Confermare il carrello">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Carrello sottoposto a conferma. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_11</bpmn:incoming>
+      <bpmn:incoming>Flow_Ordine_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_12</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Conferma_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_I_Conferma">
+          <bpmn:dataInputRefs>Data_I_Conferma_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Conferma" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1l01de1" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Conferma_store_0_in">
+        <bpmn:sourceRef>Data_I_Conferma_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1l01de1</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="Data_I_Verifica_store_0_ref" name="Emaxgest5 · Articoli / Articoli_storico …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Articoli / Articoli_storico / Scadmag. Riverifica disponibilità e date prima della registrazione. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Offerte_articoli
+Articoli_listino / Clienti_sconto. Ricalcolo prezzi e sconti. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Clienti. Codice IVA. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Cliedesta / Tabella_iva. Parametri IVA. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Testata e righe da riverificare. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:serviceTask id="I_Verifica" name="Riverificare prezzi, disponibilità e date">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Articoli / Articoli_storico / Scadmag | Riverifica disponibilità e date prima della registrazione. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Offerte_articoli Articoli_listino / Clienti_sconto | Ricalcolo prezzi e sconti. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Clienti | Codice IVA. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Cliedesta / Tabella_iva | Parametri IVA. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Testata e righe da riverificare. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_12</bpmn:incoming>
+      <bpmn:incoming>Flow_Ordine_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_13</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Verifica_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_I_Verifica">
+          <bpmn:dataInputRefs>Data_I_Verifica_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Verifica" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0hhlhxs" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Verifica_store_0_in">
+        <bpmn:sourceRef>Data_I_Verifica_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0hhlhxs</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="I_Esito" name="Conferma possibile?" default="Flow_Ordine_14">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_14</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_20</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="I_Correzione" name="Come proseguire?" default="Flow_Ordine_17">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_15</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_16</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_I_Modifica_store_0_ref" name="Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R/U: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Leggere e modificare dati di testata/righe. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Modifica" name="Modificare quantità / dati carrello">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Leggere e modificare dati di testata/righe. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_18</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Modifica_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Modifica_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Modifica">
+          <bpmn:dataInputRefs>Data_I_Modifica_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Modifica">
+          <bpmn:dataOutputRefs>Data_I_Modifica_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0p17j40" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Modifica_store_0_in">
+        <bpmn:sourceRef>Data_I_Modifica_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0p17j40</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Modifica_store_0_out">
+        <bpmn:sourceRef>Data_I_Modifica_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Modifica_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:dataStoreReference id="Data_I_Parziale_store_0_ref" name="Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R/C/U: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Testata R/U; righe R/C/U per date/quantità parziali. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Articoli / Articoli_storico / Scadmag. Disponibilità per data. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_Parziale" name="Concordare date e trasformare in evasione parziale">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/C/U | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Testata R/U; righe R/C/U per date/quantità parziali. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Articoli / Articoli_storico / Scadmag | Disponibilità per data. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_19</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Parziale_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Parziale_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Parziale">
+          <bpmn:dataInputRefs>Data_I_Parziale_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Parziale">
+          <bpmn:dataOutputRefs>Data_I_Parziale_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1fm5u5t" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Parziale_store_0_in">
+        <bpmn:sourceRef>Data_I_Parziale_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1fm5u5t</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Parziale_store_0_out">
+        <bpmn:sourceRef>Data_I_Parziale_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Parziale_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:endEvent id="I_Rinuncia" name="Acquisto non confermato">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: Front office MaxNet · Interazione cliente.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="Data_I_Registra_store_0_ref" name="Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R/D: Emaxgest5 · Carrello_testata / Carrello_righe
+Carrello_testata_n_carrello. Copiare testata e righe e cancellare carrello dopo esito positivo. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C: Emaxgest5 · Portcli / Riportc. Portcli C; Riportc C. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C: Emaxgest5 · Movimenti_articolo. Memorizzare quantità impegnate. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+U: Emaxgest5 · Articoli / Articoli_storico / Scadmag. Solo Articoli_storico e Scadmag: aggiornamenti movimentazione. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:serviceTask id="I_Registra" name="Creare ordine, impegnare scorte e rimuovere carrello">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/D | Emaxgest5 · Carrello_testata / Carrello_righe Carrello_testata_n_carrello | Copiare testata e righe e cancellare carrello dopo esito positivo. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Emaxgest5 · Portcli / Riportc | Portcli C; Riportc C. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Emaxgest5 · Movimenti_articolo | Memorizzare quantità impegnate. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+U | Emaxgest5 · Articoli / Articoli_storico / Scadmag | Solo Articoli_storico e Scadmag: aggiornamenti movimentazione. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_21</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Registra_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Registra_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Registra">
+          <bpmn:dataInputRefs>Data_I_Registra_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Registra">
+          <bpmn:dataOutputRefs>Data_I_Registra_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_04n40am" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Registra_store_0_in">
+        <bpmn:sourceRef>Data_I_Registra_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_04n40am</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Registra_store_0_out">
+        <bpmn:sourceRef>Data_I_Registra_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Registra_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="I_Urgente" name="Ordine urgente?" default="Flow_Ordine_22">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_21</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_22</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_23</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_I_RichUrgenza_store_0_ref" name="Emaxgest5 · Portcli / Riportc …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Portcli / Riportc. Riferimenti Portcli. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C: Emaxgest5 · Messaggi. Richiesta approvazione FC. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:serviceTask id="I_RichUrgenza" name="Inviare richiesta approvazione FC">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Portcli / Riportc | Riferimenti Portcli. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Emaxgest5 · Messaggi | Richiesta approvazione FC. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_23</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_24</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_RichUrgenza_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_RichUrgenza_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_RichUrgenza">
+          <bpmn:dataInputRefs>Data_I_RichUrgenza_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_RichUrgenza">
+          <bpmn:dataOutputRefs>Data_I_RichUrgenza_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0r3psze" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_RichUrgenza_store_0_in">
+        <bpmn:sourceRef>Data_I_RichUrgenza_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0r3psze</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_RichUrgenza_store_0_out">
+        <bpmn:sourceRef>Data_I_RichUrgenza_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_RichUrgenza_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="Data_I_FC_store_0_ref" name="Emaxgest5 · Articoli / Articoli_storico …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R: Emaxgest5 · Articoli / Articoli_storico / Scadmag. Disponibilità per valutare urgenza. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Portcli / Riportc. Ordine oggetto della valutazione. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:userTask id="I_FC" name="FC · Valutare urgenza e disponibilità">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Emaxgest5 · Articoli / Articoli_storico / Scadmag | Disponibilità per valutare urgenza. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Portcli / Riportc | Ordine oggetto della valutazione. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_24</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_25</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_FC_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_I_FC">
+          <bpmn:dataInputRefs>Data_I_FC_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_FC" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_112596c" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_FC_store_0_in">
+        <bpmn:sourceRef>Data_I_FC_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_112596c</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="I_Approvato" name="Approvato?" default="Flow_Ordine_27">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_25</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_26</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Ordine_27</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_I_Autorizza_store_0_ref" name="Emaxgest5 · Portcli / Riportc …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>R/U: Emaxgest5 · Portcli / Riportc. Portcli U AUTORIZZATO positivo; Portcli/Riportc R per messaggio. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C: Emaxgest5 · Messaggi. Messaggio di approvazione. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Clienti. Indirizzo e-mail e destinatario. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:dataObject id="Data_I_Autorizza_object_1" />
+    <bpmn:dataObjectReference id="Data_I_Autorizza_object_1_ref" name="Ordine urgente [esito]" dataObjectRef="Data_I_Autorizza_object_1">
+      <bpmn:documentation>C: Ordine urgente [esito]. Ordine autorizzato. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:serviceTask id="I_Autorizza" name="Impostare AUTORIZZATO e notificare cliente">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Emaxgest5 · Portcli / Riportc | Portcli U AUTORIZZATO positivo; Portcli/Riportc R per messaggio. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Emaxgest5 · Messaggi | Messaggio di approvazione. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Clienti | Indirizzo e-mail e destinatario. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Ordine urgente [esito] | Ordine autorizzato. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_26</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_29</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Autorizza_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Autorizza_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:dataOutput id="Data_I_Autorizza_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Autorizza">
+          <bpmn:dataInputRefs>Data_I_Autorizza_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Autorizza">
+          <bpmn:dataOutputRefs>Data_I_Autorizza_store_0_output</bpmn:dataOutputRefs>
+          <bpmn:dataOutputRefs>Data_I_Autorizza_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_13imtl6" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Autorizza_store_0_in">
+        <bpmn:sourceRef>Data_I_Autorizza_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_13imtl6</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Autorizza_store_0_out">
+        <bpmn:sourceRef>Data_I_Autorizza_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Autorizza_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Autorizza_object_1_out">
+        <bpmn:sourceRef>Data_I_Autorizza_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Autorizza_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="Data_I_Respinto_store_0_ref" name="Emaxgest5 · Messaggi / Clienti …" dataStoreRef="Store_Emaxgest5">
+      <bpmn:documentation>C: Emaxgest5 · Messaggi. Messaggio di mancata approvazione. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R: Emaxgest5 · Clienti. Destinatario notifica. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:dataObject id="Data_I_Respinto_object_1" />
+    <bpmn:dataObjectReference id="Data_I_Respinto_object_1_ref" name="Ordine urgente [esito]" dataObjectRef="Data_I_Respinto_object_1">
+      <bpmn:documentation>C: Ordine urgente [esito]. Ordine non autorizzato; cancellazione e rilascio scorte non specificati, non simulati. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:serviceTask id="I_Respinto" name="Notificare urgenza non approvata">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+C | Emaxgest5 · Messaggi | Messaggio di mancata approvazione. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+R | Emaxgest5 · Clienti | Destinatario notifica. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107
+C | Ordine urgente [esito] | Ordine non autorizzato; cancellazione e rilascio scorte non specificati, non simulati. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_27</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_28</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_I_Respinto_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_I_Respinto_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:dataOutput id="Data_I_Respinto_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Respinto">
+          <bpmn:dataInputRefs>Data_I_Respinto_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_I_Respinto">
+          <bpmn:dataOutputRefs>Data_I_Respinto_store_0_output</bpmn:dataOutputRefs>
+          <bpmn:dataOutputRefs>Data_I_Respinto_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0kqq9ca" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_I_Respinto_store_0_in">
+        <bpmn:sourceRef>Data_I_Respinto_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0kqq9ca</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Respinto_store_0_out">
+        <bpmn:sourceRef>Data_I_Respinto_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Respinto_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="Data_I_Respinto_object_1_out">
+        <bpmn:sourceRef>Data_I_Respinto_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Respinto_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="I_No" name="Ordine urgente non autorizzato">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: FC · Approvazione urgenza.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_28</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObject id="Data_I_Codice_object_0" />
+    <bpmn:dataObjectReference id="Data_I_Codice_object_0_ref" name="Ordine [confermato] / codice" dataObjectRef="Data_I_Codice_object_0">
+      <bpmn:documentation>C: Ordine [confermato] / codice. Codice dell'ordine accettato. Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:serviceTask id="I_Codice" name="Restituire codice ordine / conferma">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 100 / 88; PDF 119 / 107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+C | Ordine [confermato] / codice | Codice dell'ordine accettato. | Fonte PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_22</bpmn:incoming>
+      <bpmn:incoming>Flow_Ordine_29</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ordine_30</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataOutput id="Data_I_Codice_object_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_I_Codice" />
+        <bpmn:outputSet id="Outputs_I_Codice">
+          <bpmn:dataOutputRefs>Data_I_Codice_object_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:dataOutputAssociation id="Data_I_Codice_object_0_out">
+        <bpmn:sourceRef>Data_I_Codice_object_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_I_Codice_object_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="I_End" name="Ordine acquisito e autorizzato">
+      <bpmn:documentation>Scenario: TO-BE MaxNet III. Responsabilità: MaxNet · Verifiche e registrazione.
+Fonte: PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Ordine_30</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_Ordine_0" sourceRef="I_Start" targetRef="I_Login" />
+    <bpmn:sequenceFlow id="Flow_Ordine_1" sourceRef="I_Login" targetRef="I_Accesso" />
+    <bpmn:sequenceFlow id="Flow_Ordine_2" name="No" sourceRef="I_Accesso" targetRef="I_NoAccesso" />
+    <bpmn:sequenceFlow id="Flow_Ordine_3" name="Sì" sourceRef="I_Accesso" targetRef="I_Testata">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_4" sourceRef="I_Testata" targetRef="I_Riga" />
+    <bpmn:sequenceFlow id="Flow_Ordine_5" sourceRef="I_Riga" targetRef="I_Offerta" />
+    <bpmn:sequenceFlow id="Flow_Ordine_6" name="No" sourceRef="I_Offerta" targetRef="I_RichOfferta" />
+    <bpmn:sequenceFlow id="Flow_Ordine_7" sourceRef="I_RichOfferta" targetRef="I_Sospeso" />
+    <bpmn:sequenceFlow id="Flow_Ordine_8" name="Sì" sourceRef="I_Offerta" targetRef="I_Prezzo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_9" sourceRef="I_Prezzo" targetRef="I_Altre" />
+    <bpmn:sequenceFlow id="Flow_Ordine_10" name="Sì" sourceRef="I_Altre" targetRef="I_Riga">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_11" name="No" sourceRef="I_Altre" targetRef="I_Conferma" />
+    <bpmn:sequenceFlow id="Flow_Ordine_12" sourceRef="I_Conferma" targetRef="I_Verifica" />
+    <bpmn:sequenceFlow id="Flow_Ordine_13" sourceRef="I_Verifica" targetRef="I_Esito" />
+    <bpmn:sequenceFlow id="Flow_Ordine_14" name="No" sourceRef="I_Esito" targetRef="I_Correzione" />
+    <bpmn:sequenceFlow id="Flow_Ordine_15" name="Modifica" sourceRef="I_Correzione" targetRef="I_Modifica">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Modifica</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_16" name="Consegne parziali" sourceRef="I_Correzione" targetRef="I_Parziale">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Consegne parziali</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_17" name="Rinuncia" sourceRef="I_Correzione" targetRef="I_Rinuncia" />
+    <bpmn:sequenceFlow id="Flow_Ordine_18" name="Riconferma" sourceRef="I_Modifica" targetRef="I_Conferma" />
+    <bpmn:sequenceFlow id="Flow_Ordine_19" name="Riverifica" sourceRef="I_Parziale" targetRef="I_Verifica" />
+    <bpmn:sequenceFlow id="Flow_Ordine_20" name="Sì" sourceRef="I_Esito" targetRef="I_Registra">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_21" sourceRef="I_Registra" targetRef="I_Urgente" />
+    <bpmn:sequenceFlow id="Flow_Ordine_22" name="No" sourceRef="I_Urgente" targetRef="I_Codice" />
+    <bpmn:sequenceFlow id="Flow_Ordine_23" name="Sì" sourceRef="I_Urgente" targetRef="I_RichUrgenza">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_24" sourceRef="I_RichUrgenza" targetRef="I_FC" />
+    <bpmn:sequenceFlow id="Flow_Ordine_25" sourceRef="I_FC" targetRef="I_Approvato" />
+    <bpmn:sequenceFlow id="Flow_Ordine_26" name="Sì" sourceRef="I_Approvato" targetRef="I_Autorizza">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Ordine_27" name="No" sourceRef="I_Approvato" targetRef="I_Respinto" />
+    <bpmn:sequenceFlow id="Flow_Ordine_28" sourceRef="I_Respinto" targetRef="I_No" />
+    <bpmn:sequenceFlow id="Flow_Ordine_29" sourceRef="I_Autorizza" targetRef="I_Codice" />
+    <bpmn:sequenceFlow id="Flow_Ordine_30" sourceRef="I_Codice" targetRef="I_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Ordine">
+    <bpmndi:BPMNPlane id="Plane_Ordine" bpmnElement="Ordine">
+      <bpmndi:BPMNShape id="Lane_Ordine_2_di_Ordine" bpmnElement="Lane_Ordine_2" isHorizontal="true">
+        <dc:Bounds x="150" y="1680" width="4060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Ordine_1_di_Ordine" bpmnElement="Lane_Ordine_1" isHorizontal="true">
+        <dc:Bounds x="150" y="880" width="4060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Ordine_0_di_Ordine" bpmnElement="Lane_Ordine_0" isHorizontal="true">
+        <dc:Bounds x="150" y="80" width="4060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Start_di_Ordine" bpmnElement="I_Start">
+        <dc:Bounds x="272" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="238" y="407" width="104" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Login_store_0_ref_di_Ordine" bpmnElement="Data_I_Login_store_0_ref">
+        <dc:Bounds x="515" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="492" y="255" width="96" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Login_di_Ordine" bpmnElement="I_Login">
+        <dc:Bounds x="455" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Accesso_di_Ordine" bpmnElement="I_Accesso" isMarkerVisible="true">
+        <dc:Bounds x="765" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="750" y="414" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_NoAccesso_di_Ordine" bpmnElement="I_NoAccesso">
+        <dc:Bounds x="772" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="751" y="727" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Testata_store_0_ref_di_Ordine" bpmnElement="Data_I_Testata_store_0_ref">
+        <dc:Bounds x="1015" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="958" y="255" width="165" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Testata_di_Ordine" bpmnElement="I_Testata">
+        <dc:Bounds x="955" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Riga_store_0_ref_di_Ordine" bpmnElement="Data_I_Riga_store_0_ref">
+        <dc:Bounds x="1265" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1191" y="255" width="199" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Riga_di_Ordine" bpmnElement="I_Riga">
+        <dc:Bounds x="1205" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Offerta_di_Ordine" bpmnElement="I_Offerta" isMarkerVisible="true">
+        <dc:Bounds x="1515" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1481" y="414" width="119" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_RichOfferta_store_0_ref_di_Ordine" bpmnElement="Data_I_RichOfferta_store_0_ref">
+        <dc:Bounds x="1515" y="521" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1457" y="575" width="166" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_RichOfferta_di_Ordine" bpmnElement="I_RichOfferta">
+        <dc:Bounds x="1455" y="655" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Sospeso_di_Ordine" bpmnElement="I_Sospeso">
+        <dc:Bounds x="1772" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1735" y="727" width="110" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Prezzo_store_0_ref_di_Ordine" bpmnElement="Data_I_Prezzo_store_0_ref">
+        <dc:Bounds x="1765" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1710" y="255" width="160" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Prezzo_di_Ordine" bpmnElement="I_Prezzo">
+        <dc:Bounds x="1705" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Altre_di_Ordine" bpmnElement="I_Altre" isMarkerVisible="true">
+        <dc:Bounds x="2015" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2012" y="414" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Conferma_store_0_ref_di_Ordine" bpmnElement="Data_I_Conferma_store_0_ref">
+        <dc:Bounds x="2265" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2216" y="255" width="149" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Conferma_di_Ordine" bpmnElement="I_Conferma">
+        <dc:Bounds x="2205" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Verifica_store_0_ref_di_Ordine" bpmnElement="Data_I_Verifica_store_0_ref">
+        <dc:Bounds x="2265" y="1001" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2194" y="1055" width="193" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Verifica_di_Ordine" bpmnElement="I_Verifica">
+        <dc:Bounds x="2205" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Esito_di_Ordine" bpmnElement="I_Esito" isMarkerVisible="true">
+        <dc:Bounds x="2515" y="1155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2490" y="1214" width="101" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Correzione_di_Ordine" bpmnElement="I_Correzione" isMarkerVisible="true">
+        <dc:Bounds x="2515" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2495" y="414" width="91" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Modifica_store_0_ref_di_Ordine" bpmnElement="Data_I_Modifica_store_0_ref">
+        <dc:Bounds x="2765" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2716" y="255" width="149" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Modifica_di_Ordine" bpmnElement="I_Modifica">
+        <dc:Bounds x="2705" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Parziale_store_0_ref_di_Ordine" bpmnElement="Data_I_Parziale_store_0_ref">
+        <dc:Bounds x="2765" y="1321" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2716" y="1375" width="149" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Parziale_di_Ordine" bpmnElement="I_Parziale">
+        <dc:Bounds x="2705" y="1455" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Rinuncia_di_Ordine" bpmnElement="I_Rinuncia">
+        <dc:Bounds x="3022" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2979" y="727" width="122" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Registra_store_0_ref_di_Ordine" bpmnElement="Data_I_Registra_store_0_ref">
+        <dc:Bounds x="2765" y="1001" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2716" y="1055" width="149" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Registra_di_Ordine" bpmnElement="I_Registra">
+        <dc:Bounds x="2705" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Urgente_di_Ordine" bpmnElement="I_Urgente" isMarkerVisible="true">
+        <dc:Bounds x="3015" y="1155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3000" y="1214" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_RichUrgenza_store_0_ref_di_Ordine" bpmnElement="Data_I_RichUrgenza_store_0_ref">
+        <dc:Bounds x="3015" y="1801" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2963" y="1855" width="154" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_RichUrgenza_di_Ordine" bpmnElement="I_RichUrgenza">
+        <dc:Bounds x="2955" y="1935" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_FC_store_0_ref_di_Ordine" bpmnElement="Data_I_FC_store_0_ref">
+        <dc:Bounds x="3265" y="1801" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3194" y="1855" width="193" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_FC_di_Ordine" bpmnElement="I_FC">
+        <dc:Bounds x="3205" y="1935" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Approvato_di_Ordine" bpmnElement="I_Approvato" isMarkerVisible="true">
+        <dc:Bounds x="3515" y="1955" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3512" y="2014" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Autorizza_store_0_ref_di_Ordine" bpmnElement="Data_I_Autorizza_store_0_ref">
+        <dc:Bounds x="3697" y="1801" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3671" y="1855" width="102" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Autorizza_object_1_ref_di_Ordine" bpmnElement="Data_I_Autorizza_object_1_ref">
+        <dc:Bounds x="3840" y="1800" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3805" y="1855" width="106" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Autorizza_di_Ordine" bpmnElement="I_Autorizza">
+        <dc:Bounds x="3705" y="1935" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Respinto_store_0_ref_di_Ordine" bpmnElement="Data_I_Respinto_store_0_ref">
+        <dc:Bounds x="3447" y="2121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3413" y="2175" width="118" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Respinto_object_1_ref_di_Ordine" bpmnElement="Data_I_Respinto_object_1_ref">
+        <dc:Bounds x="3590" y="2120" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3555" y="2175" width="106" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Respinto_di_Ordine" bpmnElement="I_Respinto">
+        <dc:Bounds x="3455" y="2255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_No_di_Ordine" bpmnElement="I_No">
+        <dc:Bounds x="3772" y="2282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3743" y="2327" width="95" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_I_Codice_object_0_ref_di_Ordine" bpmnElement="Data_I_Codice_object_0_ref">
+        <dc:Bounds x="3772" y="1000" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3721" y="1055" width="139" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_Codice_di_Ordine" bpmnElement="I_Codice">
+        <dc:Bounds x="3705" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="I_End_di_Ordine" bpmnElement="I_End">
+        <dc:Bounds x="4022" y="1162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3996" y="1207" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Data_I_Login_store_0_in_di_Ordine" bpmnElement="Data_I_Login_store_0_in">
+        <di:waypoint x="531" y="249" />
+        <di:waypoint x="531" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Testata_store_0_in_di_Ordine" bpmnElement="Data_I_Testata_store_0_in">
+        <di:waypoint x="1031" y="249" />
+        <di:waypoint x="1031" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Testata_store_0_out_di_Ordine" bpmnElement="Data_I_Testata_store_0_out">
+        <di:waypoint x="1049" y="335" />
+        <di:waypoint x="1049" y="249" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Riga_store_0_in_di_Ordine" bpmnElement="Data_I_Riga_store_0_in">
+        <di:waypoint x="1281" y="249" />
+        <di:waypoint x="1281" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Riga_store_0_out_di_Ordine" bpmnElement="Data_I_Riga_store_0_out">
+        <di:waypoint x="1299" y="335" />
+        <di:waypoint x="1299" y="249" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_RichOfferta_store_0_in_di_Ordine" bpmnElement="Data_I_RichOfferta_store_0_in">
+        <di:waypoint x="1531" y="569" />
+        <di:waypoint x="1531" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_RichOfferta_store_0_out_di_Ordine" bpmnElement="Data_I_RichOfferta_store_0_out">
+        <di:waypoint x="1549" y="655" />
+        <di:waypoint x="1549" y="569" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Prezzo_store_0_in_di_Ordine" bpmnElement="Data_I_Prezzo_store_0_in">
+        <di:waypoint x="1781" y="249" />
+        <di:waypoint x="1781" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Conferma_store_0_in_di_Ordine" bpmnElement="Data_I_Conferma_store_0_in">
+        <di:waypoint x="2281" y="249" />
+        <di:waypoint x="2281" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Verifica_store_0_in_di_Ordine" bpmnElement="Data_I_Verifica_store_0_in">
+        <di:waypoint x="2281" y="1049" />
+        <di:waypoint x="2281" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Modifica_store_0_in_di_Ordine" bpmnElement="Data_I_Modifica_store_0_in">
+        <di:waypoint x="2781" y="249" />
+        <di:waypoint x="2781" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Modifica_store_0_out_di_Ordine" bpmnElement="Data_I_Modifica_store_0_out">
+        <di:waypoint x="2799" y="335" />
+        <di:waypoint x="2799" y="249" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Parziale_store_0_in_di_Ordine" bpmnElement="Data_I_Parziale_store_0_in">
+        <di:waypoint x="2781" y="1369" />
+        <di:waypoint x="2781" y="1455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Parziale_store_0_out_di_Ordine" bpmnElement="Data_I_Parziale_store_0_out">
+        <di:waypoint x="2799" y="1455" />
+        <di:waypoint x="2799" y="1369" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Registra_store_0_in_di_Ordine" bpmnElement="Data_I_Registra_store_0_in">
+        <di:waypoint x="2781" y="1049" />
+        <di:waypoint x="2781" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Registra_store_0_out_di_Ordine" bpmnElement="Data_I_Registra_store_0_out">
+        <di:waypoint x="2799" y="1135" />
+        <di:waypoint x="2799" y="1049" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_RichUrgenza_store_0_in_di_Ordine" bpmnElement="Data_I_RichUrgenza_store_0_in">
+        <di:waypoint x="3031" y="1849" />
+        <di:waypoint x="3031" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_RichUrgenza_store_0_out_di_Ordine" bpmnElement="Data_I_RichUrgenza_store_0_out">
+        <di:waypoint x="3049" y="1935" />
+        <di:waypoint x="3049" y="1849" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_FC_store_0_in_di_Ordine" bpmnElement="Data_I_FC_store_0_in">
+        <di:waypoint x="3281" y="1849" />
+        <di:waypoint x="3281" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Autorizza_store_0_in_di_Ordine" bpmnElement="Data_I_Autorizza_store_0_in">
+        <di:waypoint x="3713" y="1849" />
+        <di:waypoint x="3713" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Autorizza_store_0_out_di_Ordine" bpmnElement="Data_I_Autorizza_store_0_out">
+        <di:waypoint x="3731" y="1935" />
+        <di:waypoint x="3731" y="1849" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Autorizza_object_1_out_di_Ordine" bpmnElement="Data_I_Autorizza_object_1_out">
+        <di:waypoint x="3867" y="1935" />
+        <di:waypoint x="3867" y="1850" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Respinto_store_0_in_di_Ordine" bpmnElement="Data_I_Respinto_store_0_in">
+        <di:waypoint x="3463" y="2169" />
+        <di:waypoint x="3463" y="2255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Respinto_store_0_out_di_Ordine" bpmnElement="Data_I_Respinto_store_0_out">
+        <di:waypoint x="3481" y="2255" />
+        <di:waypoint x="3481" y="2169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Respinto_object_1_out_di_Ordine" bpmnElement="Data_I_Respinto_object_1_out">
+        <di:waypoint x="3617" y="2255" />
+        <di:waypoint x="3617" y="2170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_I_Codice_object_0_out_di_Ordine" bpmnElement="Data_I_Codice_object_0_out">
+        <di:waypoint x="3799" y="1135" />
+        <di:waypoint x="3799" y="1050" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_0_di_Ordine" bpmnElement="Flow_Ordine_0">
+        <di:waypoint x="308" y="380" />
+        <di:waypoint x="455" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_1_di_Ordine" bpmnElement="Flow_Ordine_1">
+        <di:waypoint x="625" y="380" />
+        <di:waypoint x="765" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_2_di_Ordine" bpmnElement="Flow_Ordine_2">
+        <di:waypoint x="815" y="380" />
+        <di:waypoint x="831" y="380" />
+        <di:waypoint x="831" y="410" />
+        <di:waypoint x="713" y="410" />
+        <di:waypoint x="713" y="700" />
+        <di:waypoint x="772" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="706" y="518" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_3_di_Ordine" bpmnElement="Flow_Ordine_3">
+        <di:waypoint x="765" y="380" />
+        <di:waypoint x="760" y="380" />
+        <di:waypoint x="760" y="350" />
+        <di:waypoint x="939" y="350" />
+        <di:waypoint x="939" y="380" />
+        <di:waypoint x="955" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="844" y="313" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_4_di_Ordine" bpmnElement="Flow_Ordine_4">
+        <di:waypoint x="1125" y="380" />
+        <di:waypoint x="1205" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_5_di_Ordine" bpmnElement="Flow_Ordine_5">
+        <di:waypoint x="1375" y="380" />
+        <di:waypoint x="1515" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_6_di_Ordine" bpmnElement="Flow_Ordine_6">
+        <di:waypoint x="1565" y="380" />
+        <di:waypoint x="1581" y="380" />
+        <di:waypoint x="1581" y="410" />
+        <di:waypoint x="1439" y="410" />
+        <di:waypoint x="1439" y="700" />
+        <di:waypoint x="1455" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1432" y="518" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_7_di_Ordine" bpmnElement="Flow_Ordine_7">
+        <di:waypoint x="1625" y="700" />
+        <di:waypoint x="1772" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_8_di_Ordine" bpmnElement="Flow_Ordine_8">
+        <di:waypoint x="1515" y="380" />
+        <di:waypoint x="1499" y="380" />
+        <di:waypoint x="1499" y="410" />
+        <di:waypoint x="1689" y="410" />
+        <di:waypoint x="1689" y="380" />
+        <di:waypoint x="1705" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1636" y="373" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_9_di_Ordine" bpmnElement="Flow_Ordine_9">
+        <di:waypoint x="1875" y="380" />
+        <di:waypoint x="2015" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_10_di_Ordine" bpmnElement="Flow_Ordine_10">
+        <di:waypoint x="2015" y="380" />
+        <di:waypoint x="1887" y="380" />
+        <di:waypoint x="1887" y="332" />
+        <di:waypoint x="1391" y="332" />
+        <di:waypoint x="1391" y="380" />
+        <di:waypoint x="1375" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1634" y="295" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_11_di_Ordine" bpmnElement="Flow_Ordine_11">
+        <di:waypoint x="2015" y="380" />
+        <di:waypoint x="1999" y="380" />
+        <di:waypoint x="1999" y="410" />
+        <di:waypoint x="2189" y="410" />
+        <di:waypoint x="2189" y="380" />
+        <di:waypoint x="2205" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2134" y="373" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_12_di_Ordine" bpmnElement="Flow_Ordine_12">
+        <di:waypoint x="2375" y="380" />
+        <di:waypoint x="2391" y="380" />
+        <di:waypoint x="2391" y="1132" />
+        <di:waypoint x="2189" y="1132" />
+        <di:waypoint x="2189" y="1180" />
+        <di:waypoint x="2205" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_13_di_Ordine" bpmnElement="Flow_Ordine_13">
+        <di:waypoint x="2375" y="1180" />
+        <di:waypoint x="2515" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_14_di_Ordine" bpmnElement="Flow_Ordine_14">
+        <di:waypoint x="2565" y="1180" />
+        <di:waypoint x="2581" y="1180" />
+        <di:waypoint x="2581" y="474" />
+        <di:waypoint x="2463" y="474" />
+        <di:waypoint x="2463" y="380" />
+        <di:waypoint x="2515" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2574" y="790" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_15_di_Ordine" bpmnElement="Flow_Ordine_15">
+        <di:waypoint x="2565" y="380" />
+        <di:waypoint x="2705" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2615" y="343" width="41" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_16_di_Ordine" bpmnElement="Flow_Ordine_16">
+        <di:waypoint x="2515" y="380" />
+        <di:waypoint x="2499" y="380" />
+        <di:waypoint x="2499" y="410" />
+        <di:waypoint x="2689" y="410" />
+        <di:waypoint x="2689" y="1500" />
+        <di:waypoint x="2705" y="1500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2645" y="918" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_17_di_Ordine" bpmnElement="Flow_Ordine_17">
+        <di:waypoint x="2565" y="380" />
+        <di:waypoint x="2581" y="380" />
+        <di:waypoint x="2581" y="410" />
+        <di:waypoint x="2693" y="410" />
+        <di:waypoint x="2693" y="700" />
+        <di:waypoint x="3022" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2836" y="663" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_18_di_Ordine" bpmnElement="Flow_Ordine_18">
+        <di:waypoint x="2705" y="380" />
+        <di:waypoint x="2577" y="380" />
+        <di:waypoint x="2577" y="350" />
+        <di:waypoint x="2391" y="350" />
+        <di:waypoint x="2391" y="380" />
+        <di:waypoint x="2375" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2456" y="313" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_19_di_Ordine" bpmnElement="Flow_Ordine_19">
+        <di:waypoint x="2705" y="1500" />
+        <di:waypoint x="2689" y="1500" />
+        <di:waypoint x="2689" y="1210" />
+        <di:waypoint x="2391" y="1210" />
+        <di:waypoint x="2391" y="1180" />
+        <di:waypoint x="2375" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2592" y="1173" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_20_di_Ordine" bpmnElement="Flow_Ordine_20">
+        <di:waypoint x="2515" y="1180" />
+        <di:waypoint x="2499" y="1180" />
+        <di:waypoint x="2499" y="1210" />
+        <di:waypoint x="2689" y="1210" />
+        <di:waypoint x="2689" y="1180" />
+        <di:waypoint x="2705" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2557" y="1140" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_21_di_Ordine" bpmnElement="Flow_Ordine_21">
+        <di:waypoint x="2875" y="1180" />
+        <di:waypoint x="3015" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_22_di_Ordine" bpmnElement="Flow_Ordine_22">
+        <di:waypoint x="3065" y="1180" />
+        <di:waypoint x="3705" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3378" y="1143" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_23_di_Ordine" bpmnElement="Flow_Ordine_23">
+        <di:waypoint x="3015" y="1180" />
+        <di:waypoint x="2939" y="1180" />
+        <di:waypoint x="2939" y="1980" />
+        <di:waypoint x="2955" y="1980" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2934" y="1543" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_24_di_Ordine" bpmnElement="Flow_Ordine_24">
+        <di:waypoint x="3125" y="1980" />
+        <di:waypoint x="3205" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_25_di_Ordine" bpmnElement="Flow_Ordine_25">
+        <di:waypoint x="3375" y="1980" />
+        <di:waypoint x="3515" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_26_di_Ordine" bpmnElement="Flow_Ordine_26">
+        <di:waypoint x="3565" y="1980" />
+        <di:waypoint x="3705" y="1980" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3630" y="1943" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_27_di_Ordine" bpmnElement="Flow_Ordine_27">
+        <di:waypoint x="3515" y="1980" />
+        <di:waypoint x="3402" y="1980" />
+        <di:waypoint x="3402" y="2300" />
+        <di:waypoint x="3455" y="2300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3395" y="2103" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_28_di_Ordine" bpmnElement="Flow_Ordine_28">
+        <di:waypoint x="3625" y="2300" />
+        <di:waypoint x="3772" y="2300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_29_di_Ordine" bpmnElement="Flow_Ordine_29">
+        <di:waypoint x="3875" y="1980" />
+        <di:waypoint x="3891" y="1980" />
+        <di:waypoint x="3891" y="1923" />
+        <di:waypoint x="3643" y="1923" />
+        <di:waypoint x="3643" y="1180" />
+        <di:waypoint x="3705" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ordine_30_di_Ordine" bpmnElement="Flow_Ordine_30">
+        <di:waypoint x="3875" y="1180" />
+        <di:waypoint x="4022" y="1180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

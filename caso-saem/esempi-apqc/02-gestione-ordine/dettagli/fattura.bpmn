@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_SAEM_Fattura" targetNamespace="https://saem.example/teaching" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:dataStore id="Data_F_Verifica_store_0_store" name="Archivi logici dell&#39;attività F_Verifica">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Recupera_store_0_store" name="Archivi logici dell&#39;attività F_Recupera">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Emetti_store_0_store" name="Archivi logici dell&#39;attività F_Emetti">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Posta_store_0_store" name="Archivi logici dell&#39;attività F_Posta">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_Archivia_store_0_store" name="Archivi logici dell&#39;attività F_Archivia">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_PrimaNota_store_0_store" name="Archivi logici dell&#39;attività F_PrimaNota">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:dataStore id="Data_F_RegManuale_store_0_store" name="Archivi logici dell&#39;attività F_RegManuale">
+    <bpmn:documentation>Raggruppamento grafico degli archivi consultati/prodotti; non identifica un nuovo database fisico. Vedere documentazione.</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:process id="Fattura" name="D.11 · Fatturazione della bolla evasa" isExecutable="false">
+    <bpmn:documentation>TO-BE · fatturazione mantenuta dal processo originale. PDF 75 / stampata 63; PDF 37 / 25. Modello didattico completo nel perimetro ordine→spedizione→fatturazione; vedere processo.md per fonti e assunzioni.</bpmn:documentation>
+    <bpmn:laneSet id="Lanes_Fattura">
+      <bpmn:lane id="Lane_Fattura_2" name="CONT · Prima nota">
+        <bpmn:flowNodeRef>F_PrimaNota</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_RegManuale</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Join</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_End</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_GiaRegistrata</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_EndManuale</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fattura_1" name="RGC / EDP / RTRAF / MAG · Invio e archivi">
+        <bpmn:flowNodeRef>F_Posta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Postel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Contrassegno</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Archivia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Canale</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Merge</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fattura_0" name="RGC / RCONT · Verifica ed emissione">
+        <bpmn:flowNodeRef>F_Verifica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Recupera</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Emetti</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Gia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F_Fork</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="F_Start" name="Ciclo settimanale · bolla evasa">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:outgoing>Flow_Fattura_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:dataStoreReference id="Data_F_Verifica_store_0_ref" name="Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate" dataStoreRef="Data_F_Verifica_store_0_store">
+      <bpmn:documentation>R: Archivio bolle evase / bolle fatturate
+Gestionale · tabelle non specificate. Tutte le bolle evase caricate; esclusione già fatturate manualmente. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:task id="F_Verifica" name="Verificare caricamento bolle ed escludere già fatturate">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate | Tutte le bolle evase caricate; esclusione già fatturate manualmente. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_1</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Verifica_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_F_Verifica">
+          <bpmn:dataInputRefs>Data_F_Verifica_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Verifica" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_18xakso" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Verifica_store_0_in">
+        <bpmn:sourceRef>Data_F_Verifica_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_18xakso</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="F_Gia" name="Già fatturata manualmente?" default="Flow_Fattura_7">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fattura_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_F_Recupera_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_Recupera_store_0_store">
+      <bpmn:documentation>R: Archivio fatture emesse
+Tabella non specificata. Fattura già emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+R: Prima nota contabile
+Tabella non specificata. Stato registrazione per evitare duplicati; raccordo didattico. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:task id="F_Recupera" name="Recuperare fattura emessa e relativo stato contabile">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Raccordo didattico: esclusione bolle già fatturate esplicita, verifica contabile evita duplicazioni.
+R | Archivio fatture emesse Tabella non specificata | Fattura già emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+R | Prima nota contabile Tabella non specificata | Stato registrazione per evitare duplicati; raccordo didattico. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_3</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Recupera_store_0_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_F_Recupera">
+          <bpmn:dataInputRefs>Data_F_Recupera_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Recupera" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1k757o1" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Recupera_store_0_in">
+        <bpmn:sourceRef>Data_F_Recupera_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1k757o1</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:dataStoreReference id="Data_F_Emetti_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_Emetti_store_0_store">
+      <bpmn:documentation>R/U: Archivio bolle evase / bolle fatturate
+Gestionale · tabelle non specificate. Bolle da fatturare; stato di fatturazione è inferenza funzionale, tabella non specificata. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+C: Archivio fatture emesse
+Tabella non specificata. Fattura prodotta; struttura fisica non specificata. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:dataObject id="Data_F_Emetti_object_1" />
+    <bpmn:dataObjectReference id="Data_F_Emetti_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Emetti_object_1">
+      <bpmn:documentation>C: Fattura [emessa]. Fattura emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="F_Emetti" name="Elaborare e stampare fattura">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Archivio bolle evase / bolle fatturate Gestionale · tabelle non specificate | Bolle da fatturare; stato di fatturazione è inferenza funzionale, tabella non specificata. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Archivio fatture emesse Tabella non specificata | Fattura prodotta; struttura fisica non specificata. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Fattura [emessa] | Fattura emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_8</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Emetti_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_Emetti_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:dataOutput id="Data_F_Emetti_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_Emetti">
+          <bpmn:dataInputRefs>Data_F_Emetti_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Emetti">
+          <bpmn:dataOutputRefs>Data_F_Emetti_store_0_output</bpmn:dataOutputRefs>
+          <bpmn:dataOutputRefs>Data_F_Emetti_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0ikmzhx" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Emetti_store_0_in">
+        <bpmn:sourceRef>Data_F_Emetti_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0ikmzhx</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_Emetti_store_0_out">
+        <bpmn:sourceRef>Data_F_Emetti_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_Emetti_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_Emetti_object_1_out">
+        <bpmn:sourceRef>Data_F_Emetti_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_Emetti_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:parallelGateway id="F_Fork" name="Invio e registrazione">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / RCONT · Verifica ed emissione.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fattura_10</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:exclusiveGateway id="F_Canale" name="Canale cliente?">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fattura_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fattura_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_F_Posta_store_0_ref" name="Anagrafica cliente · canale invio Tabella non specificata" dataStoreRef="Data_F_Posta_store_0_store">
+      <bpmn:documentation>R: Anagrafica cliente · canale invio
+Tabella non specificata. Indirizzo destinatario. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:dataObject id="Data_F_Posta_object_1" />
+    <bpmn:dataObjectReference id="Data_F_Posta_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Posta_object_1">
+      <bpmn:documentation>R: Fattura [emessa]. Smistare / spedire fattura. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="F_Posta" name="Smistare e spedire fattura per posta">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Smistare / spedire fattura. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+R | Anagrafica cliente · canale invio Tabella non specificata | Indirizzo destinatario. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_14</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Posta_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataInput id="Data_F_Posta_object_1_input" name="Dati in ingresso" />
+        <bpmn:inputSet id="Inputs_F_Posta">
+          <bpmn:dataInputRefs>Data_F_Posta_store_0_input</bpmn:dataInputRefs>
+          <bpmn:dataInputRefs>Data_F_Posta_object_1_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Posta" />
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0nfp56i" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Posta_store_0_in">
+        <bpmn:sourceRef>Data_F_Posta_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0nfp56i</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="Data_F_Posta_object_1_in">
+        <bpmn:sourceRef>Data_F_Posta_object_1_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0nfp56i</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:dataObject id="Data_F_Postel_object_0" />
+    <bpmn:dataObjectReference id="Data_F_Postel_object_0_ref" name="Fattura [emessa]" dataObjectRef="Data_F_Postel_object_0">
+      <bpmn:documentation>R: Fattura [emessa]. Dati fattura. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="Data_F_Postel_object_1" />
+    <bpmn:dataObjectReference id="Data_F_Postel_object_1_ref" name="File fatture Postel" dataObjectRef="Data_F_Postel_object_1">
+      <bpmn:documentation>C: File fatture Postel. File fatture Postel. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="F_Postel" name="EDP · Generare e trasmettere file Postel">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Dati fattura. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | File fatture Postel | File fatture Postel. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_15</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Postel_object_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_Postel_object_1_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_Postel">
+          <bpmn:dataInputRefs>Data_F_Postel_object_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Postel">
+          <bpmn:dataOutputRefs>Data_F_Postel_object_1_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0l8gjqg" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Postel_object_0_in">
+        <bpmn:sourceRef>Data_F_Postel_object_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0l8gjqg</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_Postel_object_1_out">
+        <bpmn:sourceRef>Data_F_Postel_object_1_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_Postel_object_1_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataObject id="Data_F_Contrassegno_object_0" />
+    <bpmn:dataObjectReference id="Data_F_Contrassegno_object_0_ref" name="Fattura [contrassegno]" dataObjectRef="Data_F_Contrassegno_object_0">
+      <bpmn:documentation>R/U: Fattura [contrassegno]. Invio documenti a magazzino e archiviazione secondo D.11. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="F_Contrassegno" name="RTRAF / MAG · Gestire fattura contrassegno">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R/U | Fattura [contrassegno] | Invio documenti a magazzino e archiviazione secondo D.11. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_16</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Contrassegno_object_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_Contrassegno_object_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_Contrassegno">
+          <bpmn:dataInputRefs>Data_F_Contrassegno_object_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Contrassegno">
+          <bpmn:dataOutputRefs>Data_F_Contrassegno_object_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_0efz9dk" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Contrassegno_object_0_in">
+        <bpmn:sourceRef>Data_F_Contrassegno_object_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0efz9dk</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_Contrassegno_object_0_out">
+        <bpmn:sourceRef>Data_F_Contrassegno_object_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_Contrassegno_object_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="F_Merge" name="Canale completato">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_14</bpmn:incoming>
+      <bpmn:incoming>Flow_Fattura_15</bpmn:incoming>
+      <bpmn:incoming>Flow_Fattura_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_F_Archivia_store_0_ref" name="Catalogatore / archivio fatture" dataStoreRef="Data_F_Archivia_store_0_store">
+      <bpmn:documentation>U: Catalogatore / archivio fatture. Archivio fatture e catalogatore. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:task id="F_Archivia" name="Archiviare fattura / aggiornare catalogatore">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: RGC / EDP / RTRAF / MAG · Invio e archivi.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+U | Catalogatore / archivio fatture | Archivio fatture e catalogatore. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_17</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_18</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_Archivia_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_Archivia_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_Archivia">
+          <bpmn:dataInputRefs>Data_F_Archivia_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_Archivia">
+          <bpmn:dataOutputRefs>Data_F_Archivia_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_08mlkz4" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_Archivia_store_0_in">
+        <bpmn:sourceRef>Data_F_Archivia_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_08mlkz4</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_Archivia_store_0_out">
+        <bpmn:sourceRef>Data_F_Archivia_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_Archivia_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataStoreReference id="Data_F_PrimaNota_store_0_ref" name="Prima nota contabile Tabella non specificata" dataStoreRef="Data_F_PrimaNota_store_0_store">
+      <bpmn:documentation>C: Prima nota contabile
+Tabella non specificata. Trasferimento fattura in prima nota. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:dataObject id="Data_F_PrimaNota_object_1" />
+    <bpmn:dataObjectReference id="Data_F_PrimaNota_object_1_ref" name="Fattura [emessa]" dataObjectRef="Data_F_PrimaNota_object_1">
+      <bpmn:documentation>R: Fattura [emessa]. Dati fattura emessa. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:task id="F_PrimaNota" name="Trasferire fattura in prima nota">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+R | Fattura [emessa] | Dati fattura emessa. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Prima nota contabile Tabella non specificata | Trasferimento fattura in prima nota. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_19</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_PrimaNota_object_1_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_PrimaNota_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_PrimaNota">
+          <bpmn:dataInputRefs>Data_F_PrimaNota_object_1_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_PrimaNota">
+          <bpmn:dataOutputRefs>Data_F_PrimaNota_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_02mogj7" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_PrimaNota_object_1_in">
+        <bpmn:sourceRef>Data_F_PrimaNota_object_1_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_02mogj7</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_PrimaNota_store_0_out">
+        <bpmn:sourceRef>Data_F_PrimaNota_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_PrimaNota_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:parallelGateway id="F_Join" name="Invio e contabilità completati">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_18</bpmn:incoming>
+      <bpmn:incoming>Flow_Fattura_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_20</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="F_End" name="Fatturazione completata">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_20</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="F_GiaRegistrata" name="Già in prima nota?" default="Flow_Fattura_4">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Fattura_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataStoreReference id="Data_F_RegManuale_store_0_ref" name="Archivi gestionali / documentali" dataStoreRef="Data_F_RegManuale_store_0_store">
+      <bpmn:documentation>R: Archivio fatture emesse
+Tabella non specificata. Fattura manuale già esistente. Fonte: PDF 75 / stampata 63; PDF 37 / 25
+C: Prima nota contabile
+Tabella non specificata. Solo quando non già registrata; raccordo didattico. Fonte: PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:task id="F_RegManuale" name="Registrare fattura manuale in prima nota">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Raccordo didattico per documento già emesso; prevenzione della doppia registrazione.
+R | Archivio fatture emesse Tabella non specificata | Fattura manuale già esistente. | Fonte PDF 75 / stampata 63; PDF 37 / 25
+C | Prima nota contabile Tabella non specificata | Solo quando non già registrata; raccordo didattico. | Fonte PDF 75 / stampata 63; PDF 37 / 25</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fattura_6</bpmn:outgoing>
+      <bpmn:ioSpecification>
+        <bpmn:dataInput id="Data_F_RegManuale_store_0_input" name="Dati in ingresso" />
+        <bpmn:dataOutput id="Data_F_RegManuale_store_0_output" name="Dati prodotti / modificati" />
+        <bpmn:inputSet id="Inputs_F_RegManuale">
+          <bpmn:dataInputRefs>Data_F_RegManuale_store_0_input</bpmn:dataInputRefs>
+        </bpmn:inputSet>
+        <bpmn:outputSet id="Outputs_F_RegManuale">
+          <bpmn:dataOutputRefs>Data_F_RegManuale_store_0_output</bpmn:dataOutputRefs>
+        </bpmn:outputSet>
+      </bpmn:ioSpecification>
+      <bpmn:property id="Property_1niq8hs" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Data_F_RegManuale_store_0_in">
+        <bpmn:sourceRef>Data_F_RegManuale_store_0_ref</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1niq8hs</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Data_F_RegManuale_store_0_out">
+        <bpmn:sourceRef>Data_F_RegManuale_store_0_output</bpmn:sourceRef>
+        <bpmn:targetRef>Data_F_RegManuale_store_0_ref</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:endEvent id="F_EndManuale" name="Bolla già fatturata · contabilità verificata">
+      <bpmn:documentation>Scenario: TO-BE · fatturazione mantenuta dal processo originale. Responsabilità: CONT · Prima nota.
+Fonte: PDF 75 / stampata 63; PDF 37 / 25.
+Evidenza: Attività / relazione derivata dalla fonte; aggregazione e traduzione BPMN didattiche.
+Entità/tabelle non specificate per questa decisione/evento.</bpmn:documentation>
+      <bpmn:incoming>Flow_Fattura_5</bpmn:incoming>
+      <bpmn:incoming>Flow_Fattura_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_Fattura_0" sourceRef="F_Start" targetRef="F_Verifica" />
+    <bpmn:sequenceFlow id="Flow_Fattura_1" sourceRef="F_Verifica" targetRef="F_Gia" />
+    <bpmn:sequenceFlow id="Flow_Fattura_2" name="Sì" sourceRef="F_Gia" targetRef="F_Recupera">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Fattura_3" sourceRef="F_Recupera" targetRef="F_GiaRegistrata" />
+    <bpmn:sequenceFlow id="Flow_Fattura_4" name="No" sourceRef="F_GiaRegistrata" targetRef="F_RegManuale" />
+    <bpmn:sequenceFlow id="Flow_Fattura_5" name="Sì" sourceRef="F_GiaRegistrata" targetRef="F_EndManuale">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sì</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Fattura_6" sourceRef="F_RegManuale" targetRef="F_EndManuale" />
+    <bpmn:sequenceFlow id="Flow_Fattura_7" name="No" sourceRef="F_Gia" targetRef="F_Emetti" />
+    <bpmn:sequenceFlow id="Flow_Fattura_8" sourceRef="F_Emetti" targetRef="F_Fork" />
+    <bpmn:sequenceFlow id="Flow_Fattura_9" sourceRef="F_Fork" targetRef="F_Canale" />
+    <bpmn:sequenceFlow id="Flow_Fattura_10" sourceRef="F_Fork" targetRef="F_PrimaNota" />
+    <bpmn:sequenceFlow id="Flow_Fattura_11" name="Posta" sourceRef="F_Canale" targetRef="F_Posta">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Posta</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Fattura_12" name="Postel" sourceRef="F_Canale" targetRef="F_Postel">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Postel</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Fattura_13" name="Contrassegno" sourceRef="F_Canale" targetRef="F_Contrassegno">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Contrassegno</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Fattura_14" sourceRef="F_Posta" targetRef="F_Merge" />
+    <bpmn:sequenceFlow id="Flow_Fattura_15" sourceRef="F_Postel" targetRef="F_Merge" />
+    <bpmn:sequenceFlow id="Flow_Fattura_16" sourceRef="F_Contrassegno" targetRef="F_Merge" />
+    <bpmn:sequenceFlow id="Flow_Fattura_17" sourceRef="F_Merge" targetRef="F_Archivia" />
+    <bpmn:sequenceFlow id="Flow_Fattura_18" sourceRef="F_Archivia" targetRef="F_Join" />
+    <bpmn:sequenceFlow id="Flow_Fattura_19" sourceRef="F_PrimaNota" targetRef="F_Join" />
+    <bpmn:sequenceFlow id="Flow_Fattura_20" sourceRef="F_Join" targetRef="F_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Fattura">
+    <bpmndi:BPMNPlane id="Plane_Fattura" bpmnElement="Fattura">
+      <bpmndi:BPMNShape id="Lane_Fattura_2_di_Fattura" bpmnElement="Lane_Fattura_2" isHorizontal="true">
+        <dc:Bounds x="150" y="1680" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fattura_1_di_Fattura" bpmnElement="Lane_Fattura_1" isHorizontal="true">
+        <dc:Bounds x="150" y="880" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fattura_0_di_Fattura" bpmnElement="Lane_Fattura_0" isHorizontal="true">
+        <dc:Bounds x="150" y="80" width="3060" height="800" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Start_di_Fattura" bpmnElement="F_Start">
+        <dc:Bounds x="272" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="232" y="407" width="117" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Verifica_store_0_ref_di_Fattura" bpmnElement="Data_F_Verifica_store_0_ref">
+        <dc:Bounds x="515" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="453" y="255" width="174" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Verifica_di_Fattura" bpmnElement="F_Verifica">
+        <dc:Bounds x="455" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Gia_di_Fattura" bpmnElement="F_Gia" isMarkerVisible="true">
+        <dc:Bounds x="765" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="754" y="414" width="73" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Recupera_store_0_ref_di_Fattura" bpmnElement="Data_F_Recupera_store_0_ref">
+        <dc:Bounds x="765" y="521" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="714" y="575" width="152" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Recupera_di_Fattura" bpmnElement="F_Recupera">
+        <dc:Bounds x="705" y="655" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Emetti_store_0_ref_di_Fattura" bpmnElement="Data_F_Emetti_store_0_ref">
+        <dc:Bounds x="947" y="201" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="928" y="255" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Emetti_object_1_ref_di_Fattura" bpmnElement="Data_F_Emetti_object_1_ref">
+        <dc:Bounds x="1090" y="200" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1067" y="255" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Emetti_di_Fattura" bpmnElement="F_Emetti">
+        <dc:Bounds x="955" y="335" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Fork_di_Fattura" bpmnElement="F_Fork">
+        <dc:Bounds x="1265" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1241" y="414" width="99" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Canale_di_Fattura" bpmnElement="F_Canale" isMarkerVisible="true">
+        <dc:Bounds x="1515" y="1155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1502" y="1214" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Posta_store_0_ref_di_Fattura" bpmnElement="Data_F_Posta_store_0_ref">
+        <dc:Bounds x="1697" y="1001" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1657" y="1055" width="130" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Posta_object_1_ref_di_Fattura" bpmnElement="Data_F_Posta_object_1_ref">
+        <dc:Bounds x="1840" y="1000" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1817" y="1055" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Posta_di_Fattura" bpmnElement="F_Posta">
+        <dc:Bounds x="1705" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Postel_object_0_ref_di_Fattura" bpmnElement="Data_F_Postel_object_0_ref">
+        <dc:Bounds x="1704" y="1320" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="1375" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Postel_object_1_ref_di_Fattura" bpmnElement="Data_F_Postel_object_1_ref">
+        <dc:Bounds x="1840" y="1320" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1815" y="1375" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Postel_di_Fattura" bpmnElement="F_Postel">
+        <dc:Bounds x="1705" y="1455" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Contrassegno_object_0_ref_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_ref">
+        <dc:Bounds x="2022" y="1000" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1985" y="1055" width="111" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Contrassegno_di_Fattura" bpmnElement="F_Contrassegno">
+        <dc:Bounds x="1955" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Merge_di_Fattura" bpmnElement="F_Merge" isMarkerVisible="true">
+        <dc:Bounds x="2265" y="1155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2244" y="1214" width="92" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_Archivia_store_0_ref_di_Fattura" bpmnElement="Data_F_Archivia_store_0_ref">
+        <dc:Bounds x="2515" y="1001" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2468" y="1055" width="145" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Archivia_di_Fattura" bpmnElement="F_Archivia">
+        <dc:Bounds x="2455" y="1135" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_PrimaNota_store_0_ref_di_Fattura" bpmnElement="Data_F_PrimaNota_store_0_ref">
+        <dc:Bounds x="1697" y="1801" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1666" y="1855" width="112" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_PrimaNota_object_1_ref_di_Fattura" bpmnElement="Data_F_PrimaNota_object_1_ref">
+        <dc:Bounds x="1840" y="1800" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1817" y="1855" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_PrimaNota_di_Fattura" bpmnElement="F_PrimaNota">
+        <dc:Bounds x="1705" y="1935" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_Join_di_Fattura" bpmnElement="F_Join">
+        <dc:Bounds x="2765" y="1955" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2748" y="2014" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_End_di_Fattura" bpmnElement="F_End">
+        <dc:Bounds x="3022" y="1962" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2981" y="2007" width="119" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_GiaRegistrata_di_Fattura" bpmnElement="F_GiaRegistrata" isMarkerVisible="true">
+        <dc:Bounds x="1015" y="1955" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="995" y="2014" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Data_F_RegManuale_store_0_ref_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_ref">
+        <dc:Bounds x="1265" y="2121" width="50" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1214" y="2175" width="152" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_RegManuale_di_Fattura" bpmnElement="F_RegManuale">
+        <dc:Bounds x="1205" y="2255" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_EndManuale_di_Fattura" bpmnElement="F_EndManuale">
+        <dc:Bounds x="1522" y="2282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1492" y="2327" width="97" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_Fattura_0_di_Fattura" bpmnElement="Flow_Fattura_0">
+        <di:waypoint x="308" y="380" />
+        <di:waypoint x="455" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Verifica_store_0_in_di_Fattura" bpmnElement="Data_F_Verifica_store_0_in">
+        <di:waypoint x="531" y="249" />
+        <di:waypoint x="531" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_1_di_Fattura" bpmnElement="Flow_Fattura_1">
+        <di:waypoint x="625" y="380" />
+        <di:waypoint x="765" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_2_di_Fattura" bpmnElement="Flow_Fattura_2">
+        <di:waypoint x="815" y="380" />
+        <di:waypoint x="831" y="380" />
+        <di:waypoint x="831" y="410" />
+        <di:waypoint x="689" y="410" />
+        <di:waypoint x="689" y="700" />
+        <di:waypoint x="705" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="684" y="518" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_7_di_Fattura" bpmnElement="Flow_Fattura_7">
+        <di:waypoint x="765" y="380" />
+        <di:waypoint x="749" y="380" />
+        <di:waypoint x="749" y="410" />
+        <di:waypoint x="939" y="410" />
+        <di:waypoint x="939" y="380" />
+        <di:waypoint x="955" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="884" y="373" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Recupera_store_0_in_di_Fattura" bpmnElement="Data_F_Recupera_store_0_in">
+        <di:waypoint x="781" y="569" />
+        <di:waypoint x="781" y="655" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_3_di_Fattura" bpmnElement="Flow_Fattura_3">
+        <di:waypoint x="875" y="700" />
+        <di:waypoint x="891" y="700" />
+        <di:waypoint x="891" y="1980" />
+        <di:waypoint x="1015" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_store_0_out_di_Fattura" bpmnElement="Data_F_Emetti_store_0_out">
+        <di:waypoint x="981" y="335" />
+        <di:waypoint x="981" y="249" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_store_0_in_di_Fattura" bpmnElement="Data_F_Emetti_store_0_in">
+        <di:waypoint x="963" y="249" />
+        <di:waypoint x="963" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Emetti_object_1_out_di_Fattura" bpmnElement="Data_F_Emetti_object_1_out">
+        <di:waypoint x="1117" y="335" />
+        <di:waypoint x="1117" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_8_di_Fattura" bpmnElement="Flow_Fattura_8">
+        <di:waypoint x="1125" y="380" />
+        <di:waypoint x="1265" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_9_di_Fattura" bpmnElement="Flow_Fattura_9">
+        <di:waypoint x="1315" y="380" />
+        <di:waypoint x="1499" y="380" />
+        <di:waypoint x="1499" y="1180" />
+        <di:waypoint x="1515" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_10_di_Fattura" bpmnElement="Flow_Fattura_10">
+        <di:waypoint x="1315" y="380" />
+        <di:waypoint x="1643" y="380" />
+        <di:waypoint x="1643" y="1980" />
+        <di:waypoint x="1705" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_11_di_Fattura" bpmnElement="Flow_Fattura_11">
+        <di:waypoint x="1565" y="1180" />
+        <di:waypoint x="1705" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1621" y="1143" width="29" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_12_di_Fattura" bpmnElement="Flow_Fattura_12">
+        <di:waypoint x="1515" y="1180" />
+        <di:waypoint x="1499" y="1180" />
+        <di:waypoint x="1499" y="1202" />
+        <di:waypoint x="1463" y="1202" />
+        <di:waypoint x="1463" y="1500" />
+        <di:waypoint x="1705" y="1500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1448" y="1314" width="31" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_13_di_Fattura" bpmnElement="Flow_Fattura_13">
+        <di:waypoint x="1565" y="1180" />
+        <di:waypoint x="1693" y="1180" />
+        <di:waypoint x="1693" y="1132" />
+        <di:waypoint x="1939" y="1132" />
+        <di:waypoint x="1939" y="1180" />
+        <di:waypoint x="1955" y="1180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1605" y="1140" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Posta_store_0_in_di_Fattura" bpmnElement="Data_F_Posta_store_0_in">
+        <di:waypoint x="1713" y="1049" />
+        <di:waypoint x="1713" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Posta_object_1_in_di_Fattura" bpmnElement="Data_F_Posta_object_1_in">
+        <di:waypoint x="1849" y="1050" />
+        <di:waypoint x="1849" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_14_di_Fattura" bpmnElement="Flow_Fattura_14">
+        <di:waypoint x="1875" y="1180" />
+        <di:waypoint x="1943" y="1180" />
+        <di:waypoint x="1943" y="1132" />
+        <di:waypoint x="2249" y="1132" />
+        <di:waypoint x="2249" y="1180" />
+        <di:waypoint x="2265" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Postel_object_0_in_di_Fattura" bpmnElement="Data_F_Postel_object_0_in">
+        <di:waypoint x="1713" y="1370" />
+        <di:waypoint x="1713" y="1455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Postel_object_1_out_di_Fattura" bpmnElement="Data_F_Postel_object_1_out">
+        <di:waypoint x="1867" y="1455" />
+        <di:waypoint x="1867" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_15_di_Fattura" bpmnElement="Flow_Fattura_15">
+        <di:waypoint x="1875" y="1500" />
+        <di:waypoint x="2213" y="1500" />
+        <di:waypoint x="2213" y="1180" />
+        <di:waypoint x="2265" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Contrassegno_object_0_out_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_out">
+        <di:waypoint x="2049" y="1135" />
+        <di:waypoint x="2049" y="1050" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Contrassegno_object_0_in_di_Fattura" bpmnElement="Data_F_Contrassegno_object_0_in">
+        <di:waypoint x="2031" y="1050" />
+        <di:waypoint x="2031" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_16_di_Fattura" bpmnElement="Flow_Fattura_16">
+        <di:waypoint x="2125" y="1180" />
+        <di:waypoint x="2265" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_17_di_Fattura" bpmnElement="Flow_Fattura_17">
+        <di:waypoint x="2315" y="1180" />
+        <di:waypoint x="2455" y="1180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Archivia_store_0_out_di_Fattura" bpmnElement="Data_F_Archivia_store_0_out">
+        <di:waypoint x="2549" y="1135" />
+        <di:waypoint x="2549" y="1049" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_Archivia_store_0_in_di_Fattura" bpmnElement="Data_F_Archivia_store_0_in">
+        <di:waypoint x="2531" y="1049" />
+        <di:waypoint x="2531" y="1135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_18_di_Fattura" bpmnElement="Flow_Fattura_18">
+        <di:waypoint x="2625" y="1180" />
+        <di:waypoint x="2641" y="1180" />
+        <di:waypoint x="2641" y="1980" />
+        <di:waypoint x="2765" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_PrimaNota_store_0_out_di_Fattura" bpmnElement="Data_F_PrimaNota_store_0_out">
+        <di:waypoint x="1731" y="1935" />
+        <di:waypoint x="1731" y="1849" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_PrimaNota_object_1_in_di_Fattura" bpmnElement="Data_F_PrimaNota_object_1_in">
+        <di:waypoint x="1849" y="1850" />
+        <di:waypoint x="1849" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_19_di_Fattura" bpmnElement="Flow_Fattura_19">
+        <di:waypoint x="1875" y="1980" />
+        <di:waypoint x="2765" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_20_di_Fattura" bpmnElement="Flow_Fattura_20">
+        <di:waypoint x="2815" y="1980" />
+        <di:waypoint x="3022" y="1980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_4_di_Fattura" bpmnElement="Flow_Fattura_4">
+        <di:waypoint x="1065" y="1980" />
+        <di:waypoint x="1189" y="1980" />
+        <di:waypoint x="1189" y="2300" />
+        <di:waypoint x="1205" y="2300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="2103" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_5_di_Fattura" bpmnElement="Flow_Fattura_5">
+        <di:waypoint x="1015" y="1980" />
+        <di:waypoint x="999" y="1980" />
+        <di:waypoint x="999" y="2010" />
+        <di:waypoint x="1506" y="2010" />
+        <di:waypoint x="1506" y="2300" />
+        <di:waypoint x="1522" y="2300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1247" y="1973" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_RegManuale_store_0_out_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_out">
+        <di:waypoint x="1299" y="2255" />
+        <di:waypoint x="1299" y="2169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Data_F_RegManuale_store_0_in_di_Fattura" bpmnElement="Data_F_RegManuale_store_0_in">
+        <di:waypoint x="1281" y="2169" />
+        <di:waypoint x="1281" y="2255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Fattura_6_di_Fattura" bpmnElement="Flow_Fattura_6">
+        <di:waypoint x="1375" y="2300" />
+        <di:waypoint x="1522" y="2300" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

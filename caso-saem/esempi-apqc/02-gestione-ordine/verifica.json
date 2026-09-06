@@ -1,0 +1,62 @@
+{
+  "checked_on": "2026-09-06",
+  "files": [
+    {
+      "file": "dettagli/consegna.bpmn",
+      "schema_checked": true,
+      "tasks": 27,
+      "data_references": 44,
+      "data_associations": 53,
+      "errors": []
+    },
+    {
+      "file": "dettagli/fattura.bpmn",
+      "schema_checked": true,
+      "tasks": 9,
+      "data_references": 13,
+      "data_associations": 17,
+      "errors": []
+    },
+    {
+      "file": "dettagli/logistica.bpmn",
+      "schema_checked": true,
+      "tasks": 17,
+      "data_references": 26,
+      "data_associations": 30,
+      "errors": []
+    },
+    {
+      "file": "dettagli/modifica.bpmn",
+      "schema_checked": true,
+      "tasks": 9,
+      "data_references": 10,
+      "data_associations": 15,
+      "errors": []
+    },
+    {
+      "file": "dettagli/offerta.bpmn",
+      "schema_checked": true,
+      "tasks": 10,
+      "data_references": 11,
+      "data_associations": 18,
+      "errors": []
+    },
+    {
+      "file": "dettagli/ordine.bpmn",
+      "schema_checked": true,
+      "tasks": 15,
+      "data_references": 17,
+      "data_associations": 26,
+      "errors": []
+    },
+    {
+      "file": "processo.bpmn",
+      "schema_checked": true,
+      "tasks": 64,
+      "data_references": 92,
+      "data_associations": 124,
+      "errors": []
+    }
+  ],
+  "note": "La verifica geometrica esclude i contenitori lane/pool. Non dimostra la correttezza eseguibile delle condizioni di business."
+}

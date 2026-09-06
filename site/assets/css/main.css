@@ -396,6 +396,49 @@ section {
   padding-left: 1.2rem;
 }
 
+.data-table-wrap {
+  overflow-x: auto;
+  margin: 0.7rem 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 560px;
+  font-size: 0.95rem;
+}
+
+.data-table caption {
+  caption-side: top;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  background: #eef6fb;
+  color: var(--accent-strong);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: #fbfdff;
+}
+
 .key-takeaways {
   margin-top: 1rem;
   padding: 0.9rem 1rem;

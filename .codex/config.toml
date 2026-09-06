@@ -1,0 +1,3 @@
+[mcp_servers.camunda-modeler]
+url = "http://localhost:3100/mcp"
+enabled = true

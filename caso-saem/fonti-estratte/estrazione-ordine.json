@@ -1,0 +1,3437 @@
+{
+  "source": "resources/casoSAEM.pdf",
+  "extractedOn": "2026-09-06",
+  "pageConvention": "PDF 1-based / pagina stampata = PDF - 12 per le pagine estratte",
+  "views": [
+    {
+      "id": "Process_SAEM_Ordine",
+      "name": "SAEM · Gestione ordine cliente · TO-BE",
+      "lanes": [
+        "RGC / FC · Gestione commerciale",
+        "MaxNet III · Acquisizione ordine",
+        "RGC · Rilascio e gestione variazioni",
+        "Magazzino / contabilità · Consegne"
+      ],
+      "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11",
+      "scope": "TO-BE MaxNet III",
+      "nodes": [
+        {
+          "id": "Start_Main",
+          "type": "startEvent",
+          "name": "Richiesta cliente",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "G_Offerta",
+          "type": "exclusiveGateway",
+          "name": "Serve un'offerta?",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "Sub_Offerta",
+          "type": "subProcess",
+          "name": "D.1 · Preparare e autorizzare offerta",
+          "x": 680,
+          "y": 180,
+          "l": 0,
+          "view": "Offerta"
+        },
+        {
+          "id": "G_OffertaEsito",
+          "type": "exclusiveGateway",
+          "name": "Offerta disponibile?",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "End_Offerta",
+          "type": "endEvent",
+          "name": "Richiesta chiusa",
+          "x": 1180,
+          "y": 305,
+          "l": 0
+        },
+        {
+          "id": "Sub_Ordine",
+          "type": "subProcess",
+          "name": "D.2A/B · Acquisire ordine normale / urgente",
+          "x": 1180,
+          "y": 620,
+          "l": 1,
+          "view": "Ordine"
+        },
+        {
+          "id": "G_OrdineEsito",
+          "type": "exclusiveGateway",
+          "name": "Ordine acquisito e autorizzato?",
+          "x": 1430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "End_NoOrdine",
+          "type": "endEvent",
+          "name": "Ordine non acquisito / urgente respinto",
+          "x": 1680,
+          "y": 745,
+          "l": 1
+        },
+        {
+          "id": "M_Controllo",
+          "type": "task",
+          "name": "RGC · Riesaminare ordine e stato contabile",
+          "x": 1680,
+          "y": 1060,
+          "l": 2,
+          "source": "PDF 95 / 83; PDF 36 / 24",
+          "evidence": "Esplicita; chiusura/reiterazione del blocco resa esplicita didatticamente."
+        },
+        {
+          "id": "G_Rilascio",
+          "type": "exclusiveGateway",
+          "name": "Evasione autorizzabile?",
+          "x": 1930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "M_Blocco",
+          "type": "task",
+          "name": "RGC / CONT · Risolvere blocchi o concordare rinuncia",
+          "x": 1930,
+          "y": 1205,
+          "l": 2,
+          "offset": 145,
+          "evidence": "Ramo di risoluzione didattico: fonte segnala problemi contabili / cliente bloccato."
+        },
+        {
+          "id": "G_Rinuncia",
+          "type": "exclusiveGateway",
+          "name": "Rinuncia?",
+          "x": 2180,
+          "y": 1205,
+          "l": 2
+        },
+        {
+          "id": "End_Blocco",
+          "type": "endEvent",
+          "name": "Ordine non rilasciato",
+          "x": 2430,
+          "y": 1205,
+          "l": 2
+        },
+        {
+          "id": "G_Variazioni",
+          "type": "exclusiveGateway",
+          "name": "Richiesta variazione prima del rilascio?",
+          "x": 2180,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "Sub_Modifica",
+          "type": "subProcess",
+          "name": "D.2C · Modificare / annullare ordine",
+          "x": 2430,
+          "y": 620,
+          "l": 1,
+          "view": "Modifica"
+        },
+        {
+          "id": "G_Annullato",
+          "type": "exclusiveGateway",
+          "name": "Ordine annullato?",
+          "x": 2680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "End_Annullato",
+          "type": "endEvent",
+          "name": "Ordine annullato",
+          "x": 2930,
+          "y": 745,
+          "l": 1
+        },
+        {
+          "id": "M_Conferma",
+          "type": "task",
+          "name": "RGC · Comunicare conferma e piano consegne",
+          "x": 2430,
+          "y": 1060,
+          "l": 2,
+          "source": "PDF 95 / 83; PDF 36 / 24",
+          "evidence": "Esplicita; piano per consegna è aggregazione didattica delle date di evasione."
+        },
+        {
+          "id": "Sub_Consegna",
+          "type": "subProcess",
+          "name": "Per ogni consegna · Evadere e fatturare",
+          "x": 2680,
+          "y": 1500,
+          "l": 3,
+          "view": "Consegna",
+          "multi": true
+        },
+        {
+          "id": "End_Main",
+          "type": "endEvent",
+          "name": "Consegne fatturate e registrate",
+          "x": 2930,
+          "y": 1500,
+          "l": 3
+        },
+        {
+          "id": "D_MainOfferta",
+          "type": "object",
+          "name": "Offerta [autorizzata]",
+          "x": 680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "D_MainOrdine",
+          "type": "object",
+          "name": "Ordine [acquisito]",
+          "x": 1180,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "DS_MainConti",
+          "type": "store",
+          "name": "Stato contabile cliente\nGestionale · tabella non specificata",
+          "x": 1680,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "D_MainPiano",
+          "type": "object",
+          "name": "Conferma / piano consegne",
+          "x": 2430,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "D_MainFatture",
+          "type": "object",
+          "name": "Fatture / prima nota",
+          "x": 2680,
+          "y": 1385,
+          "l": 3
+        }
+      ],
+      "flows": [
+        {
+          "a": "Start_Main",
+          "b": "G_Offerta",
+          "name": ""
+        },
+        {
+          "a": "G_Offerta",
+          "b": "Sub_Offerta",
+          "name": "Sì"
+        },
+        {
+          "a": "G_Offerta",
+          "b": "Sub_Ordine",
+          "name": "No · offerta valida / catalogo",
+          "viaY": 350
+        },
+        {
+          "a": "Sub_Offerta",
+          "b": "G_OffertaEsito",
+          "name": ""
+        },
+        {
+          "a": "G_OffertaEsito",
+          "b": "End_Offerta",
+          "name": "No"
+        },
+        {
+          "a": "G_OffertaEsito",
+          "b": "Sub_Ordine",
+          "name": "Sì"
+        },
+        {
+          "a": "Sub_Ordine",
+          "b": "G_OrdineEsito",
+          "name": ""
+        },
+        {
+          "a": "G_OrdineEsito",
+          "b": "End_NoOrdine",
+          "name": "No"
+        },
+        {
+          "a": "G_OrdineEsito",
+          "b": "M_Controllo",
+          "name": "Sì"
+        },
+        {
+          "a": "M_Controllo",
+          "b": "G_Rilascio",
+          "name": ""
+        },
+        {
+          "a": "G_Rilascio",
+          "b": "M_Blocco",
+          "name": "No"
+        },
+        {
+          "a": "M_Blocco",
+          "b": "G_Rinuncia",
+          "name": ""
+        },
+        {
+          "a": "G_Rinuncia",
+          "b": "End_Blocco",
+          "name": "Sì"
+        },
+        {
+          "a": "G_Rinuncia",
+          "b": "M_Controllo",
+          "name": "No · riesame",
+          "viaY": 1440
+        },
+        {
+          "a": "G_Rilascio",
+          "b": "G_Variazioni",
+          "name": "Sì"
+        },
+        {
+          "a": "G_Variazioni",
+          "b": "Sub_Modifica",
+          "name": "Sì"
+        },
+        {
+          "a": "Sub_Modifica",
+          "b": "G_Annullato",
+          "name": ""
+        },
+        {
+          "a": "G_Annullato",
+          "b": "End_Annullato",
+          "name": "Sì"
+        },
+        {
+          "a": "G_Annullato",
+          "b": "M_Controllo",
+          "name": "No · nuovo riesame",
+          "viaY": 795
+        },
+        {
+          "a": "G_Variazioni",
+          "b": "M_Conferma",
+          "name": "No"
+        },
+        {
+          "a": "M_Conferma",
+          "b": "Sub_Consegna",
+          "name": ""
+        },
+        {
+          "a": "Sub_Consegna",
+          "b": "End_Main",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "Sub_Offerta",
+          "data": "D_MainOfferta",
+          "crud": "C",
+          "detail": "Offerta disponibile oppure esito di chiusura; vedi dettaglio D.1.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "Sub_Ordine",
+          "data": "D_MainOfferta",
+          "crud": "R",
+          "detail": "Offerta valida quando necessaria; catalogo è alternativa.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "Sub_Ordine",
+          "data": "D_MainOrdine",
+          "crud": "C",
+          "detail": "Ordine con esito acquisizione/autorizzazione.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "M_Controllo",
+          "data": "D_MainOrdine",
+          "crud": "R",
+          "detail": "Ordine da riesaminare.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "M_Controllo",
+          "data": "DS_MainConti",
+          "crud": "R",
+          "detail": "Problemi contabili / cliente bloccato; tabella non specificata.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "M_Blocco",
+          "data": "DS_MainConti",
+          "crud": "R/U?",
+          "detail": "Risoluzione: aggiornamenti fisici non specificati; ramo didattico.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "Sub_Modifica",
+          "data": "D_MainOrdine",
+          "crud": "R/U/D",
+          "detail": "Modifica o annullamento; CRUD fisico nel dettaglio.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "M_Conferma",
+          "data": "D_MainPiano",
+          "crud": "C",
+          "detail": "Conferma al cliente e date di evasione.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "Sub_Consegna",
+          "data": "D_MainPiano",
+          "crud": "R",
+          "detail": "Un'istanza per ciascuna consegna concordata.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        },
+        {
+          "task": "Sub_Consegna",
+          "data": "D_MainFatture",
+          "crud": "C",
+          "detail": "Fatture e registrazioni per le bolle evase.",
+          "source": "PDF 95 / stampata 83; dettagli D.1, D.2, D.7, D.9, D.10, D.11"
+        }
+      ]
+    },
+    {
+      "id": "Offerta",
+      "name": "D.1 · Preparazione e autorizzazione offerta",
+      "lanes": [
+        "FC / RGC · Offerta in MaxNet",
+        "DIRV · Autorizzazione prezzo"
+      ],
+      "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100",
+      "scope": "TO-BE MaxNet III",
+      "nodes": [
+        {
+          "id": "O_Start",
+          "type": "startEvent",
+          "name": "Richiesta offerta",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Login",
+          "type": "userTask",
+          "name": "Accedere e identificare il cliente",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Nuovo",
+          "type": "exclusiveGateway",
+          "name": "Nuovo contatto?",
+          "x": 680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Contatto",
+          "type": "userTask",
+          "name": "Creare contatto e categoria industriale",
+          "x": 680,
+          "y": 330,
+          "l": 0,
+          "offset": 150
+        },
+        {
+          "id": "O_Testata",
+          "type": "userTask",
+          "name": "Impostare testata offerta",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Riga",
+          "type": "userTask",
+          "name": "Aggiungere articolo, quantità e prezzo",
+          "x": 1180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Soglia",
+          "type": "exclusiveGateway",
+          "name": "Prezzo sotto soglia?",
+          "x": 1430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_ModPrezzo",
+          "type": "userTask",
+          "name": "Modificare prezzo della riga",
+          "x": 1430,
+          "y": 330,
+          "l": 0,
+          "offset": 150
+        },
+        {
+          "id": "O_Scelta",
+          "type": "exclusiveGateway",
+          "name": "Chiedere deroga?",
+          "x": 1430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "O_Richiesta",
+          "type": "serviceTask",
+          "name": "Generare richiesta autorizzazione",
+          "x": 1680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "O_DIRV",
+          "type": "userTask",
+          "name": "DIRV · Valutare deroga al prezzo",
+          "x": 1930,
+          "y": 620,
+          "l": 1,
+          "evidence": "Autorizzazione esplicita PDF 36/24 e 100/88; tabelle dell'esito non specificate."
+        },
+        {
+          "id": "O_Autorizzata",
+          "type": "exclusiveGateway",
+          "name": "Deroga concessa?",
+          "x": 2180,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "O_Rivedere",
+          "type": "userTask",
+          "name": "FC · Rivedere o ritirare proposta",
+          "x": 2430,
+          "y": 620,
+          "l": 1,
+          "evidence": "Gestione del rifiuto resa esplicita didatticamente."
+        },
+        {
+          "id": "O_Ritiro",
+          "type": "exclusiveGateway",
+          "name": "Ritirare?",
+          "x": 2680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "O_Stop",
+          "type": "endEvent",
+          "name": "Offerta non disponibile",
+          "x": 2930,
+          "y": 760,
+          "l": 1
+        },
+        {
+          "id": "O_Altre",
+          "type": "exclusiveGateway",
+          "name": "Altre righe?",
+          "x": 2180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Conferma",
+          "type": "userTask",
+          "name": "Confermare e numerare offerta",
+          "x": 2430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "O_Pubblica",
+          "type": "serviceTask",
+          "name": "Rendere offerta visibile al cliente",
+          "x": 2680,
+          "y": 180,
+          "l": 0,
+          "source": "PDF 100 / 88"
+        },
+        {
+          "id": "O_End",
+          "type": "endEvent",
+          "name": "Offerta autorizzata disponibile",
+          "x": 2930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "OS_Persone",
+          "type": "store",
+          "name": "Emaxgest5 · Persone / Clienti",
+          "x": 430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "OS_Clienti",
+          "type": "store",
+          "name": "Emaxgest5 · Clienti / Categorie",
+          "x": 680,
+          "y": 125,
+          "l": 0
+        },
+        {
+          "id": "OS_Testata",
+          "type": "store",
+          "name": "Emaxgest5 · Offerte_testate",
+          "x": 930,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "OS_Articoli",
+          "type": "store",
+          "name": "Emaxgest5 · Articoli\nArticoli_storico / Scadmag / Articoli_listino",
+          "x": 1180,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "OS_Righe",
+          "type": "store",
+          "name": "Emaxgest5 · Offerte_articoli",
+          "x": 1680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "OS_Messaggi",
+          "type": "store",
+          "name": "Emaxgest5 · Messaggi",
+          "x": 1680,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "OD_Deroga",
+          "type": "object",
+          "name": "Richiesta / esito deroga",
+          "x": 1930,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "OS_Sequenza",
+          "type": "store",
+          "name": "Emaxgest5 · Offerta_testata_n_offerta",
+          "x": 2430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "OD_Offerta",
+          "type": "object",
+          "name": "Offerta [autorizzata]",
+          "x": 2680,
+          "y": 65,
+          "l": 0
+        }
+      ],
+      "flows": [
+        {
+          "a": "O_Start",
+          "b": "O_Login",
+          "name": ""
+        },
+        {
+          "a": "O_Login",
+          "b": "O_Nuovo",
+          "name": ""
+        },
+        {
+          "a": "O_Nuovo",
+          "b": "O_Contatto",
+          "name": "Sì"
+        },
+        {
+          "a": "O_Nuovo",
+          "b": "O_Testata",
+          "name": "No"
+        },
+        {
+          "a": "O_Contatto",
+          "b": "O_Testata",
+          "name": ""
+        },
+        {
+          "a": "O_Testata",
+          "b": "O_Riga",
+          "name": ""
+        },
+        {
+          "a": "O_Riga",
+          "b": "O_Soglia",
+          "name": ""
+        },
+        {
+          "a": "O_Soglia",
+          "b": "O_Altre",
+          "name": "No"
+        },
+        {
+          "a": "O_Soglia",
+          "b": "O_Scelta",
+          "name": "Sì"
+        },
+        {
+          "a": "O_Scelta",
+          "b": "O_ModPrezzo",
+          "name": "No"
+        },
+        {
+          "a": "O_ModPrezzo",
+          "b": "O_Soglia",
+          "name": "Rivalutare",
+          "viaX": 1635
+        },
+        {
+          "a": "O_Scelta",
+          "b": "O_Richiesta",
+          "name": "Sì"
+        },
+        {
+          "a": "O_Richiesta",
+          "b": "O_DIRV",
+          "name": ""
+        },
+        {
+          "a": "O_DIRV",
+          "b": "O_Autorizzata",
+          "name": ""
+        },
+        {
+          "a": "O_Autorizzata",
+          "b": "O_Altre",
+          "name": "Sì"
+        },
+        {
+          "a": "O_Autorizzata",
+          "b": "O_Rivedere",
+          "name": "No"
+        },
+        {
+          "a": "O_Rivedere",
+          "b": "O_Ritiro",
+          "name": ""
+        },
+        {
+          "a": "O_Ritiro",
+          "b": "O_Stop",
+          "name": "Sì"
+        },
+        {
+          "a": "O_Ritiro",
+          "b": "O_ModPrezzo",
+          "name": "No",
+          "viaY": 835
+        },
+        {
+          "a": "O_Altre",
+          "b": "O_Riga",
+          "name": "Sì",
+          "viaY": 370
+        },
+        {
+          "a": "O_Altre",
+          "b": "O_Conferma",
+          "name": "No"
+        },
+        {
+          "a": "O_Conferma",
+          "b": "O_Pubblica",
+          "name": ""
+        },
+        {
+          "a": "O_Pubblica",
+          "b": "O_End",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "O_Login",
+          "data": "OS_Persone",
+          "crud": "R",
+          "detail": "Persone: autenticazione operatore; Clienti: identificazione destinatario.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Contatto",
+          "data": "OS_Clienti",
+          "crud": "R/C",
+          "detail": "Categorie R; Clienti C per nuovo contatto.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Testata",
+          "data": "OS_Persone",
+          "crud": "R",
+          "detail": "Dati cliente ed esecutore della testata.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Testata",
+          "data": "OS_Testata",
+          "crud": "C",
+          "detail": "Creazione testata confermata.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Riga",
+          "data": "OS_Articoli",
+          "crud": "R",
+          "detail": "Anagrafica, confezioni, listino; storico e Scadmag se si verifica disponibilità.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Riga",
+          "data": "OS_Righe",
+          "crud": "C",
+          "detail": "Creare riga di offerta.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_ModPrezzo",
+          "data": "OS_Righe",
+          "crud": "R/U",
+          "detail": "Leggere e aggiornare prezzo riga.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Richiesta",
+          "data": "OS_Righe",
+          "crud": "R",
+          "detail": "Riferimenti e prezzo della riga sotto soglia.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Richiesta",
+          "data": "OS_Testata",
+          "crud": "R",
+          "detail": "Riferimenti testata della richiesta.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Richiesta",
+          "data": "OS_Persone",
+          "crud": "R",
+          "detail": "Esecutore della richiesta.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Richiesta",
+          "data": "OS_Messaggi",
+          "crud": "C",
+          "detail": "Messaggio al DIRV.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Richiesta",
+          "data": "OD_Deroga",
+          "crud": "C",
+          "detail": "Richiesta di deroga.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_DIRV",
+          "data": "OD_Deroga",
+          "crud": "R/U",
+          "detail": "Valutazione ed esito; persistenza dell'esito non specificata.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Rivedere",
+          "data": "OD_Deroga",
+          "crud": "R",
+          "detail": "Esito negativo da riesaminare.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Conferma",
+          "data": "OS_Sequenza",
+          "crud": "R/U",
+          "detail": "Leggere e incrementare progressivo offerta.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Conferma",
+          "data": "OS_Righe",
+          "crud": "R",
+          "detail": "Righe della proposta da confermare.",
+          "source": "PDF 96, 100, 106, 110–112 / stampate 84, 88, 94, 98–100"
+        },
+        {
+          "task": "O_Pubblica",
+          "data": "OD_Offerta",
+          "crud": "C",
+          "detail": "Offerta resa visibile dopo autorizzazione; modalità di aggiornamento fisico non specificata.",
+          "source": "PDF 100 / 88"
+        }
+      ]
+    },
+    {
+      "id": "Ordine",
+      "name": "D.2A/B · Inserimento ordine normale e urgente",
+      "lanes": [
+        "Front office MaxNet · Interazione cliente",
+        "MaxNet · Verifiche e registrazione",
+        "FC · Approvazione urgenza"
+      ],
+      "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107",
+      "scope": "TO-BE MaxNet III",
+      "nodes": [
+        {
+          "id": "I_Start",
+          "type": "startEvent",
+          "name": "Intenzione d'acquisto",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Login",
+          "type": "userTask",
+          "name": "Autenticare cliente attivo",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Accesso",
+          "type": "exclusiveGateway",
+          "name": "Accesso valido?",
+          "x": 680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_NoAccesso",
+          "type": "endEvent",
+          "name": "Accesso negato",
+          "x": 680,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "I_Testata",
+          "type": "userTask",
+          "name": "Ricevere destinazione / termini e creare carrello",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Riga",
+          "type": "userTask",
+          "name": "Selezionare codice SAEM e multipli di confezione",
+          "x": 1180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Offerta",
+          "type": "exclusiveGateway",
+          "name": "Offerta valida o articolo acquistabile a catalogo?",
+          "x": 1430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_RichOfferta",
+          "type": "sendTask",
+          "name": "Inviare richiesta offerta / rinnovo",
+          "x": 1430,
+          "y": 330,
+          "l": 0,
+          "offset": 150
+        },
+        {
+          "id": "I_Sospeso",
+          "type": "endEvent",
+          "name": "Acquisto sospeso · richiesta offerta inviata",
+          "x": 1680,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "I_Prezzo",
+          "type": "serviceTask",
+          "name": "Calcolare prezzo, sconto, IVA e disponibilità",
+          "x": 1680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Altre",
+          "type": "exclusiveGateway",
+          "name": "Altre righe?",
+          "x": 1930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Conferma",
+          "type": "userTask",
+          "name": "Cliente · Confermare il carrello",
+          "x": 2180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Verifica",
+          "type": "serviceTask",
+          "name": "Riverificare prezzi, disponibilità e date",
+          "x": 2180,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "I_Esito",
+          "type": "exclusiveGateway",
+          "name": "Conferma possibile?",
+          "x": 2430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "I_Correzione",
+          "type": "exclusiveGateway",
+          "name": "Come proseguire?",
+          "x": 2430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Modifica",
+          "type": "userTask",
+          "name": "Modificare quantità / dati carrello",
+          "x": 2680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "I_Parziale",
+          "type": "userTask",
+          "name": "Concordare date e trasformare in evasione parziale",
+          "x": 2680,
+          "y": 770,
+          "l": 1,
+          "offset": 150
+        },
+        {
+          "id": "I_Rinuncia",
+          "type": "endEvent",
+          "name": "Acquisto non confermato",
+          "x": 2930,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "I_Registra",
+          "type": "serviceTask",
+          "name": "Creare ordine, impegnare scorte e rimuovere carrello",
+          "x": 2680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "I_Urgente",
+          "type": "exclusiveGateway",
+          "name": "Ordine urgente?",
+          "x": 2930,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "I_RichUrgenza",
+          "type": "serviceTask",
+          "name": "Inviare richiesta approvazione FC",
+          "x": 2930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "I_FC",
+          "type": "userTask",
+          "name": "FC · Valutare urgenza e disponibilità",
+          "x": 3180,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "I_Approvato",
+          "type": "exclusiveGateway",
+          "name": "Approvato?",
+          "x": 3430,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "I_Autorizza",
+          "type": "serviceTask",
+          "name": "Impostare AUTORIZZATO e notificare cliente",
+          "x": 3680,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "I_Respinto",
+          "type": "serviceTask",
+          "name": "Notificare urgenza non approvata",
+          "x": 3430,
+          "y": 1210,
+          "l": 2,
+          "offset": 150
+        },
+        {
+          "id": "I_No",
+          "type": "endEvent",
+          "name": "Ordine urgente non autorizzato",
+          "x": 3680,
+          "y": 1210,
+          "l": 2
+        },
+        {
+          "id": "I_Codice",
+          "type": "serviceTask",
+          "name": "Restituire codice ordine / conferma",
+          "x": 3680,
+          "y": 620,
+          "l": 1,
+          "source": "PDF 100 / 88; PDF 119 / 107"
+        },
+        {
+          "id": "I_End",
+          "type": "endEvent",
+          "name": "Ordine acquisito e autorizzato",
+          "x": 3930,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "IS_Clienti",
+          "type": "store",
+          "name": "Emaxgest5 · Clienti",
+          "x": 430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "IS_Destinazioni",
+          "type": "store",
+          "name": "Emaxgest5 · Cliedesta / Tabella_iva",
+          "x": 930,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "IS_Articoli",
+          "type": "store",
+          "name": "Emaxgest5 · Articoli",
+          "x": 1180,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "IS_Messaggi",
+          "type": "store",
+          "name": "Emaxgest5 · Messaggi",
+          "x": 1430,
+          "y": 90,
+          "l": 0
+        },
+        {
+          "id": "IS_Prezzi",
+          "type": "store",
+          "name": "Emaxgest5 · Offerte_articoli\nArticoli_listino / Clienti_sconto",
+          "x": 1680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "IS_Carrello",
+          "type": "store",
+          "name": "Emaxgest5 · Carrello_testata / Carrello_righe\nCarrello_testata_n_carrello",
+          "x": 2180,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "IS_Scorte",
+          "type": "store",
+          "name": "Emaxgest5 · Articoli / Articoli_storico / Scadmag",
+          "x": 2180,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "IS_Ordini",
+          "type": "store",
+          "name": "Emaxgest5 · Portcli / Riportc",
+          "x": 2680,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "IS_Movimenti",
+          "type": "store",
+          "name": "Emaxgest5 · Movimenti_articolo",
+          "x": 2930,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "IS_MessUrgenza",
+          "type": "store",
+          "name": "Emaxgest5 · Messaggi",
+          "x": 2930,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "ID_Esito",
+          "type": "object",
+          "name": "Ordine urgente [esito]",
+          "x": 3680,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "ID_Ordine",
+          "type": "object",
+          "name": "Ordine [confermato] / codice",
+          "x": 3680,
+          "y": 505,
+          "l": 1
+        }
+      ],
+      "flows": [
+        {
+          "a": "I_Start",
+          "b": "I_Login",
+          "name": ""
+        },
+        {
+          "a": "I_Login",
+          "b": "I_Accesso",
+          "name": ""
+        },
+        {
+          "a": "I_Accesso",
+          "b": "I_NoAccesso",
+          "name": "No"
+        },
+        {
+          "a": "I_Accesso",
+          "b": "I_Testata",
+          "name": "Sì"
+        },
+        {
+          "a": "I_Testata",
+          "b": "I_Riga",
+          "name": ""
+        },
+        {
+          "a": "I_Riga",
+          "b": "I_Offerta",
+          "name": ""
+        },
+        {
+          "a": "I_Offerta",
+          "b": "I_RichOfferta",
+          "name": "No"
+        },
+        {
+          "a": "I_RichOfferta",
+          "b": "I_Sospeso",
+          "name": ""
+        },
+        {
+          "a": "I_Offerta",
+          "b": "I_Prezzo",
+          "name": "Sì"
+        },
+        {
+          "a": "I_Prezzo",
+          "b": "I_Altre",
+          "name": ""
+        },
+        {
+          "a": "I_Altre",
+          "b": "I_Riga",
+          "name": "Sì",
+          "viaY": 395
+        },
+        {
+          "a": "I_Altre",
+          "b": "I_Conferma",
+          "name": "No"
+        },
+        {
+          "a": "I_Conferma",
+          "b": "I_Verifica",
+          "name": ""
+        },
+        {
+          "a": "I_Verifica",
+          "b": "I_Esito",
+          "name": ""
+        },
+        {
+          "a": "I_Esito",
+          "b": "I_Correzione",
+          "name": "No"
+        },
+        {
+          "a": "I_Correzione",
+          "b": "I_Modifica",
+          "name": "Modifica"
+        },
+        {
+          "a": "I_Correzione",
+          "b": "I_Parziale",
+          "name": "Consegne parziali",
+          "viaX": 2520
+        },
+        {
+          "a": "I_Correzione",
+          "b": "I_Rinuncia",
+          "name": "Rinuncia",
+          "viaY": 440
+        },
+        {
+          "a": "I_Modifica",
+          "b": "I_Conferma",
+          "name": "Riconferma",
+          "viaY": 35
+        },
+        {
+          "a": "I_Parziale",
+          "b": "I_Verifica",
+          "name": "Riverifica",
+          "viaY": 835
+        },
+        {
+          "a": "I_Esito",
+          "b": "I_Registra",
+          "name": "Sì"
+        },
+        {
+          "a": "I_Registra",
+          "b": "I_Urgente",
+          "name": ""
+        },
+        {
+          "a": "I_Urgente",
+          "b": "I_Codice",
+          "name": "No"
+        },
+        {
+          "a": "I_Urgente",
+          "b": "I_RichUrgenza",
+          "name": "Sì"
+        },
+        {
+          "a": "I_RichUrgenza",
+          "b": "I_FC",
+          "name": ""
+        },
+        {
+          "a": "I_FC",
+          "b": "I_Approvato",
+          "name": ""
+        },
+        {
+          "a": "I_Approvato",
+          "b": "I_Autorizza",
+          "name": "Sì"
+        },
+        {
+          "a": "I_Approvato",
+          "b": "I_Respinto",
+          "name": "No"
+        },
+        {
+          "a": "I_Respinto",
+          "b": "I_No",
+          "name": ""
+        },
+        {
+          "a": "I_Autorizza",
+          "b": "I_Codice",
+          "name": ""
+        },
+        {
+          "a": "I_Codice",
+          "b": "I_End",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "I_Login",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Autenticazione cliente attivo; diagramma descrive il sistema storico, non una raccomandazione di gestione credenziali.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Testata",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Dati cliente / codice IVA.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Testata",
+          "data": "IS_Destinazioni",
+          "crud": "R",
+          "detail": "Cliedesta: destinazione e disposizioni; Tabella_iva: parametri.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Testata",
+          "data": "IS_Carrello",
+          "crud": "C/R/U",
+          "detail": "Carrello_testata C; progressivo Carrello_testata_n_carrello R/U.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Riga",
+          "data": "IS_Articoli",
+          "crud": "R",
+          "detail": "Codici SAEM e confezioni indivisibili.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Riga",
+          "data": "IS_Carrello",
+          "crud": "C",
+          "detail": "Carrello_righe: inserimento articolo.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_RichOfferta",
+          "data": "IS_Messaggi",
+          "crud": "C",
+          "detail": "Richiesta con riferimenti cliente/articolo.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_RichOfferta",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Riferimenti del cliente.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_RichOfferta",
+          "data": "IS_Articoli",
+          "crud": "R",
+          "detail": "Riferimenti dell'articolo.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Prezzo",
+          "data": "IS_Prezzi",
+          "crud": "R",
+          "detail": "Prezzo offerta oppure listino con sconto cliente.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Prezzo",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Codice IVA cliente.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Prezzo",
+          "data": "IS_Destinazioni",
+          "crud": "R",
+          "detail": "Parametri Tabella_iva.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Prezzo",
+          "data": "IS_Scorte",
+          "crud": "R",
+          "detail": "Disponibilità da anagrafica / storico / Scadmag.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Conferma",
+          "data": "IS_Carrello",
+          "crud": "R",
+          "detail": "Carrello sottoposto a conferma.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Verifica",
+          "data": "IS_Scorte",
+          "crud": "R",
+          "detail": "Riverifica disponibilità e date prima della registrazione.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Verifica",
+          "data": "IS_Prezzi",
+          "crud": "R",
+          "detail": "Ricalcolo prezzi e sconti.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Verifica",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Codice IVA.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Verifica",
+          "data": "IS_Destinazioni",
+          "crud": "R",
+          "detail": "Parametri IVA.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Verifica",
+          "data": "IS_Carrello",
+          "crud": "R",
+          "detail": "Testata e righe da riverificare.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Modifica",
+          "data": "IS_Carrello",
+          "crud": "R/U",
+          "detail": "Leggere e modificare dati di testata/righe.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Parziale",
+          "data": "IS_Carrello",
+          "crud": "R/C/U",
+          "detail": "Testata R/U; righe R/C/U per date/quantità parziali.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Parziale",
+          "data": "IS_Scorte",
+          "crud": "R",
+          "detail": "Disponibilità per data.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Registra",
+          "data": "IS_Carrello",
+          "crud": "R/D",
+          "detail": "Copiare testata e righe e cancellare carrello dopo esito positivo.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Registra",
+          "data": "IS_Ordini",
+          "crud": "C",
+          "detail": "Portcli C; Riportc C.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Registra",
+          "data": "IS_Movimenti",
+          "crud": "C",
+          "detail": "Memorizzare quantità impegnate.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Registra",
+          "data": "IS_Scorte",
+          "crud": "U",
+          "detail": "Solo Articoli_storico e Scadmag: aggiornamenti movimentazione.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_RichUrgenza",
+          "data": "IS_Ordini",
+          "crud": "R",
+          "detail": "Riferimenti Portcli.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_RichUrgenza",
+          "data": "IS_MessUrgenza",
+          "crud": "C",
+          "detail": "Richiesta approvazione FC.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_FC",
+          "data": "IS_Scorte",
+          "crud": "R",
+          "detail": "Disponibilità per valutare urgenza.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_FC",
+          "data": "IS_Ordini",
+          "crud": "R",
+          "detail": "Ordine oggetto della valutazione.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Autorizza",
+          "data": "IS_Ordini",
+          "crud": "R/U",
+          "detail": "Portcli U AUTORIZZATO positivo; Portcli/Riportc R per messaggio.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Autorizza",
+          "data": "IS_MessUrgenza",
+          "crud": "C",
+          "detail": "Messaggio di approvazione.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Autorizza",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Indirizzo e-mail e destinatario.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Autorizza",
+          "data": "ID_Esito",
+          "crud": "C",
+          "detail": "Ordine autorizzato.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Respinto",
+          "data": "IS_MessUrgenza",
+          "crud": "C",
+          "detail": "Messaggio di mancata approvazione.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Respinto",
+          "data": "IS_Clienti",
+          "crud": "R",
+          "detail": "Destinatario notifica.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Respinto",
+          "data": "ID_Esito",
+          "crud": "C",
+          "detail": "Ordine non autorizzato; cancellazione e rilascio scorte non specificati, non simulati.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        },
+        {
+          "task": "I_Codice",
+          "data": "ID_Ordine",
+          "crud": "C",
+          "detail": "Codice dell'ordine accettato.",
+          "source": "PDF 97–98, 107–108, 113–119 / stampate 85–86, 95–96, 101–107"
+        }
+      ]
+    },
+    {
+      "id": "Modifica",
+      "name": "D.2C · Variazioni prima del rilascio · Variante sviluppatori",
+      "lanes": [
+        "Front office MaxNet · Interazione cliente",
+        "MaxNet · Verifiche e sostituzione ordine"
+      ],
+      "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113",
+      "scope": "TO-BE MaxNet III",
+      "nodes": [
+        {
+          "id": "V_Start",
+          "type": "startEvent",
+          "name": "Richiesta variazione",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Apri",
+          "type": "userTask",
+          "name": "Aprire ordine inserito",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Azione",
+          "type": "exclusiveGateway",
+          "name": "Annullare intero ordine?",
+          "x": 680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Annulla",
+          "type": "serviceTask",
+          "name": "Cancellare testata e righe ordine",
+          "x": 930,
+          "y": 330,
+          "l": 0,
+          "offset": 150,
+          "evidence": "D Portcli/Riportc esplicita. Rilascio impegni da verificare: non inventato."
+        },
+        {
+          "id": "V_EndAnnulla",
+          "type": "endEvent",
+          "name": "Ordine annullato",
+          "x": 1180,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "V_Copia",
+          "type": "serviceTask",
+          "name": "Copiare ordine in nuovo carrello",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Edit",
+          "type": "userTask",
+          "name": "Modificare destinazione, date, quantità / aggiungere righe",
+          "x": 1180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Conferma",
+          "type": "userTask",
+          "name": "Cliente · Confermare modifiche",
+          "x": 1430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Check",
+          "type": "serviceTask",
+          "name": "Riverificare offerte, prezzi, IVA e disponibilità",
+          "x": 1430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "V_Ok",
+          "type": "exclusiveGateway",
+          "name": "Modifiche confermabili?",
+          "x": 1680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "V_Scelta",
+          "type": "exclusiveGateway",
+          "name": "Come proseguire?",
+          "x": 1680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Parziale",
+          "type": "userTask",
+          "name": "Trasformare carrello in evasione parziale",
+          "x": 1930,
+          "y": 330,
+          "l": 0,
+          "offset": 150
+        },
+        {
+          "id": "V_Abbandona",
+          "type": "userTask",
+          "name": "Abbandonare modifiche · mantenere ordine originale",
+          "x": 2180,
+          "y": 180,
+          "l": 0,
+          "evidence": "Chiusura didattica: fonte cancella l'ordine originale soltanto dopo verifiche positive; pulizia carrello non specificata."
+        },
+        {
+          "id": "V_EndInvariato",
+          "type": "endEvent",
+          "name": "Ordine invariato",
+          "x": 2430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "V_Sostituisci",
+          "type": "serviceTask",
+          "name": "Sostituire ordine originale e aggiornare impegni",
+          "x": 1930,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "V_End",
+          "type": "endEvent",
+          "name": "Ordine modificato · riesame commerciale",
+          "x": 2430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "VS_Ordine",
+          "type": "store",
+          "name": "Emaxgest5 · Portcli / Riportc",
+          "x": 430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "VS_Carrello",
+          "type": "store",
+          "name": "Emaxgest5 · Carrello_testata / Carrello_righe",
+          "x": 930,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "VS_Prezzi",
+          "type": "store",
+          "name": "Emaxgest5 · Offerte_articoli / Articoli_listino\nClienti / Clienti_sconto / Tabella_iva",
+          "x": 1430,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "VS_Scorte",
+          "type": "store",
+          "name": "Emaxgest5 · Articoli / Articoli_storico\nScadmag / Movimenti_articolo",
+          "x": 1680,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "VD_Esito",
+          "type": "object",
+          "name": "Ordine [sostituito · nuova priorità]",
+          "x": 1930,
+          "y": 505,
+          "l": 1
+        }
+      ],
+      "flows": [
+        {
+          "a": "V_Start",
+          "b": "V_Apri",
+          "name": ""
+        },
+        {
+          "a": "V_Apri",
+          "b": "V_Azione",
+          "name": ""
+        },
+        {
+          "a": "V_Azione",
+          "b": "V_Annulla",
+          "name": "Sì"
+        },
+        {
+          "a": "V_Annulla",
+          "b": "V_EndAnnulla",
+          "name": ""
+        },
+        {
+          "a": "V_Azione",
+          "b": "V_Copia",
+          "name": "No"
+        },
+        {
+          "a": "V_Copia",
+          "b": "V_Edit",
+          "name": ""
+        },
+        {
+          "a": "V_Edit",
+          "b": "V_Conferma",
+          "name": ""
+        },
+        {
+          "a": "V_Conferma",
+          "b": "V_Check",
+          "name": ""
+        },
+        {
+          "a": "V_Check",
+          "b": "V_Ok",
+          "name": ""
+        },
+        {
+          "a": "V_Ok",
+          "b": "V_Sostituisci",
+          "name": "Sì"
+        },
+        {
+          "a": "V_Sostituisci",
+          "b": "V_End",
+          "name": ""
+        },
+        {
+          "a": "V_Ok",
+          "b": "V_Scelta",
+          "name": "No"
+        },
+        {
+          "a": "V_Scelta",
+          "b": "V_Edit",
+          "name": "Correggere",
+          "viaY": 360
+        },
+        {
+          "a": "V_Scelta",
+          "b": "V_Parziale",
+          "name": "Consegne parziali"
+        },
+        {
+          "a": "V_Parziale",
+          "b": "V_Check",
+          "name": "Riverificare",
+          "viaY": 810
+        },
+        {
+          "a": "V_Scelta",
+          "b": "V_Abbandona",
+          "name": "Abbandonare"
+        },
+        {
+          "a": "V_Abbandona",
+          "b": "V_EndInvariato",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "V_Apri",
+          "data": "VS_Ordine",
+          "crud": "R",
+          "detail": "Visualizzare testata e righe.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Annulla",
+          "data": "VS_Ordine",
+          "crud": "D",
+          "detail": "Eliminare Portcli e Riportc; non confondere con U* alternativa.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Copia",
+          "data": "VS_Ordine",
+          "crud": "R",
+          "detail": "Leggere ordine originale.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Copia",
+          "data": "VS_Carrello",
+          "crud": "C",
+          "detail": "Creare carrello da ordine originale.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Edit",
+          "data": "VS_Carrello",
+          "crud": "R/U/C",
+          "detail": "Testata R/U; righe R/U, C per articoli aggiunti.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Edit",
+          "data": "VS_Prezzi",
+          "crud": "R",
+          "detail": "Prezzi / IVA per righe modificate o nuove.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Conferma",
+          "data": "VS_Carrello",
+          "crud": "R",
+          "detail": "Dati sottoposti a conferma.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Check",
+          "data": "VS_Carrello",
+          "crud": "R",
+          "detail": "Dati da riverificare.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Check",
+          "data": "VS_Prezzi",
+          "crud": "R",
+          "detail": "Prezzo offerta o listino/sconto, codice e parametri IVA.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Check",
+          "data": "VS_Scorte",
+          "crud": "R",
+          "detail": "Disponibilità: Articoli, Articoli_storico, Scadmag; non attribuire R a Movimenti_articolo.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Parziale",
+          "data": "VS_Carrello",
+          "crud": "R/U/C",
+          "detail": "Testata R/U, righe R/U/C per quantità e date.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Parziale",
+          "data": "VS_Scorte",
+          "crud": "R",
+          "detail": "Articoli, Articoli_storico, Scadmag per date di disponibilità.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Sostituisci",
+          "data": "VS_Ordine",
+          "crud": "D/C",
+          "detail": "Eliminare vecchia testata/righe e creare nuove dopo verifiche positive. Variante sviluppatori: perdita della priorità originale.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Sostituisci",
+          "data": "VS_Carrello",
+          "crud": "R/D",
+          "detail": "Copiare e rimuovere carrello dopo conferma.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Sostituisci",
+          "data": "VS_Scorte",
+          "crud": "C/U",
+          "detail": "Movimenti_articolo C; Articoli_storico e Scadmag U. Verificare riconciliazione impegni preesistenti prima di un'implementazione eseguibile.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Sostituisci",
+          "data": "VD_Esito",
+          "crud": "C",
+          "detail": "Ordine sostituito, da riesaminare anche per eventuale urgenza.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        },
+        {
+          "task": "V_Abbandona",
+          "data": "VS_Ordine",
+          "crud": "R",
+          "detail": "Ordine originale mantenuto; ramo didattico.",
+          "source": "PDF 94, 99, 109, 120–125 / stampate 82, 87, 97, 108–113"
+        }
+      ]
+    },
+    {
+      "id": "Consegna",
+      "name": "Consegna pianificata · Evasione e fatturazione",
+      "lanes": [
+        "RGC / magazzino · Calendario consegna",
+        "RGC / contabilità · Ciclo fatturazione"
+      ],
+      "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105",
+      "scope": "TO-BE · logistica mantenuta; orchestrazione per consegna didattica",
+      "nodes": [
+        {
+          "id": "C_Start",
+          "type": "startEvent",
+          "name": "Consegna del piano",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "C_Data",
+          "type": "intermediateCatchEvent",
+          "name": "Data preparazione concordata",
+          "x": 430,
+          "y": 180,
+          "l": 0,
+          "timer": "dataPreparazione"
+        },
+        {
+          "id": "Sub_Logistica",
+          "type": "subProcess",
+          "name": "D.7 / D.9 / D.10 · Preparare e spedire",
+          "x": 680,
+          "y": 180,
+          "l": 0,
+          "view": "Logistica"
+        },
+        {
+          "id": "C_Spedita",
+          "type": "exclusiveGateway",
+          "name": "Merce partita?",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "C_Settimana",
+          "type": "intermediateCatchEvent",
+          "name": "Prossimo ciclo settimanale",
+          "x": 930,
+          "y": 620,
+          "l": 1,
+          "timer": "dataProssimoCicloFatturazione"
+        },
+        {
+          "id": "Sub_Fattura",
+          "type": "subProcess",
+          "name": "D.11 · Fatturare bolle e registrare",
+          "x": 1180,
+          "y": 620,
+          "l": 1,
+          "view": "Fattura"
+        },
+        {
+          "id": "C_End",
+          "type": "endEvent",
+          "name": "Consegna fatturata",
+          "x": 1430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "CD_Piano",
+          "type": "object",
+          "name": "Piano consegna [data / quantità]",
+          "x": 430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "CD_Bolla",
+          "type": "object",
+          "name": "Bolla [evasa]",
+          "x": 680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "CD_Fattura",
+          "type": "object",
+          "name": "Fattura / prima nota",
+          "x": 1180,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "C_Ripiano",
+          "type": "task",
+          "name": "RGC · Ripianificare consegna e data",
+          "x": 1180,
+          "y": 330,
+          "l": 0,
+          "offset": 150,
+          "evidence": "Ritorno operativo didattico per mancata partenza; non chiude la consegna come fatturata."
+        }
+      ],
+      "flows": [
+        {
+          "a": "C_Start",
+          "b": "C_Data",
+          "name": ""
+        },
+        {
+          "a": "C_Data",
+          "b": "Sub_Logistica",
+          "name": ""
+        },
+        {
+          "a": "Sub_Logistica",
+          "b": "C_Spedita",
+          "name": ""
+        },
+        {
+          "a": "C_Spedita",
+          "b": "C_Settimana",
+          "name": "Sì"
+        },
+        {
+          "a": "C_Settimana",
+          "b": "Sub_Fattura",
+          "name": ""
+        },
+        {
+          "a": "Sub_Fattura",
+          "b": "C_End",
+          "name": ""
+        },
+        {
+          "a": "C_Spedita",
+          "b": "C_Ripiano",
+          "name": "No"
+        },
+        {
+          "a": "C_Ripiano",
+          "b": "C_Data",
+          "name": "Nuova data",
+          "viaY": 385
+        }
+      ],
+      "links": [
+        {
+          "task": "Sub_Logistica",
+          "data": "CD_Piano",
+          "crud": "R",
+          "detail": "Lotto e data corrente; preparazione bolle prima del ritiro.",
+          "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105"
+        },
+        {
+          "task": "Sub_Logistica",
+          "data": "CD_Bolla",
+          "crud": "C",
+          "detail": "Bolla evasa e dati di partenza.",
+          "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105"
+        },
+        {
+          "task": "Sub_Fattura",
+          "data": "CD_Bolla",
+          "crud": "R",
+          "detail": "Solo bolle evase non già fatturate.",
+          "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105"
+        },
+        {
+          "task": "Sub_Fattura",
+          "data": "CD_Fattura",
+          "crud": "C",
+          "detail": "Fattura e registrazione; raggruppamento settimanale è nel processo contabile.",
+          "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105"
+        },
+        {
+          "task": "C_Ripiano",
+          "data": "CD_Piano",
+          "crud": "R/U",
+          "detail": "Nuova data concordata; dettagli di tabella non specificati.",
+          "source": "PDF 37, 95, 113–117 / stampate 25, 83, 101–105"
+        }
+      ]
+    },
+    {
+      "id": "Logistica",
+      "name": "D.7 / D.9A–C / D.10 · Evasione della consegna",
+      "lanes": [
+        "RGC / EDP / CONT / DIRV · Autorizzazione e bolle",
+        "MAG / RMAG / SMAG · Prelievo e documenti",
+        "MAG / spedizioniere · Carico e partenza"
+      ],
+      "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83",
+      "scope": "TO-BE · attività logistiche mantenute dal processo originale",
+      "nodes": [
+        {
+          "id": "L_Start",
+          "type": "startEvent",
+          "name": "Consegna da preparare",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Porto",
+          "type": "exclusiveGateway",
+          "name": "Porto franco?",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Corriere",
+          "type": "task",
+          "name": "Selezionare spedizioniere qualificato per zona",
+          "x": 680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Prepara",
+          "type": "serviceTask",
+          "name": "EDP · Elaborare bolle e controlli economici",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Blocchi",
+          "type": "exclusiveGateway",
+          "name": "Controlli superati?",
+          "x": 1180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Sblocca",
+          "type": "task",
+          "name": "CONT / DIRV · Riesaminare insoluti e autorizzazioni",
+          "x": 1180,
+          "y": 330,
+          "l": 0,
+          "offset": 150
+        },
+        {
+          "id": "L_Sblocco",
+          "type": "exclusiveGateway",
+          "name": "Blocco risolto?",
+          "x": 1430,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "L_Stop",
+          "type": "endEvent",
+          "name": "Partenza non autorizzata",
+          "x": 1680,
+          "y": 330,
+          "l": 0
+        },
+        {
+          "id": "L_Autorizza",
+          "type": "task",
+          "name": "RGC · Completare dati e autorizzare stampa bolle",
+          "x": 1430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Stampa",
+          "type": "task",
+          "name": "SMAG · Stampare bolle di prelievo",
+          "x": 1680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "L_Prelievo",
+          "type": "manualTask",
+          "name": "Prelevare merce e verificare corrispondenza / scadenze",
+          "x": 1680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "L_Conforme",
+          "type": "exclusiveGateway",
+          "name": "Prodotti conformi?",
+          "x": 1930,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "L_NC",
+          "type": "task",
+          "name": "Aprire non conformità e isolare merce",
+          "x": 1930,
+          "y": 770,
+          "l": 1,
+          "offset": 150
+        },
+        {
+          "id": "L_Sostituisci",
+          "type": "task",
+          "name": "RGC / MAG · Reperire merce conforme o ripianificare",
+          "x": 2180,
+          "y": 770,
+          "l": 1,
+          "offset": 150,
+          "evidence": "Risoluzione didattica dopo non conformità documentata."
+        },
+        {
+          "id": "L_Rimedio",
+          "type": "exclusiveGateway",
+          "name": "Sostituzione disponibile?",
+          "x": 2430,
+          "y": 770,
+          "l": 1
+        },
+        {
+          "id": "L_Sospesa",
+          "type": "endEvent",
+          "name": "Consegna da ripianificare",
+          "x": 2680,
+          "y": 770,
+          "l": 1
+        },
+        {
+          "id": "L_ADRProd",
+          "type": "task",
+          "name": "Verificare schede e conformità ADR del prodotto",
+          "x": 2180,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "L_Doc",
+          "type": "exclusiveGateway",
+          "name": "Allegati richiesti?",
+          "x": 2430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "L_Allegati",
+          "type": "task",
+          "name": "Richiedere schede e stampare certificati",
+          "x": 2680,
+          "y": 620,
+          "l": 1,
+          "offset": 0
+        },
+        {
+          "id": "L_Imballa",
+          "type": "manualTask",
+          "name": "Allegare documenti, imballare ed etichettare",
+          "x": 2930,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "L_Arrivo",
+          "type": "task",
+          "name": "Identificare ritirante, colli e veicolo",
+          "x": 2930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_ADR",
+          "type": "exclusiveGateway",
+          "name": "Merce ADR?",
+          "x": 3180,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_CheckADR",
+          "type": "task",
+          "name": "Verificare idoneità veicolo e conducente ADR",
+          "x": 3430,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_Idoneo",
+          "type": "exclusiveGateway",
+          "name": "Idonei?",
+          "x": 3680,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_Cambia",
+          "type": "task",
+          "name": "Richiedere mezzo / conducente idonei",
+          "x": 3680,
+          "y": 1210,
+          "l": 2,
+          "offset": 150,
+          "evidence": "Ramo di rimedio didattico al controllo ADR documentato; nessuna partenza su esito negativo."
+        },
+        {
+          "id": "L_Paga",
+          "type": "exclusiveGateway",
+          "name": "Incasso al ritiro / contrassegno?",
+          "x": 3930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_Incasso",
+          "type": "task",
+          "name": "Verificare incasso o documenti di contrassegno",
+          "x": 4180,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_Carica",
+          "type": "manualTask",
+          "name": "Completare bolla, caricare e consegnare merce",
+          "x": 4430,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_Partenza",
+          "type": "task",
+          "name": "RMAG / SMAG · Registrare dati di partenza",
+          "x": 4680,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "L_End",
+          "type": "endEvent",
+          "name": "Merce partita · bolla evasa",
+          "x": 4930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "LS_Corrieri",
+          "type": "store",
+          "name": "Archivio spedizionieri qualificati\nTabella non specificata",
+          "x": 680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "LS_Gestionale",
+          "type": "store",
+          "name": "Gestionale · ordini, bolle, anagrafiche,\nscorte, contabilità / listini · tabelle non specificate",
+          "x": 930,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "LD_Autorizzazione",
+          "type": "object",
+          "name": "Autorizzazione evasione / riesame",
+          "x": 1430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "LD_Bolla",
+          "type": "object",
+          "name": "Bolla [prelievo]",
+          "x": 1680,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "LS_Prodotti",
+          "type": "store",
+          "name": "Anagrafica prodotti / scorte\nTabella non specificata",
+          "x": 1680,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "LD_NC",
+          "type": "object",
+          "name": "Non conformità",
+          "x": 1930,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "LS_ADR",
+          "type": "store",
+          "name": "Schede prodotto / prescrizioni ADR\nArchivio documentale",
+          "x": 2180,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "LD_Allegati",
+          "type": "object",
+          "name": "Schede tecniche / certificati",
+          "x": 2680,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "LD_Colli",
+          "type": "object",
+          "name": "Etichette / documenti di consegna",
+          "x": 2930,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "LD_ADR",
+          "type": "object",
+          "name": "Documenti veicolo / conducente",
+          "x": 3430,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "LD_Pagamento",
+          "type": "object",
+          "name": "Documenti incasso / contrassegno",
+          "x": 4180,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "LD_BollaPartenza",
+          "type": "object",
+          "name": "Bolla [completata / evasa]",
+          "x": 4430,
+          "y": 945,
+          "l": 2
+        },
+        {
+          "id": "LS_Bolle",
+          "type": "store",
+          "name": "Archivio bolle / stato ordine\nGestionale · tabella non specificata",
+          "x": 4680,
+          "y": 945,
+          "l": 2
+        }
+      ],
+      "flows": [
+        {
+          "a": "L_Start",
+          "b": "L_Porto",
+          "name": ""
+        },
+        {
+          "a": "L_Porto",
+          "b": "L_Corriere",
+          "name": "Sì"
+        },
+        {
+          "a": "L_Porto",
+          "b": "L_Prepara",
+          "name": "No · ritiro cliente",
+          "viaY": 385
+        },
+        {
+          "a": "L_Corriere",
+          "b": "L_Prepara",
+          "name": ""
+        },
+        {
+          "a": "L_Prepara",
+          "b": "L_Blocchi",
+          "name": ""
+        },
+        {
+          "a": "L_Blocchi",
+          "b": "L_Sblocca",
+          "name": "No"
+        },
+        {
+          "a": "L_Sblocca",
+          "b": "L_Sblocco",
+          "name": ""
+        },
+        {
+          "a": "L_Sblocco",
+          "b": "L_Stop",
+          "name": "No"
+        },
+        {
+          "a": "L_Sblocco",
+          "b": "L_Prepara",
+          "name": "Sì · ricontrollare",
+          "viaY": 425
+        },
+        {
+          "a": "L_Blocchi",
+          "b": "L_Autorizza",
+          "name": "Sì"
+        },
+        {
+          "a": "L_Autorizza",
+          "b": "L_Stampa",
+          "name": ""
+        },
+        {
+          "a": "L_Stampa",
+          "b": "L_Prelievo",
+          "name": ""
+        },
+        {
+          "a": "L_Prelievo",
+          "b": "L_Conforme",
+          "name": ""
+        },
+        {
+          "a": "L_Conforme",
+          "b": "L_NC",
+          "name": "No"
+        },
+        {
+          "a": "L_NC",
+          "b": "L_Sostituisci",
+          "name": ""
+        },
+        {
+          "a": "L_Sostituisci",
+          "b": "L_Rimedio",
+          "name": ""
+        },
+        {
+          "a": "L_Rimedio",
+          "b": "L_Sospesa",
+          "name": "No"
+        },
+        {
+          "a": "L_Rimedio",
+          "b": "L_Prelievo",
+          "name": "Sì",
+          "viaY": 855
+        },
+        {
+          "a": "L_Conforme",
+          "b": "L_ADRProd",
+          "name": "Sì"
+        },
+        {
+          "a": "L_ADRProd",
+          "b": "L_Doc",
+          "name": ""
+        },
+        {
+          "a": "L_Doc",
+          "b": "L_Allegati",
+          "name": "Sì"
+        },
+        {
+          "a": "L_Doc",
+          "b": "L_Imballa",
+          "name": "No",
+          "viaY": 430
+        },
+        {
+          "a": "L_Allegati",
+          "b": "L_Imballa",
+          "name": ""
+        },
+        {
+          "a": "L_Imballa",
+          "b": "L_Arrivo",
+          "name": ""
+        },
+        {
+          "a": "L_Arrivo",
+          "b": "L_ADR",
+          "name": ""
+        },
+        {
+          "a": "L_ADR",
+          "b": "L_CheckADR",
+          "name": "Sì"
+        },
+        {
+          "a": "L_ADR",
+          "b": "L_Paga",
+          "name": "No",
+          "viaY": 865
+        },
+        {
+          "a": "L_CheckADR",
+          "b": "L_Idoneo",
+          "name": ""
+        },
+        {
+          "a": "L_Idoneo",
+          "b": "L_Cambia",
+          "name": "No"
+        },
+        {
+          "a": "L_Cambia",
+          "b": "L_CheckADR",
+          "name": "Ripetere controllo",
+          "viaY": 1275
+        },
+        {
+          "a": "L_Idoneo",
+          "b": "L_Paga",
+          "name": "Sì"
+        },
+        {
+          "a": "L_Paga",
+          "b": "L_Incasso",
+          "name": "Sì"
+        },
+        {
+          "a": "L_Paga",
+          "b": "L_Carica",
+          "name": "No",
+          "viaY": 865
+        },
+        {
+          "a": "L_Incasso",
+          "b": "L_Carica",
+          "name": ""
+        },
+        {
+          "a": "L_Carica",
+          "b": "L_Partenza",
+          "name": ""
+        },
+        {
+          "a": "L_Partenza",
+          "b": "L_End",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "L_Corriere",
+          "data": "LS_Corrieri",
+          "crud": "R",
+          "detail": "Spedizionieri qualificati, zona e condizioni.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Prepara",
+          "data": "LS_Gestionale",
+          "crud": "R",
+          "detail": "Ordini, cliente, scorte, bolle, insoluti, condizioni commerciali.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Prepara",
+          "data": "LD_Bolla",
+          "crud": "C",
+          "detail": "Elaborazione preliminare bolle.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Sblocca",
+          "data": "LS_Gestionale",
+          "crud": "R",
+          "detail": "Insoluti / prezzi / autorizzazioni; fonte D.9A.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Sblocca",
+          "data": "LD_Autorizzazione",
+          "crud": "C",
+          "detail": "Esito riesame; CRUD di tabelle non specificato.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Autorizza",
+          "data": "LD_Autorizzazione",
+          "crud": "R/U",
+          "detail": "Autorizzazione evasione e dati per stampa.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Autorizza",
+          "data": "LD_Bolla",
+          "crud": "R/U",
+          "detail": "Completamento bolle / trasporto.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Stampa",
+          "data": "LD_Bolla",
+          "crud": "R",
+          "detail": "Stampa delle bolle autorizzate.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Prelievo",
+          "data": "LD_Bolla",
+          "crud": "R",
+          "detail": "Righe e quantità da prelevare.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Prelievo",
+          "data": "LS_Prodotti",
+          "crud": "R",
+          "detail": "Prodotti, scorte, lotti/scadenze; dettaglio tabelle non specificato.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_NC",
+          "data": "LD_NC",
+          "crud": "C",
+          "detail": "Segnalazione non conformità; isolamento fisico non è Data Object.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Sostituisci",
+          "data": "LD_NC",
+          "crud": "R",
+          "detail": "Non conformità e rimedio; ramo didattico.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_ADRProd",
+          "data": "LS_ADR",
+          "crud": "R",
+          "detail": "Controllo documentale nel caso storico, non istruzioni normative attuali.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Allegati",
+          "data": "LD_Bolla",
+          "crud": "R",
+          "detail": "Note e richieste di allegati.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Allegati",
+          "data": "LD_Allegati",
+          "crud": "C",
+          "detail": "Richiedere documenti a RGC/RTRAF e stampare certificati.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Imballa",
+          "data": "LD_Allegati",
+          "crud": "R",
+          "detail": "Allegare documenti quando richiesti.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Imballa",
+          "data": "LD_Colli",
+          "crud": "C",
+          "detail": "Etichette / documenti accompagnamento.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Arrivo",
+          "data": "LD_Colli",
+          "crud": "R",
+          "detail": "Identificare colli, ritirante e destinazione.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Arrivo",
+          "data": "LS_Corrieri",
+          "crud": "R",
+          "detail": "Identità ritirante e spedizioniere.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_CheckADR",
+          "data": "LD_ADR",
+          "crud": "R",
+          "detail": "Documenti veicolo/conducente; controllo storico SAEM.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Cambia",
+          "data": "LD_ADR",
+          "crud": "R",
+          "detail": "Esito non idoneo, nuovo controllo obbligatorio.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Incasso",
+          "data": "LD_Pagamento",
+          "crud": "R/U",
+          "detail": "Verificare incasso o contrassegno; tabelle non specificate.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Carica",
+          "data": "LD_BollaPartenza",
+          "crud": "C",
+          "detail": "Completare dati consegna / targa e bolla.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Carica",
+          "data": "LD_Colli",
+          "crud": "R",
+          "detail": "Colli / etichette / documenti.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Partenza",
+          "data": "LD_BollaPartenza",
+          "crud": "R",
+          "detail": "Dati effettivi di partenza.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        },
+        {
+          "task": "L_Partenza",
+          "data": "LS_Bolle",
+          "crud": "U",
+          "detail": "Aggiornare archivio bolle e stato ordine.",
+          "source": "PDF 37, 72–74, 95 / stampate 25, 60–62, 83"
+        }
+      ]
+    },
+    {
+      "id": "Fattura",
+      "name": "D.11 · Fatturazione della bolla evasa",
+      "lanes": [
+        "RGC / RCONT · Verifica ed emissione",
+        "RGC / EDP / RTRAF / MAG · Invio e archivi",
+        "CONT · Prima nota"
+      ],
+      "source": "PDF 75 / stampata 63; PDF 37 / 25",
+      "scope": "TO-BE · fatturazione mantenuta dal processo originale",
+      "nodes": [
+        {
+          "id": "F_Start",
+          "type": "startEvent",
+          "name": "Ciclo settimanale · bolla evasa",
+          "x": 180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "F_Verifica",
+          "type": "task",
+          "name": "Verificare caricamento bolle ed escludere già fatturate",
+          "x": 430,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "F_Gia",
+          "type": "exclusiveGateway",
+          "name": "Già fatturata manualmente?",
+          "x": 680,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "F_Recupera",
+          "type": "task",
+          "name": "Recuperare fattura emessa e relativo stato contabile",
+          "x": 680,
+          "y": 330,
+          "l": 0,
+          "offset": 150,
+          "evidence": "Raccordo didattico: esclusione bolle già fatturate esplicita, verifica contabile evita duplicazioni."
+        },
+        {
+          "id": "F_Emetti",
+          "type": "task",
+          "name": "Elaborare e stampare fattura",
+          "x": 930,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "F_Fork",
+          "type": "parallelGateway",
+          "name": "Invio e registrazione",
+          "x": 1180,
+          "y": 180,
+          "l": 0
+        },
+        {
+          "id": "F_Canale",
+          "type": "exclusiveGateway",
+          "name": "Canale cliente?",
+          "x": 1430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "F_Posta",
+          "type": "task",
+          "name": "Smistare e spedire fattura per posta",
+          "x": 1680,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "F_Postel",
+          "type": "task",
+          "name": "EDP · Generare e trasmettere file Postel",
+          "x": 1680,
+          "y": 770,
+          "l": 1,
+          "offset": 150
+        },
+        {
+          "id": "F_Contrassegno",
+          "type": "task",
+          "name": "RTRAF / MAG · Gestire fattura contrassegno",
+          "x": 1930,
+          "y": 620,
+          "l": 1,
+          "offset": 0
+        },
+        {
+          "id": "F_Merge",
+          "type": "exclusiveGateway",
+          "name": "Canale completato",
+          "x": 2180,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "F_Archivia",
+          "type": "task",
+          "name": "Archiviare fattura / aggiornare catalogatore",
+          "x": 2430,
+          "y": 620,
+          "l": 1
+        },
+        {
+          "id": "F_PrimaNota",
+          "type": "task",
+          "name": "Trasferire fattura in prima nota",
+          "x": 1680,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "F_Join",
+          "type": "parallelGateway",
+          "name": "Invio e contabilità completati",
+          "x": 2680,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "F_End",
+          "type": "endEvent",
+          "name": "Fatturazione completata",
+          "x": 2930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "F_GiaRegistrata",
+          "type": "exclusiveGateway",
+          "name": "Già in prima nota?",
+          "x": 930,
+          "y": 1060,
+          "l": 2
+        },
+        {
+          "id": "F_RegManuale",
+          "type": "task",
+          "name": "Registrare fattura manuale in prima nota",
+          "x": 1180,
+          "y": 1210,
+          "l": 2,
+          "offset": 150,
+          "evidence": "Raccordo didattico per documento già emesso; prevenzione della doppia registrazione."
+        },
+        {
+          "id": "F_EndManuale",
+          "type": "endEvent",
+          "name": "Bolla già fatturata · contabilità verificata",
+          "x": 1430,
+          "y": 1210,
+          "l": 2
+        },
+        {
+          "id": "FS_Bolle",
+          "type": "store",
+          "name": "Archivio bolle evase / bolle fatturate\nGestionale · tabelle non specificate",
+          "x": 430,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "FS_Fatture",
+          "type": "store",
+          "name": "Archivio fatture emesse\nTabella non specificata",
+          "x": 930,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "FD_Fattura",
+          "type": "object",
+          "name": "Fattura [emessa]",
+          "x": 1180,
+          "y": 65,
+          "l": 0
+        },
+        {
+          "id": "FS_Clienti",
+          "type": "store",
+          "name": "Anagrafica cliente · canale invio\nTabella non specificata",
+          "x": 1430,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "FD_Postel",
+          "type": "object",
+          "name": "File fatture Postel",
+          "x": 1680,
+          "y": 525,
+          "l": 1
+        },
+        {
+          "id": "FD_Contrassegno",
+          "type": "object",
+          "name": "Fattura [contrassegno]",
+          "x": 1930,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "FS_Catalogo",
+          "type": "store",
+          "name": "Catalogatore / archivio fatture",
+          "x": 2430,
+          "y": 505,
+          "l": 1
+        },
+        {
+          "id": "FS_Contabilita",
+          "type": "store",
+          "name": "Prima nota contabile\nTabella non specificata",
+          "x": 1680,
+          "y": 945,
+          "l": 2
+        }
+      ],
+      "flows": [
+        {
+          "a": "F_Start",
+          "b": "F_Verifica",
+          "name": ""
+        },
+        {
+          "a": "F_Verifica",
+          "b": "F_Gia",
+          "name": ""
+        },
+        {
+          "a": "F_Gia",
+          "b": "F_Recupera",
+          "name": "Sì"
+        },
+        {
+          "a": "F_Recupera",
+          "b": "F_GiaRegistrata",
+          "name": ""
+        },
+        {
+          "a": "F_GiaRegistrata",
+          "b": "F_RegManuale",
+          "name": "No"
+        },
+        {
+          "a": "F_GiaRegistrata",
+          "b": "F_EndManuale",
+          "name": "Sì",
+          "viaY": 850
+        },
+        {
+          "a": "F_RegManuale",
+          "b": "F_EndManuale",
+          "name": ""
+        },
+        {
+          "a": "F_Gia",
+          "b": "F_Emetti",
+          "name": "No"
+        },
+        {
+          "a": "F_Emetti",
+          "b": "F_Fork",
+          "name": ""
+        },
+        {
+          "a": "F_Fork",
+          "b": "F_Canale",
+          "name": ""
+        },
+        {
+          "a": "F_Fork",
+          "b": "F_PrimaNota",
+          "name": "",
+          "viaX": 1320
+        },
+        {
+          "a": "F_Canale",
+          "b": "F_Posta",
+          "name": "Posta"
+        },
+        {
+          "a": "F_Canale",
+          "b": "F_Postel",
+          "name": "Postel"
+        },
+        {
+          "a": "F_Canale",
+          "b": "F_Contrassegno",
+          "name": "Contrassegno",
+          "viaY": 420
+        },
+        {
+          "a": "F_Posta",
+          "b": "F_Merge",
+          "name": "",
+          "viaY": 440
+        },
+        {
+          "a": "F_Postel",
+          "b": "F_Merge",
+          "name": ""
+        },
+        {
+          "a": "F_Contrassegno",
+          "b": "F_Merge",
+          "name": ""
+        },
+        {
+          "a": "F_Merge",
+          "b": "F_Archivia",
+          "name": ""
+        },
+        {
+          "a": "F_Archivia",
+          "b": "F_Join",
+          "name": ""
+        },
+        {
+          "a": "F_PrimaNota",
+          "b": "F_Join",
+          "name": ""
+        },
+        {
+          "a": "F_Join",
+          "b": "F_End",
+          "name": ""
+        }
+      ],
+      "links": [
+        {
+          "task": "F_Verifica",
+          "data": "FS_Bolle",
+          "crud": "R",
+          "detail": "Tutte le bolle evase caricate; esclusione già fatturate manualmente.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Recupera",
+          "data": "FS_Fatture",
+          "crud": "R",
+          "detail": "Fattura già emessa.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Recupera",
+          "data": "FS_Contabilita",
+          "crud": "R",
+          "detail": "Stato registrazione per evitare duplicati; raccordo didattico.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Emetti",
+          "data": "FS_Bolle",
+          "crud": "R/U",
+          "detail": "Bolle da fatturare; stato di fatturazione è inferenza funzionale, tabella non specificata.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Emetti",
+          "data": "FS_Fatture",
+          "crud": "C",
+          "detail": "Fattura prodotta; struttura fisica non specificata.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Emetti",
+          "data": "FD_Fattura",
+          "crud": "C",
+          "detail": "Fattura emessa.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Posta",
+          "data": "FD_Fattura",
+          "crud": "R",
+          "detail": "Smistare / spedire fattura.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Posta",
+          "data": "FS_Clienti",
+          "crud": "R",
+          "detail": "Indirizzo destinatario.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Postel",
+          "data": "FD_Fattura",
+          "crud": "R",
+          "detail": "Dati fattura.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Postel",
+          "data": "FD_Postel",
+          "crud": "C",
+          "detail": "File fatture Postel.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Contrassegno",
+          "data": "FD_Contrassegno",
+          "crud": "R/U",
+          "detail": "Invio documenti a magazzino e archiviazione secondo D.11.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_Archivia",
+          "data": "FS_Catalogo",
+          "crud": "U",
+          "detail": "Archivio fatture e catalogatore.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_PrimaNota",
+          "data": "FD_Fattura",
+          "crud": "R",
+          "detail": "Dati fattura emessa.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_PrimaNota",
+          "data": "FS_Contabilita",
+          "crud": "C",
+          "detail": "Trasferimento fattura in prima nota.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_RegManuale",
+          "data": "FS_Fatture",
+          "crud": "R",
+          "detail": "Fattura manuale già esistente.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        },
+        {
+          "task": "F_RegManuale",
+          "data": "FS_Contabilita",
+          "crud": "C",
+          "detail": "Solo quando non già registrata; raccordo didattico.",
+          "source": "PDF 75 / stampata 63; PDF 37 / 25"
+        }
+      ]
+    }
+  ]
+}
