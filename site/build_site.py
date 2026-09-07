@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Genera il sito del corso processi-MOCI06 (home + 7 moduli + guida di laboratorio).
+"""Genera il sito del corso processi-MOCI06 (home + 8 moduli + guida di laboratorio).
 
 Riusa CSS/JS del corso datamesh (skill claude-course-builder): albero struttura a
 due livelli, evidenziazione sezione attiva, pulsante di stampa, foglio di stile per
@@ -18,12 +18,13 @@ REPO_TREE = "https://github.com/thimotyb/corso-processi/tree/main/"
 
 MODULES = [
     ("01", "M01 - Classificazione e architettura dei processi"),
-    ("02", "M02 - APQC PCF: Category, Process Group, Process"),
-    ("03", "M03 - Dalla Activity al Task"),
-    ("04", "M04 - Variabili di processo e relazioni"),
-    ("05", "M05 - Indicatori e misurazione"),
-    ("06", "M06 - Rappresentazione: SIPOC, process map, swimlane, BPMN"),
-    ("07", "M07 - Scheda processo completa (laboratorio integrato)"),
+    ("02", "M02 - Raccolta e documentazione dei requisiti"),
+    ("03", "M03 - APQC PCF: Category, Process Group, Process"),
+    ("04", "M04 - Dalla Activity al Task"),
+    ("05", "M05 - Variabili di processo e relazioni"),
+    ("06", "M06 - Indicatori e misurazione"),
+    ("07", "M07 - Rappresentazione: SIPOC, process map, swimlane, BPMN"),
+    ("08", "M08 - Scheda processo completa (laboratorio integrato)"),
 ]
 
 # id dell'ultima sezione (esercitazione) di ogni modulo — calcolato dal contenuto
@@ -77,48 +78,131 @@ CONTENT = {
    "La prospettiva del cliente orienta la definizione delle <strong>misure di qualità</strong>. Non basta sapere quante attività sono state eseguite: occorre verificare se l'output è arrivato al destinatario giusto, nel momento concordato, nel formato utilizzabile e senza errori. Tempi di risposta, puntualità, completezza, accuratezza, numero di reclami e tasso di rilavorazione sono esempi di misure che collegano il funzionamento interno al valore percepito dal cliente.",
   ],None),
   (1,"2 Funzione, processo, attività e task",[
-   "Funzione, processo, attività e task sono livelli diversi. La funzione è un'unità organizzativa permanente; il processo è un flusso orientato a un risultato; l'attività è un passaggio del processo; il task è un'azione elementare e verificabile.",
+   "<strong>Funzione, processo, attività e task</strong> descrivono aspetti diversi del lavoro organizzativo e non sono sinonimi. La funzione identifica una responsabilità o una capacità organizzativa relativamente stabile, spesso associata a un'unità, a un reparto o a una competenza. Il processo, invece, descrive il modo in cui il lavoro attraversa l'organizzazione per ottenere un risultato utile. Le attività e i task rappresentano livelli progressivamente più concreti di questo lavoro.",
+   "Un <strong>processo aziendale</strong> è una sequenza strutturata e ripetibile di attività progettata per raggiungere un obiettivo specifico. Non coincide semplicemente con l'elenco delle operazioni svolte da un reparto: comprende l'insieme delle attività, delle decisioni, delle responsabilità e delle regole necessarie per trasformare determinati input in output destinati a uno o più clienti o destinatari. Per questa ragione un processo può iniziare in una funzione, proseguire in altre funzioni e concludersi presso un cliente interno o esterno.",
+   "Ogni processo dovrebbe rendere espliciti il proprio <strong>obiettivo</strong>, gli <strong>input</strong> necessari, gli <strong>output</strong> prodotti, i ruoli coinvolti, le regole applicabili e i criteri con cui si valuta il risultato. L'obiettivo chiarisce perché il processo esiste e quale valore deve generare. Gli input possono essere dati, richieste, documenti, materiali, autorizzazioni o eventi; gli output possono essere prodotti, servizi, decisioni, comunicazioni o informazioni utilizzate dal passaggio successivo.",
+   "Le <strong>attività</strong> sono unità di lavoro riconoscibili all'interno del processo. Un'attività può consistere in un'operazione semplice, come inviare una comunicazione, oppure comprendere più passaggi collegati, controlli e decisioni. La sequenza delle attività costituisce il <strong>flusso di lavoro</strong>: mostra l'ordine normale delle operazioni, ma anche le alternative, le diramazioni, le esecuzioni parallele, i ritorni e le condizioni che determinano il percorso effettivo di ogni istanza del processo.",
+   "Il <strong>task</strong> è l'azione elementare che, al livello di dettaglio scelto, può essere assegnata a un ruolo ed eseguita o verificata come unità operativa. Il confine tra attività e task dipende dalla finalità del modello: se occorre comprendere il processo nel suo insieme, un gruppo di azioni può essere rappresentato come una singola attività; se occorre organizzare l'esecuzione o automatizzare il lavoro, la stessa attività può essere scomposta in task più dettagliati. Il livello di dettaglio deve quindi essere sufficiente per comprendere, assegnare e controllare il lavoro, senza rendere il modello inutilmente complesso.",
+   "Un processo è comprensibile anche attraverso le sue <strong>responsabilità</strong>. Ogni attività o task dovrebbe avere un esecutore, un responsabile o un ruolo chiaramente identificabile. La distinzione dei ruoli riduce sovrapposizioni e omissioni, facilita il passaggio di consegne e rende possibile verificare chi deve agire, chi deve approvare e chi deve essere informato. Il processo può inoltre utilizzare risorse, sistemi informativi e strumenti diversi, che devono essere coerenti con le attività da svolgere.",
+   "Le <strong>regole e gli standard</strong> definiscono i vincoli entro cui il processo deve operare: criteri di accettazione, autorizzazioni, obblighi normativi, livelli di servizio e condizioni per proseguire o deviare dal flusso. La <strong>documentazione</strong> rende il processo ripetibile e verificabile, mentre i controlli e i meccanismi di feedback permettono di rilevare errori, eccezioni e scostamenti. Un processo ben descritto non mostra quindi soltanto che cosa viene fatto, ma anche in quali condizioni, con quali strumenti e secondo quali criteri.",
+   "Infine, <strong>metriche e indicatori</strong> collegano l'esecuzione del processo al risultato atteso. Tempi di attraversamento, costi, qualità dell'output, puntualità, errori, rilavorazioni e soddisfazione del cliente sono esempi di aspetti misurabili. La loro osservazione consente di capire se il processo raggiunge il proprio obiettivo e di individuare opportunità di miglioramento.",
+   "In sintesi, la funzione descrive una responsabilità organizzativa, il processo coordina il lavoro verso un risultato, l'attività rappresenta un'unità significativa di lavoro e il task rende operativa un'azione concreta. Questa distinzione consente di passare dalla struttura organizzativa al flusso end-to-end e, quando serve, dal flusso generale al dettaglio necessario per l'esecuzione e il controllo.",
+   "Per leggere correttamente un processo è utile osservare insieme questi elementi:",
+   "<ul class=\"study-bullets\"><li><strong>Obiettivo</strong>: il risultato che il processo deve raggiungere.</li><li><strong>Input e output</strong>: ciò che il processo riceve, trasforma e consegna.</li><li><strong>Attività e task</strong>: il lavoro da svolgere e il livello di dettaglio con cui lo si rappresenta.</li><li><strong>Flusso</strong>: l'ordine, le condizioni, le alternative e le eventuali attività parallele.</li><li><strong>Ruoli e risorse</strong>: chi esegue, approva, controlla o supporta il lavoro.</li><li><strong>Regole, documentazione e controlli</strong>: i vincoli e le evidenze che rendono il processo ripetibile.</li><li><strong>Metriche e feedback</strong>: come si verifica il risultato e come si orienta il miglioramento.</li></ul>",
   ],None),
-  (2,"2.1 Come distinguere i livelli",[
-   "La funzione risponde alla domanda «chi»; il processo a «quale risultato si deve ottenere»; l'attività a «quale passaggio serve»; il task a «quale azione concreta viene eseguita».",
-   "Una funzione può partecipare a più processi e un processo può attraversare più funzioni. Un nome di processo efficace contiene normalmente un verbo e un oggetto, per esempio «gestire l'ordine cliente».",
+  (2,"2.1 Distinguere i livelli per estrarre i requisiti",[
+   "La distinzione tra funzione, processo, attività e task non serve soltanto a ordinare il vocabolario. Serve a capire <strong>a quale livello porre ogni domanda</strong> durante la raccolta dei requisiti. La funzione chiarisce chi possiede una responsabilità; il processo chiarisce quale risultato deve essere ottenuto; l'attività chiarisce quale parte del lavoro è necessaria; il task chiarisce quale azione concreta deve essere eseguita e verificata.",
+   "A livello di <strong>processo</strong> si raccolgono obiettivo, cliente, confini, input, output, vincoli e indicatori. A livello di <strong>attività</strong> si individuano attore, precondizioni, informazioni utilizzate, risultato intermedio e regole applicate. A livello di <strong>task</strong> si precisano l'azione, l'esito osservabile, l'eventuale interazione con un sistema e il dato creato o modificato.",
+   "Una funzione può partecipare a più processi e un processo può attraversare più funzioni. Per questo il requisito deve essere collegato sia al risultato end-to-end sia all'attività e al ruolo che lo rendono possibile. La distinzione dei livelli evita di confondere una responsabilità organizzativa con un'attività, oppure una funzione del sistema con l'intero processo aziendale.",
+   "Nel caso SAEM, per esempio, «gestire l'ordine cliente» è il processo; «creare la testata del carrello» è un'attività; «leggere i dati del cliente», «verificare l'IVA» o «confermare la testata» sono task o passi operativi. Questa scomposizione permette di collegare ogni requisito alle informazioni lette o scritte e al ruolo che esegue l'azione.",
+   "La distinzione dei livelli è quindi il punto di partenza; la raccolta completa richiede poi di documentare fonti, flussi alternativi, eccezioni, entità informative, operazioni CRUD e criteri di verifica.",
   ],None),
   (1,"3 Classificazione cross-industry",[
-   "Una classificazione cross-industry usa una tassonomia comune per descrivere processi presenti in organizzazioni e settori diversi. La tassonomia rende confrontabili nomi, livelli e risultati senza cancellare le specificità dell'azienda.",
+   "Una classificazione <strong>cross-industry</strong> organizza i processi aziendali in una struttura comune, utilizzabile da organizzazioni diverse per settore, dimensione e localizzazione. L'obiettivo non è sostenere che tutte le aziende lavorino nello stesso modo, ma offrire un punto di confronto per riconoscere processi con finalità simili anche quando sono eseguiti con ruoli, strumenti e procedure differenti.",
+   "Una tassonomia di processo funziona come una <strong>mappa condivisa</strong>. Permette di passare dai nomi locali e dalle descrizioni operative a categorie, gruppi e processi riconoscibili. La mappa aiuta a vedere l'organizzazione nel suo insieme, a individuare aree coperte o scoperte e a collegare le attività quotidiane a risultati più ampi.",
+   "Un modello comune è particolarmente utile quando si devono confrontare prestazioni, progettare miglioramenti, definire responsabilità, valutare sistemi informativi o discutere processi tra persone che provengono da funzioni diverse. Senza un vocabolario condiviso, la stessa parola può indicare attività diverse e attività equivalenti possono essere descritte con parole diverse.",
+   "Nessuna tassonomia sostituisce l'analisi dell'organizzazione. Un framework fornisce una struttura di riferimento; l'azienda deve poi adattarla ai propri prodotti, clienti, vincoli, ruoli, sistemi e livelli di dettaglio. La classificazione è quindi un modello di orientamento e confronto, non una fotografia completa delle procedure locali.",
+   "La necessità di scegliere un modello dipende dal <strong>perimetro dell'analisi</strong>. Un'organizzazione che vuole rappresentare l'intero patrimonio dei processi ha bisogno di uno schema ampio e trasversale. Un'organizzazione che studia soprattutto la movimentazione fisica dei prodotti può preferire un framework specializzato nella supply chain, come <strong>SCOR</strong>. I due approcci possono essere confrontati, ma non hanno lo stesso campo di applicazione.",
+   "<div class=\"note-box\"><strong>Framework generale: APQC Process Classification Framework.</strong> È una tassonomia cross-industry e cross-funzionale pensata per descrivere i processi dell'intera organizzazione e renderne possibile il confronto. La struttura procede dal livello più ampio delle <strong>Category</strong> ai <strong>Process Group</strong>, ai <strong>Process</strong> e alle <strong>Activity</strong>. I livelli superiori aiutano a leggere il portafoglio complessivo; i livelli inferiori descrivono progressivamente il lavoro. I task e le procedure operative restano invece dipendenti dall'organizzazione e dal contesto in cui il processo viene eseguito.</div>",
+   "<div class=\"note-box\"><strong>Framework specializzato: SCOR.</strong> È orientato alla supply chain e segue i processi con cui un'organizzazione pianifica, gestisce gli ordini, approvvigiona, trasforma, consegna e gestisce i resi. La struttura comprende macro-processi, categorie ed elementi di processo, insieme a prospettive su <strong>performance</strong>, <strong>practices</strong> e <strong>people</strong>. È quindi particolarmente adatto a imprese manifatturiere e distributive; non ha lo stesso perimetro generale di un modello che copre anche vendite, risorse umane, IT e finanza.</div>",
+   "Le suite gestionali rendono concreto il rapporto tra <strong>standardizzazione</strong> e <strong>automazione</strong>. Non si limitano a registrare dati: propongono ruoli, stati, controlli, transazioni e passaggi collegati. La standardizzazione definisce il percorso; la configurazione della piattaforma stabilisce come quel percorso viene eseguito e quali aggiornamenti possono avvenire automaticamente.",
+   "Un esempio è il processo <strong>Order to Cash</strong> documentato per Oracle NetSuite: l'ordine cliente alimenta l'evasione e la fatturazione; il sistema aggiorna lo stato dell'ordine, invia la fattura e genera la registrazione contabile. <a href=\"https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4750146419.html\" target=\"_blank\" rel=\"noopener noreferrer\">La pagina ufficiale Oracle descrive questi controlli e automatismi</a>.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/netsuite-order-to-cash.svg\" alt=\"Schema didattico del processo Oracle NetSuite Order to Cash: ordine cliente, evasione, fatturazione, aggiornamento dello stato e registrazione contabile\" data-caption=\"Schema didattico ricostruito dalla documentazione ufficiale Oracle NetSuite sul processo Order to Cash.\"><figcaption>Schema didattico ricostruito dalla <a href=\"https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4750146419.html\" target=\"_blank\" rel=\"noopener noreferrer\">documentazione ufficiale Oracle NetSuite</a>: Order to Cash.</figcaption></figure>",
+   "Un esempio analogo è il processo <strong>Procure to Pay</strong> documentato da SAP: la richiesta di acquisto porta all'assegnazione della fonte, all'ordine al fornitore, alla ricezione, alla verifica della fattura e al pagamento. Le regole configurabili possono selezionare richieste, fonti di approvvigionamento e ordini, anche con esecuzione pianificata. <a href=\"https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/af9ef57f504840d2b81be8667206d485/852a52a67c2c442ead085aa07b9fe8d4.html\" target=\"_blank\" rel=\"noopener noreferrer\">La documentazione SAP sulle regole di automazione descrive questo scenario</a>.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/sap-procure-to-pay.svg\" alt=\"Schema didattico del processo SAP Procure to Pay: richiesta di acquisto, fonte, ordine al fornitore, ricezione, verifica della fattura e pagamento\" data-caption=\"Schema didattico ricostruito dalla documentazione ufficiale SAP sul processo Procure to Pay.\"><figcaption>Schema didattico ricostruito dalla <a href=\"https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/af9ef57f504840d2b81be8667206d485/852a52a67c2c442ead085aa07b9fe8d4.html\" target=\"_blank\" rel=\"noopener noreferrer\">documentazione ufficiale SAP</a>: Procure to Pay.</figcaption></figure>",
   ],None),
   (2,"3.1 Tassonomie e vocabolario comune",[
-   "Senza un riferimento condiviso, reparti e aziende possono usare nomi diversi per processi simili. Una tassonomia comune stabilisce categorie e relazioni gerarchiche, riducendo ambiguità e tempo di allineamento.",
+   "Una <strong>tassonomia</strong> è una classificazione organizzata secondo categorie e relazioni gerarchiche. Nel caso dei processi, la gerarchia consente di leggere lo stesso oggetto a livelli diversi: una vista generale mostra grandi aree dell'organizzazione; livelli successivi raggruppano processi omogenei; livelli più dettagliati descrivono attività e, quando necessario, passi operativi specifici.",
+   "La gerarchia non serve soltanto a ordinare un elenco. Stabilisce il rapporto tra un elemento e il contesto più ampio a cui appartiene. Un processo può quindi essere identificato sia per il proprio nome e risultato sia per la posizione che occupa nella struttura complessiva. Questa posizione facilita la navigazione, il confronto e la tracciabilità delle analisi.",
+   "Il <strong>vocabolario comune</strong> riduce le ambiguità tra funzioni, sedi e organizzazioni. Per ottenere questo risultato, i nomi devono descrivere il risultato o la finalità del processo, non soltanto il reparto che lo esegue. Il reparto può cambiare, mentre il processo può rimanere necessario e attraversare più unità organizzative.",
+   "Un buon nome di processo tende a contenere un verbo e un oggetto: per esempio <em>gestire gli ordini cliente</em>, <em>selezionare i fornitori</em> o <em>emettere la fattura al cliente</em>. La denominazione deve essere accompagnata da una definizione e da un confine, perché il solo nome non è sufficiente a stabilire quali attività siano incluse.",
+   "Per confrontare due processi occorre verificare almeno quattro elementi:",
+   "<ul class=\"study-bullets\"><li><strong>finalità</strong>: quale bisogno o risultato condividono;</li><li><strong>confini</strong>: da quale evento partono e dove terminano;</li><li><strong>livello</strong>: se il confronto riguarda categorie, processi, attività o task;</li><li><strong>definizione</strong>: quali attività e risultati sono effettivamente compresi.</li></ul>",
   ],None),
   (2,"3.2 Perché classificare i processi",[
-   "Una classificazione ordinata sostiene analisi organizzative, miglioramento continuo, benchmarking, digitalizzazione, automazione e definizione di responsabilità e indicatori.",
+   "Classificare i processi serve innanzitutto a costruire una <strong>vista completa e leggibile dell'organizzazione</strong>. La tassonomia aiuta a individuare quali processi esistono, come sono raggruppati, quali risultati producono e quali collegamenti hanno con altre aree dell'azienda.",
+   "La classificazione sostiene il <strong>confronto delle prestazioni</strong>. Se due organizzazioni usano definizioni compatibili, possono confrontare tempi, costi, qualità, volumi o livelli di servizio riferiti a processi con uno scopo simile. Il confronto non elimina le differenze di contesto: le rende esplicite e permette di capire quali risultati dipendano dall'organizzazione, dal mercato o dai vincoli specifici.",
+   "Una struttura comune facilita il <strong>miglioramento continuo</strong>. Permette di assegnare un responsabile, collegare indicatori al processo, individuare sovrapposizioni e lacune, confrontare lo stato attuale con quello desiderato e selezionare le aree in cui intervenire per prime.",
+   "La classificazione è utile anche nei progetti di <strong>digitalizzazione e automazione</strong>. Prima di scegliere un'applicazione o automatizzare un'attività, occorre sapere a quale processo appartiene, quale risultato deve sostenere, quali ruoli coinvolge e quali informazioni attraversano il flusso. Una tassonomia evita che l'analisi si riduca a un insieme di funzioni applicative scollegate.",
+   "Infine, la classificazione rende più stabile la comunicazione tra direzione, responsabili di processo, analisti, tecnici e auditor. Un riferimento comune facilita la definizione di responsabilità e indicatori, la gestione del portafoglio dei processi, la documentazione dei rischi e il riuso delle conoscenze tra progetti diversi.",
+   "I benefici principali possono essere riassunti così:",
+   "<ul class=\"study-bullets\"><li><strong>visibilità</strong>: rende leggibile l'insieme dei processi aziendali;</li><li><strong>confrontabilità</strong>: permette di confrontare processi omogenei tra funzioni o organizzazioni;</li><li><strong>governance</strong>: aiuta ad assegnare responsabilità, obiettivi e indicatori;</li><li><strong>miglioramento</strong>: sostiene benchmarking, analisi delle lacune e priorità di intervento;</li><li><strong>digitalizzazione</strong>: collega processi, dati e sistemi prima di automatizzare;</li><li><strong>riuso</strong>: crea un linguaggio e una struttura riutilizzabili in analisi successive.</li></ul>",
+   "La classificazione deve però essere riesaminata quando cambiano strategia, prodotti, tecnologie, organizzazione o vincoli esterni. Un modello utile non è immutabile: resta abbastanza stabile da consentire il confronto, ma può evolvere quando cambiano le modalità con cui l'organizzazione crea valore.",
   ],None),
-  (1,"4 Introduzione all'APQC Process Classification Framework",[
-   "L'APQC Process Classification Framework è una tassonomia cross-industry di riferimento per mappare e confrontare i processi aziendali. Il corso utilizza la gerarchia Category → Process Group → Process → Activity e aggiunge il livello Task per la descrizione operativa.",
-   "Il PCF aiuta a collocare un processo in una struttura comune; non sostituisce l'analisi dell'organizzazione e non definisce i task specifici di ogni azienda.",
+  (1,"4 Dal processo ai requisiti",[
+   "La descrizione di un processo non si esaurisce nella rappresentazione del flusso. Per poterlo migliorare, digitalizzare o supportare con un sistema informativo è necessario esplicitare <strong>che cosa deve accadere</strong>, <strong>per chi</strong>, <strong>in quali condizioni</strong> e <strong>con quali risultati verificabili</strong>. Queste informazioni costituiscono la base per la raccolta dei requisiti.",
+   "Un requisito nasce da un'esigenza osservata o dichiarata e descrive una condizione che il processo o il sistema deve rispettare. Può riguardare il risultato del processo, una regola di business, un'informazione da conservare, un controllo, un'autorizzazione, un tempo di risposta oppure un comportamento che il sistema deve rendere possibile.",
+   "La raccolta parte dal <strong>modello di business</strong>: obiettivi, clienti, attività, ruoli, input, output, vincoli ed eccezioni. Solo dopo si selezionano le parti che devono essere supportate da applicazioni o archivi. In questo modo il sistema informativo resta al servizio del processo e non diventa il punto di partenza dell'analisi.",
+   "È utile distinguere due livelli collegati: i <strong>requisiti del processo</strong>, che descrivono il lavoro e il risultato atteso, e i <strong>requisiti informativi o IT</strong>, che descrivono le funzioni del sistema e i dati necessari. Il secondo livello deriva dal primo attraverso un passaggio di selezione e di dettaglio progressivo.",
+   "Per avviare la raccolta dei requisiti occorre chiedersi:",
+   "<ul class=\"study-bullets\"><li><strong>Quale esigenza</strong> ha dato origine al processo o alla modifica?</li><li><strong>Quale risultato</strong> deve essere ottenuto e da chi sarà utilizzato?</li><li><strong>Quali regole e vincoli</strong> devono essere rispettati?</li><li><strong>Quali informazioni</strong> servono per eseguire, controllare e concludere il lavoro?</li><li><strong>Quali errori, alternative ed eccezioni</strong> devono essere gestiti?</li><li><strong>Come si verificherà</strong> che il requisito sia stato soddisfatto?</li></ul>",
   ],None),
-  (2,"4.1 Le Category di processo",[
-   "La Category è il livello più ampio della classificazione e raggruppa processi con finalità omogenee. Le Category possono riguardare processi operativi, di gestione o di supporto.",
+  (2,"4.1 Esigenze, vincoli e fonti dei requisiti",[
+   "I requisiti possono essere esplicitamente dichiarati dal cliente o dagli utenti, ma possono anche derivare da esigenze note, requisiti cogenti, policy aziendali, accordi di servizio, rischi, errori ricorrenti e caratteristiche tecniche del prodotto o del servizio.",
+   "Una raccolta completa considera sia ciò che il cliente chiede sia ciò che è necessario per l'uso previsto. Nel caso di un ordine, per esempio, non basta registrare il prodotto richiesto: possono essere necessari dati sul cliente, condizioni di consegna, disponibilità, IVA, autorizzazioni, limiti di prezzo e modalità di evasione.",
+   "Ogni requisito dovrebbe avere una <strong>fonte</strong>: una richiesta, un documento, una regola, un'intervista, un'osservazione del lavoro, un indicatore di prestazione o un elemento del sistema esistente. La fonte permette di riesaminare la decisione e di distinguere ciò che è documentato da ciò che è stato inferito durante l'analisi.",
   ],None),
-  (2,"4.2 Esempi di aree funzionali",[
-   "Nel corso si incontrano esempi relativi a visione e strategia, vendite, acquisti, servizi, customer service, finance, risorse umane e tecnologia informatica. La Category è scelta in base alla finalità del processo, non al nome del reparto.",
+  (2,"4.2 Confini e livelli di dettaglio",[
+   "La raccolta deve mantenere il collegamento tra il requisito e il livello a cui si riferisce. Un obiettivo riguarda il processo nel suo insieme; una regola può riguardare una specifica attività; un requisito informativo può riguardare un singolo dato o una singola interazione con il sistema.",
+   "Un requisito troppo generale non è verificabile; uno troppo dettagliato può anticipare inutilmente una soluzione tecnica. Il livello corretto è quello che consente di comprendere il comportamento atteso, assegnare una responsabilità, verificare l'esito e mantenere aperte le scelte progettuali ancora non decise.",
   ],None),
-  (1,"5 Process Group, Process e risultati attesi",[
-   "Il Process Group raccoglie processi coerenti all'interno di una Category. Il Process rappresenta un flusso con obiettivo, confini, cliente e risultato atteso. Questa struttura permette di passare dalla vista generale alla descrizione del processo che sarà analizzato.",
+  (1,"5 Dalle attività alle entità informative",[
+   "Dopo aver individuato le attività da analizzare, si osservano le informazioni che esse utilizzano e producono. Un'attività può leggere dati già disponibili, crearne di nuovi, aggiornarli, eliminarli o usarli per generare un documento, una comunicazione o una decisione.",
+   "Le <strong>entità informative</strong> rappresentano strutture dati o unità informative significative per il processo. Possono essere un cliente, un ordine, una riga d'ordine, un articolo, un'autorizzazione, un messaggio o un documento. In una prima analisi sono entità candidate: solo il successivo approfondimento stabilisce se saranno confermate, modificate, accorpate o eliminate.",
+   "Il collegamento tra attività ed entità rende visibile il rapporto tra lavoro e informazioni. Per ogni attività è possibile chiedere: quali dati deve leggere? quali dati produce? quali dati modifica? quali informazioni devono restare disponibili per il passaggio successivo o per un controllo successivo?",
+   "Questa analisi aiuta a evitare due errori opposti: descrivere attività senza sapere quali informazioni le rendono possibili oppure partire dalle tabelle esistenti senza comprendere quale bisogno del processo soddisfino.",
   ],None),
-  (2,"5.1 Dalla Category al Process",[
-   "La classificazione procede dal generale al particolare: si identifica l'area funzionale, si individua il Process Group, si seleziona il Process e si verifica che il risultato atteso descriva ciò che l'organizzazione deve effettivamente produrre.",
+  (2,"5.1 Letture, scritture e responsabilità",[
+   "Le relazioni tra attività ed entità possono essere annotate come operazioni di lettura e scrittura. La lettura indica che l'attività usa informazioni già presenti; la scrittura indica che l'attività crea o modifica un'informazione che diventa disponibile per altri soggetti o attività.",
+   "L'annotazione deve essere accompagnata dal <strong>ruolo</strong> che esegue l'operazione e dallo scopo della lettura o della scrittura. Leggere i dati del cliente per autenticare l'utente è un requisito diverso dal leggerli per calcolare il prezzo o compilare la testata di un ordine.",
   ],None),
-  (1,"6 Laboratorio: prima mappa gerarchica",[
-   "Scegliere un processo reale o simulato. Costruire una prima mappa a cinque livelli: Category, Process Group, Process, Activity e Task.",
-   "Per il momento sono sufficienti nomi, confini e risultati attesi. La scomposizione dettagliata delle Activity, le variabili e gli indicatori saranno approfonditi nei moduli successivi.",
+  (2,"5.2 La matrice attività–informazioni",[
+   "Una matrice attività–informazioni mette in riga le attività e in colonna le entità o gli archivi. Nelle celle si annotano le operazioni compiute. La matrice fornisce una vista sintetica e consente di verificare che ogni informazione prodotta abbia un destinatario e che ogni informazione letta sia giustificata da un'attività.",
+   "Quando l'archivio è persistente, la matrice può essere dettagliata con la notazione <strong>CRUD</strong>: Create, Read, Update e Delete. La matrice non sostituisce la descrizione testuale, ma la integra e aiuta a validare la coerenza tra modello del processo e modello dei dati.",
+  ],None),
+  (1,"6 Dalle entità ai requisiti funzionali",[
+   "Le relazioni tra attività ed entità permettono di derivare i <strong>casi d'uso</strong>. Un caso d'uso descrive una funzionalità visibile dall'esterno, attivata da un attore e realizzata attraverso interazioni con il sistema e con le informazioni che il sistema gestisce.",
+   "Il caso d'uso traduce il processo in una domanda operativa: che cosa deve poter fare l'attore e quale risultato deve ottenere? La descrizione non deve limitarsi al nome della funzione, ma deve rendere espliciti il flusso normale, le condizioni iniziali, il risultato finale e i percorsi alternativi.",
+   "La specifica testuale dei requisiti può essere organizzata in asserzioni numerate. La numerazione deve seguire una struttura stabile e mantenere la distinzione tra categorie di requisito. Questo rende possibile riferirsi a un requisito durante progettazione, sviluppo, test e gestione delle modifiche.",
+  ],None),
+  (2,"6.1 Flusso principale e flussi alternativi",[
+   "Il <strong>flusso principale</strong> descrive il percorso atteso quando i dati sono corretti e le condizioni sono soddisfatte. I <strong>flussi alternativi</strong> descrivono variazioni legittime del percorso, mentre le <strong>eccezioni</strong> descrivono errori, indisponibilità o condizioni che impediscono la conclusione normale.",
+   "Per ogni alternativa è utile indicare il punto del flusso in cui si attiva, il dato o la condizione che la determina, l'azione da compiere e il risultato prodotto. Questa struttura consente di trasformare le eccezioni in percorsi analizzabili invece di lasciarle come conoscenza implicita degli operatori.",
+  ],None),
+  (2,"6.2 Precondizioni, postcondizioni e verificabilità",[
+   "Le <strong>precondizioni</strong> indicano ciò che deve essere vero prima dell'avvio, per esempio utente autenticato, cliente attivo o dati disponibili. Le <strong>postcondizioni</strong> descrivono lo stato che deve risultare al termine, per esempio ordine registrato, messaggio inviato o autorizzazione aggiornata.",
+   "Un requisito è utile quando può essere verificato. Frequenza, criticità, tempi attesi, completezza dei dati e criteri di accettazione aiutano a stabilire la priorità e a progettare controlli e test. La documentazione deve poter rispondere alla domanda: come sapremo che il requisito è stato soddisfatto?",
+  ],None),
+  (1,"7 Caso SAEM: dalla criticità alla specifica",[
+   "Nel caso SAEM la raccolta dei requisiti parte dall'analisi del processo reale di gestione degli ordini. L'analisi evidenzia problemi nelle unità di misura, nella corrispondenza tra codici cliente e codici interni, nei tempi di evasione, nei resi e nelle modifiche telefoniche agli ordini.",
+   "Queste criticità vengono trasformate in esigenze del nuovo processo: rendere visibili le specifiche dell'ordine, cercare e selezionare l'articolo corretto, verificare la disponibilità, controllare i parametri economici, gestire l'evasione unica o parziale e ridurre gli errori di imputazione.",
+   "La tesi non si limita a elencare le funzionalità. Collega ciascuna attività alle informazioni utilizzate e prodotte. Per l'ordine telematico, per esempio, la creazione del carrello legge cliente, condizioni di consegna e parametri IVA; la conferma legge e verifica testata e righe; l'esito positivo crea l'ordine effettivo e trasferisce le righe.",
+   "Le operazioni sono poi formalizzate nelle Assembly Line e nelle tavole CRUD. Da queste relazioni vengono derivati i casi d'uso e le relative specifiche testuali, con attori, flussi, alternative, eccezioni, precondizioni, postcondizioni, frequenza e criticità.",
+  ],None),
+  (2,"7.1 Esempio: gestione dell'ordine telematico",[
+   "L'attore cliente crea la testata del carrello, inserisce gli articoli, verifica disponibilità e condizioni, quindi conferma l'ordine. Il sistema legge le informazioni necessarie, segnala le righe non disponibili, ricalcola i dati economici e, se le verifiche hanno esito positivo, trasforma il carrello in ordine.",
+   "Le entità informative coinvolte includono cliente, condizioni di consegna, tabella IVA, carrello, righe del carrello, articoli, storico articoli, scadenze di magazzino, listini, ordine e messaggi. La loro presenza nel modello deve essere collegata all'attività che le legge o le scrive e alla fonte che documenta l'interazione.",
+  ],None),
+  (2,"7.2 Iterazione e gestione delle varianti",[
+   "La documentazione dei requisiti evolve durante lo sviluppo. Una prima descrizione può essere breve; in seguito vengono aggiunti i dettagli delle interazioni, delle entità e degli scenari alternativi. Il confronto tra tavole CRUD e soluzioni diverse permette inoltre di rendere visibili le varianti progettuali.",
+   "Nel caso SAEM la modifica dell'ordine presenta alternative tra la soluzione sviluppata dai tecnici e quella proposta nell'analisi. Le differenze vengono evidenziate nella tavola CRUD e non devono essere confuse con requisiti già definitivamente approvati.",
+  ],None),
+  (1,"8 Laboratorio: costruire una scheda dei requisiti",[
+   "Scegliere un processo semplice, come la gestione di una richiesta cliente o di un ordine. Descrivere prima l'obiettivo, i confini, gli attori, gli input e gli output; poi individuare le attività e le condizioni che modificano il flusso.",
+   "Per ogni attività compilare una scheda con: requisito, fonte, ruolo, input, output, entità lette, entità create o modificate, regola applicata, flusso alternativo, eccezione e criterio di verifica. Assegnare un identificativo stabile a ogni requisito.",
+   "Infine costruire una matrice attività–informazioni e confrontarla con la descrizione testuale. Ogni lettura o scrittura deve essere motivata da un'esigenza del processo; ogni output informativo deve avere un destinatario o un uso documentato.",
   ],None),
  ],
- kt=[
+  kt=[
   "Un processo trasforma input in output per un cliente e ha obiettivo, confini, evento di avvio e risultato atteso.",
   "Funzione, processo, attività e task sono livelli distinti: il processo esprime il risultato, il task l'azione elementare.",
-  "La classificazione cross-industry fornisce un vocabolario e una gerarchia comuni a organizzazioni diverse.",
-  "APQC organizza i processi in Category, Process Group, Process e Activity; il Task viene definito dall'organizzazione.",
-  "La prima esercitazione consiste nel costruire una mappa gerarchica a cinque livelli.",
+  "Una tassonomia cross-industry fornisce un linguaggio comune per confrontare processi con finalità simili in organizzazioni diverse.",
+  "La scelta del framework dipende dal perimetro: un modello generale copre l'organizzazione, mentre SCOR è specializzato nella supply chain.",
+  "La raccolta dei requisiti parte dall'analisi del business e distingue requisiti di processo da requisiti informativi e IT.",
+  "Le Assembly Line collegano attività ed entità informative attraverso relazioni di lettura e scrittura.",
+  "La matrice CRUD valida la coerenza tra attività, dati e comportamento del sistema.",
+  "I casi d'uso documentano attori, flussi, alternative, eccezioni, precondizioni e postcondizioni.",
+  "Nel caso SAEM i requisiti evolvono iterativamente e sono collegati a fonti, dati e varianti progettuali.",
  ]),
 
 "02": dict(
@@ -254,7 +338,7 @@ CONTENT = {
    "Entrambi vanno individuati perché determinano gran parte della variabilità di tempi e costi.",
   ],"La scheda di ogni dominio in <code>esempi-apqc/</code> contiene una matrice delle variabili già compilata, utile come modello."),
   (1,"4 Laboratorio",[
-   "Costruire la matrice delle variabili per la Activity scomposta nel Modulo 3. Aggiungere una riga con almeno un collo di bottiglia e indicare una relazione causa-effetto tra due variabili.",
+   "Costruire la matrice delle variabili per la Activity scomposta nel Modulo 4. Aggiungere una riga con almeno un collo di bottiglia e indicare una relazione causa-effetto tra due variabili.",
   ],None),
  ],
  kt=[
@@ -404,6 +488,48 @@ CONTENT = {
  ]),
 }
 
+# ---- riorganizzazione didattica dei moduli --------------------------------
+# M01 termina alla sezione 3. Le sezioni dedicate alla requisitazione diventano
+# il nuovo M02; i moduli già esistenti scalano di una posizione.
+requirements_sections = CONTENT["01"]["sections"][8:]
+CONTENT["01"]["sections"] = CONTENT["01"]["sections"][:8]
+requirement_section_numbers = {
+    "4": "1", "4.1": "1.1", "4.2": "1.2",
+    "5": "2", "5.1": "2.1", "5.2": "2.2",
+    "6": "3", "6.1": "3.1", "6.2": "3.2",
+    "7": "4", "7.1": "4.1", "7.2": "4.2",
+    "8": "5",
+}
+requirements_sections = [
+    (
+        level,
+        requirement_section_numbers.get(title.split(" ", 1)[0], title.split(" ", 1)[0])
+        + title[len(title.split(" ", 1)[0]):],
+        paragraphs,
+        note,
+    )
+    for level, title, paragraphs, note in requirements_sections
+]
+CONTENT["01"]["kt"] = [
+    "Un processo trasforma input in output per un cliente e ha obiettivo, confini, evento di avvio e risultato atteso.",
+    "Funzione, processo, attività e task sono livelli distinti: il processo esprime il risultato, il task l'azione elementare.",
+    "Una tassonomia cross-industry fornisce un linguaggio comune per confrontare processi con finalità simili in organizzazioni diverse.",
+    "La scelta del framework dipende dal perimetro: un modello generale copre l'organizzazione, mentre SCOR è specializzato nella supply chain.",
+]
+requirements_kt = [
+    "La raccolta dei requisiti parte dall'analisi del business e distingue requisiti di processo da requisiti informativi e IT.",
+    "Le Assembly Line collegano attività ed entità informative attraverso relazioni di lettura e scrittura.",
+    "La matrice CRUD valida la coerenza tra attività, dati e comportamento del sistema.",
+    "I casi d'uso documentano attori, flussi, alternative, eccezioni, precondizioni e postcondizioni.",
+    "Nel caso SAEM i requisiti evolvono iterativamente e sono collegati a fonti, dati e varianti progettuali.",
+]
+for old, new in reversed([
+    ("02", "03"), ("03", "04"), ("04", "05"),
+    ("05", "06"), ("06", "07"), ("07", "08"),
+]):
+    CONTENT[new] = CONTENT.pop(old)
+CONTENT["02"] = dict(sections=requirements_sections, kt=requirements_kt)
+
 # ---- template ----------------------------------------------------------------
 
 def esc(s): return html.escape(s, quote=True)
@@ -518,19 +644,21 @@ def index_html():
 
     def a(code): return f"chapters/chapter-{code}.html#{LAB_ANCHOR[code]}"
     labs = [
-        ("Laboratorio M01 - Prima mappa gerarchica", a("01"),
-         "Costruire una mappa a cinque livelli: Category, Process Group, Process, Activity e Task, definendo confini e risultato atteso."),
-        ("Laboratorio M02 - Collocazione nel PCF", a("02"),
+        ("Laboratorio M01 - Classificazione dei processi", a("01"),
+         "Consolidare concetti di processo, livelli e classificazione cross-industry."),
+        ("Laboratorio M02 - Scheda dei requisiti", a("02"),
+         "Descrivere un processo, collegare attività ed entità informative e costruire una prima matrice attività–informazioni con requisiti verificabili."),
+        ("Laboratorio M03 - Collocazione nel PCF", a("03"),
          "Collocare un processo aziendale nei primi tre livelli del Process Classification Framework di APQC."),
-        ("Laboratorio M03 - Dalla Activity ai Task", a("03"),
+        ("Laboratorio M04 - Dalla Activity ai Task", a("04"),
          "Scomporre una Activity di un dominio APQC in quattro-sei Task con esecutore ed esito verificabile."),
-        ("Laboratorio M04 - Matrice delle variabili", a("04"),
+        ("Laboratorio M05 - Matrice delle variabili", a("05"),
          "Costruire la matrice delle variabili con almeno un collo di bottiglia e una relazione causa-effetto."),
-        ("Laboratorio M05 - Definire i KPI", a("05"),
+        ("Laboratorio M06 - Definire i KPI", a("06"),
          "Definire due-tre KPI con formula, unità, frequenza, fonte del dato e target motivato."),
-        ("Laboratorio M06 - Visualizzare in Camunda", a("06"),
+        ("Laboratorio M07 - Visualizzare in Camunda", a("07"),
          "Aprire due esempi .bpmn in Camunda Modeler, leggerne corsie ed eventi, aggiungere un ramo di eccezione."),
-        ("Laboratorio M07 - Scheda processo completa", a("07"),
+        ("Laboratorio M08 - Scheda processo completa", a("08"),
          "Produrre il pacchetto completo di deliverable per un dominio APQC e presentarlo in aula."),
         ("Guida - BPMN con Camunda e assistente MCP", "lab-camunda-mcp.html",
          "Annesso opzionale: allestire l'ambiente (Claude, plugin MCP del Modeler, Camunda 8 in Docker) per generare le bozze BPMN dai prompt."),
@@ -612,7 +740,7 @@ def index_html():
 
  <section id="moduli">
   <h2>Moduli</h2>
-  <p>Sette moduli tematici derivati dai blocchi principali del programma. I moduli 6 e 7 usano i diagrammi BPMN e Camunda Modeler come laboratorio di visualizzazione sugli esempi APQC.</p>
+  <p>Otto moduli tematici derivati dai blocchi principali del programma. I moduli 7 e 8 usano i diagrammi BPMN e Camunda Modeler come laboratorio di visualizzazione sugli esempi APQC.</p>
   <ul class="chapter-list">
 {mod_items}
   </ul>
@@ -667,7 +795,7 @@ def lab_html():
 </header>
 <nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
  <a href="index.html">Home</a>
- <a href="chapters/chapter-06.html">Modulo 6</a>
+ <a href="chapters/chapter-07.html">Modulo 7</a>
  <a href="lab-camunda-mcp.html" aria-current="page">Guida di laboratorio</a>
 </nav>
 <main class="content">
@@ -688,7 +816,7 @@ def lab_html():
 
   <section class="study-section" id="s01">
    <h2>1 A cosa serve questa guida</h2>
-   <p>Questo è un <strong>annesso opzionale</strong> al Modulo 6: non fa parte del programma d'aula e non è un sillabo. Serve a chi, dopo aver visto i diagrammi BPMN degli esempi APQC, vuole provare a generarne una bozza a partire da una scheda processo, coordinandosi con i prompt.</p>
+   <p>Questo è un <strong>annesso opzionale</strong> al Modulo 7: non fa parte del programma d'aula e non è un sillabo. Serve a chi, dopo aver visto i diagrammi BPMN degli esempi APQC, vuole provare a generarne una bozza a partire da una scheda processo, coordinandosi con i prompt.</p>
    <p>Lo strumento è un assistente (Claude) collegato al Camunda Desktop Modeler tramite un server MCP. La generazione produce una prima stesura; la revisione del diagramma resta sempre compito dell'analista.</p>
    <div class="note-box">Il taglio del corso non cambia: la modellazione BPMN qui è un supporto alla visualizzazione e alla discussione, non un obiettivo tecnico.</div>
   </section>

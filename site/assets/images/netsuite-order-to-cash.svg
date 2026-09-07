@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Schema didattico del processo NetSuite Order to Cash</title>
+  <desc id="desc">Un ordine cliente passa attraverso evasione, fatturazione, aggiornamento dello stato e registrazione contabile.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#315d78"/>
+    </marker>
+    <style>
+      .box { fill:#eaf3f7; stroke:#315d78; stroke-width:2; rx:14; }
+      .output { fill:#eef5e8; stroke:#557342; stroke-width:2; rx:14; }
+      .text { fill:#20303a; font: 600 22px Arial, sans-serif; text-anchor:middle; }
+      .small { fill:#52636d; font: 18px Arial, sans-serif; text-anchor:middle; }
+      .line { stroke:#315d78; stroke-width:3; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="360" fill="#ffffff"/>
+  <text x="600" y="42" class="small">Schema didattico ricostruito dalla documentazione ufficiale Oracle</text>
+  <rect x="55" y="125" width="205" height="100" class="box"/>
+  <text x="157" y="168" class="text"><tspan x="157" dy="0">Ordine</tspan><tspan x="157" dy="30">cliente</tspan></text>
+  <rect x="335" y="125" width="205" height="100" class="box"/>
+  <text x="437" y="168" class="text"><tspan x="437" dy="0">Evasione</tspan><tspan x="437" dy="30">ordine</tspan></text>
+  <rect x="615" y="125" width="205" height="100" class="box"/>
+  <text x="717" y="168" class="text"><tspan x="717" dy="0">Fatturazione</tspan><tspan x="717" dy="30">e invio</tspan></text>
+  <rect x="895" y="125" width="250" height="100" class="output"/>
+  <text x="1020" y="168" class="text"><tspan x="1020" dy="0">Stato e</tspan><tspan x="1020" dy="30">contabilità</tspan></text>
+  <line x1="260" y1="175" x2="330" y2="175" class="line"/>
+  <line x1="540" y1="175" x2="610" y2="175" class="line"/>
+  <line x1="820" y1="175" x2="890" y2="175" class="line"/>
+  <text x="157" y="285" class="small">Sales Order</text>
+  <text x="437" y="285" class="small">spedizione / fulfillment</text>
+  <text x="717" y="285" class="small">invoice</text>
+  <text x="1020" y="285" class="small">stato ordine + registrazione GL</text>
+</svg>

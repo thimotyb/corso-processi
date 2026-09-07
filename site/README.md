@@ -11,19 +11,20 @@ argomento tecnico a sé.
 | File | Contenuto |
 |---|---|
 | `index.html` | Home: presentazione, obiettivi, informazioni, elenco moduli, laboratori, riferimenti |
-| `chapters/chapter-01.html` … `chapter-07.html` | 7 moduli tematici, struttura a due livelli (1 / 1.1), punti chiave a fine modulo |
-| `lab-camunda-mcp.html` | Annesso **opzionale** al Modulo 6: ambiente Claude + plugin MCP del Modeler + Camunda 8 in Docker per generare bozze BPMN dai prompt. Non fa parte del programma d'aula |
+| `chapters/chapter-01.html` … `chapter-08.html` | 8 moduli tematici, struttura a due livelli (1 / 1.1), punti chiave a fine modulo |
+| `lab-camunda-mcp.html` | Annesso **opzionale** al Modulo 7: ambiente Claude + plugin MCP del Modeler + Camunda 8 in Docker per generare bozze BPMN dai prompt. Non fa parte del programma d'aula |
 | `assets/css/main.css`, `assets/js/back-to-top.js` | Stili e comportamento (albero struttura, evidenziazione sezione attiva, pulsante di stampa, foglio di stile per la stampa) — ripresi dal course-kit datamesh |
 
 ## Moduli
 
 1. M01 — Classificazione e architettura dei processi
-2. M02 — APQC PCF: Category, Process Group, Process
-3. M03 — Dalla Activity al Task
-4. M04 — Variabili di processo e relazioni
-5. M05 — Indicatori e misurazione
-6. M06 — Rappresentazione: SIPOC, process map, swimlane, BPMN
-7. M07 — Scheda processo completa (laboratorio integrato)
+2. M02 — Raccolta e documentazione dei requisiti
+3. M03 — APQC PCF: Category, Process Group, Process
+4. M04 — Dalla Activity al Task
+5. M05 — Variabili di processo e relazioni
+6. M06 — Indicatori e misurazione
+7. M07 — Rappresentazione: SIPOC, process map, swimlane, BPMN
+8. M08 — Scheda processo completa (laboratorio integrato)
 
 ## Uso
 

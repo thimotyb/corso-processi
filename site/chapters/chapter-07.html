@@ -3,81 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M07 - Scheda processo completa (laboratorio integrato)</title>
+<title>M07 - Rappresentazione: SIPOC, process map, swimlane, BPMN</title>
 <link rel="stylesheet" href="../assets/css/main.css">
 <script defer src="../assets/js/back-to-top.js"></script>
 </head>
 <body>
 <header class="hero" id="top">
- <h1>M07 - Scheda processo completa (laboratorio integrato)</h1>
+ <h1>M07 - Rappresentazione: SIPOC, process map, swimlane, BPMN</h1>
 </header>
 <nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
    <a href="../index.html">Home</a>
    <a href="chapter-06.html">Modulo precedente (M06)</a>
-   <a href="chapter-07.html" aria-current="page">M07 - Scheda processo completa (laboratorio integrato)</a>
+   <a href="chapter-07.html" aria-current="page">M07 - Rappresentazione: SIPOC, process map, swimlane, BPMN</a>
+   <a href="chapter-08.html">Modulo successivo (M08)</a>
 </nav>
 <main class="content">
  <article>
   <section class="section-toc">
    <h2>Indice del modulo</h2>
    <ul>
-    <li><a href="#s01">1 La scheda processo sintetica</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 I campi della scheda</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Coerenza con i livelli gerarchici</a></li><li><a href="#s04">2 Costruire la scheda end-to-end</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Dalla collocazione PCF alla matrice delle variabili</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Dalla matrice alla rappresentazione</a></li><li><a href="#s07">3 Output e template aziendale</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Il pacchetto di deliverable</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Riuso come template</a></li><li><a href="#s10">4 Laboratorio finale</a></li>
+    <li><a href="#s01">1 Rappresentazioni sintetiche</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Tabelle e matrici</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 SIPOC: struttura e uso</a></li><li><a href="#s04">2 Process map e swimlane</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Mappa di processo per fasi</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Corsie per ruolo</a></li><li><a href="#s07">3 Cenni a BPMN</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Elementi di base</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Quando serve una notazione formale</a></li><li><a href="#s10">4 Visualizzare gli esempi con Camunda</a></li><li><a href="#s11">5 Laboratorio</a></li>
    </ul>
   </section>
 <section class="study-section" id="s01">
-  <h2>1 La scheda processo sintetica</h2>
-  <p>La scheda processo raccoglie in una pagina tutto ciò che serve per capire, governare e migliorare un processo. È il deliverable che integra i risultati dei moduli precedenti.</p>
+  <h2>1 Rappresentazioni sintetiche</h2>
+  <p>Rappresentare un processo significa renderlo leggibile a colpo d&#x27;occhio. Le forme sintetiche precedono i diagrammi e ne preparano i contenuti.</p>
 </section>
 <section class="study-section" id="s02">
-  <h3>1.1 I campi della scheda</h3>
-  <p>I campi minimi sono: nome del processo con codice PCF, process owner, obiettivo, confini (evento di innesco ed evento finale), ruoli coinvolti, sistemi coinvolti, KPI, rischi e colli di bottiglia.</p>
-  <p>Ogni campo deve essere compilabile in poche righe.</p>
+  <h3>1.1 Tabelle e matrici</h3>
+  <p>Tabelle e matrici organizzano in righe e colonne gli elementi del processo: attività e responsabili, variabili e valori, rischi e contromisure. Sono rapide da compilare e da confrontare, e non richiedono strumenti grafici.</p>
 </section>
 <section class="study-section" id="s03">
-  <h3>1.2 Coerenza con i livelli gerarchici</h3>
-  <p>Il nome e il codice collegano la scheda alla gerarchia PCF; l&#x27;elenco delle attività richiama le Activity del Process; la scomposizione in Task documenta il livello operativo.</p>
-  <p>La scheda è coerente quando questi riferimenti si corrispondono senza salti.</p>
+  <h3>1.2 SIPOC: struttura e uso</h3>
+  <p>Il SIPOC descrive il processo in cinque colonne: Supplier, Input, Process, Output, Customer. La colonna centrale contiene le macro-fasi in cinque-sette passi.</p>
+  <p>Serve a fissare i confini e gli scambi con l&#x27;esterno prima di entrare nel dettaglio.</p>
 </section>
 <section class="study-section" id="s04">
-  <h2>2 Costruire la scheda end-to-end</h2>
-  <p>La costruzione segue l&#x27;ordine dei moduli: collocazione, scomposizione, variabili, indicatori, rappresentazione.</p>
+  <h2>2 Process map e swimlane</h2>
+  <p>I diagrammi di flusso mostrano la sequenza delle attività e le decisioni. Le corsie aggiungono la dimensione della responsabilità.</p>
 </section>
 <section class="study-section" id="s05">
-  <h3>2.1 Dalla collocazione PCF alla matrice delle variabili</h3>
-  <p>Si parte dai primi tre livelli PCF per fissare identità e confini, si elencano le Activity, se ne scompone almeno una in Task, quindi si compila la matrice delle variabili.</p>
-  <p>A questo punto la scheda ha già obiettivo, confini, ruoli, sistemi e rischi.</p>
+  <h3>2.1 Mappa di processo per fasi</h3>
+  <p>La process map dispone le attività nell&#x27;ordine di esecuzione, con i punti di decisione e gli esiti. Evidenzia ripetizioni, attese e passaggi di consegna. È la base per discutere semplificazioni.</p>
 </section>
 <section class="study-section" id="s06">
-  <h3>2.2 Dalla matrice alla rappresentazione</h3>
-  <p>Dalle variabili si ricavano i KPI e, dalle attività e dai ruoli, il SIPOC e il diagramma a corsie o BPMN.</p>
-  <p>Il diagramma verifica la coerenza della scheda: se un&#x27;attività non ha un ruolo o un esito, la lacuna emerge nel disegno.</p>
+  <h3>2.2 Corsie per ruolo</h3>
+  <p>Nel diagramma a corsie ogni corsia rappresenta un ruolo o un&#x27;unità, e ogni attività sta nella corsia di chi la esegue.</p>
+  <p>I passaggi tra corsie rendono visibili gli handoff, spesso all&#x27;origine di ritardi ed errori.</p>
 </section>
 <section class="study-section" id="s07">
-  <h2>3 Output e template aziendale</h2>
-  <p>Il corso produce un pacchetto di deliverable riusabile come modello interno.</p>
+  <h2>3 Cenni a BPMN</h2>
+  <p>BPMN (Business Process Model and Notation) è lo standard OMG per rappresentare i processi in modo formale, con un insieme di simboli condiviso.</p>
 </section>
 <section class="study-section" id="s08">
-  <h3>3.1 Il pacchetto di deliverable</h3>
-  <p>Il pacchetto comprende: mappa gerarchica dei processi, scheda processo sintetica, elenco di attività e Task, matrice delle variabili e delle relazioni, diagramma di rappresentazione.</p>
-  <p>Insieme descrivono il processo a tutti i livelli utili.</p>
+  <h3>3.1 Elementi di base</h3>
+  <p>Gli elementi fondamentali sono l&#x27;evento (cerchio) per inizio, fine e accadimenti intermedi; l&#x27;attività (rettangolo arrotondato) per il lavoro svolto; il gateway (rombo) per le diramazioni; il flusso di sequenza (freccia) per l&#x27;ordine. Le corsie collocano gli elementi per responsabilità.</p>
 </section>
 <section class="study-section" id="s09">
-  <h3>3.2 Riuso come template</h3>
-  <p>Gli stessi campi e le stesse tabelle si applicano ad altri processi dell&#x27;organizzazione. Adottarli come formato standard rende i processi confrontabili e accelera le analisi successive.</p>
-  <div class="note-box">Le sette schede in <code>esempi-apqc/</code> sono esempi completi del pacchetto di deliverable, uno per dominio funzionale.</div>
+  <h3>3.2 Quando serve una notazione formale</h3>
+  <p>Una notazione formale conviene quando il diagramma deve essere interpretato senza ambiguità da persone diverse, quando descrive percorsi alternativi e condizioni, o quando è il punto di partenza per l&#x27;automazione.</p>
+  <p>Per una panoramica rapida, SIPOC e process map restano più economici.</p>
 </section>
 <section class="study-section" id="s10">
-  <h2>4 Laboratorio finale</h2>
-  <p>Produrre la scheda processo completa di un dominio APQC a scelta: collocazione PCF, elenco attività, una Activity scomposta in Task, matrice delle variabili, due-tre KPI definiti, e il diagramma BPMN aperto in Camunda Modeler con almeno una modifica motivata.</p>
-  <p>Presentare la scheda in aula in cinque minuti.</p>
+  <h2>4 Visualizzare gli esempi con Camunda</h2>
+  <p>I file <code>esempi-apqc/&lt;dominio&gt;/processo.bpmn</code> contengono i sette processi in notazione BPMN 2.0 con corsie per ruolo, pensati per essere proiettati e discussi in aula. Si aprono con Camunda Modeler, gratuito, senza alcun motore di esecuzione collegato.</p>
+  <p>In aula: aprire due esempi — tra cui customer service o IT, che includono un gateway esclusivo — e leggere insieme corsie, eventi e diramazioni; poi chiedere ai partecipanti di aggiungere un ramo di eccezione o un ruolo mancante.</p>
+  <p>Per chi vuole approfondire, un assistente AI collegato a Camunda tramite MCP può generare la prima bozza del diagramma da una scheda processo. La revisione del diagramma resta sempre a carico dell&#x27;analista.</p>
+  <div class="note-box">La guida <a href="../lab-camunda-mcp.html">Laboratorio BPMN con Camunda e assistente MCP</a> raccoglie prerequisiti, installazione e primo esempio per chi vuole provare la generazione assistita.</div>
+</section>
+<section class="study-section" id="s11">
+  <h2>5 Laboratorio</h2>
+  <p>Aprire due esempi APQC in Camunda Modeler. Per ciascuno: identificare corsie, evento di innesco, evento finale e gateway. Aggiungere un ramo di eccezione plausibile e salvarne una copia.</p>
 </section>
   <section class="key-takeaways">
    <h2>Punti chiave</h2>
    <ul>
-    <li>La scheda processo integra in una pagina collocazione, attività, variabili, indicatori e rappresentazione.</li>
-    <li>La coerenza si verifica quando nome e codice, Activity e Task si corrispondono senza salti.</li>
-    <li>Il diagramma funziona da controllo: attività senza ruolo o senza esito emergono nel disegno.</li>
-    <li>Il pacchetto di deliverable del corso è riusabile come template aziendale per confrontare i processi.</li>
+    <li>SIPOC e tabelle fissano confini e scambi prima del dettaglio grafico.</li>
+    <li>La process map mostra sequenza e decisioni; le corsie aggiungono la responsabilità e rendono visibili gli handoff.</li>
+    <li>BPMN è lo standard OMG: evento, attività, gateway, flusso di sequenza e corsie sono gli elementi di base.</li>
+    <li>I file .bpmn del corso servono a visualizzare e discutere gli esempi; un assistente AI via MCP può produrre una bozza, ma la revisione è dell&#x27;analista.</li>
    </ul>
   </section>
  </article>

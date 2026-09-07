@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M04 - Variabili di processo e relazioni</title>
+<title>M04 - Dalla Activity al Task</title>
 <link rel="stylesheet" href="../assets/css/main.css">
 <script defer src="../assets/js/back-to-top.js"></script>
 </head>
 <body>
 <header class="hero" id="top">
- <h1>M04 - Variabili di processo e relazioni</h1>
+ <h1>M04 - Dalla Activity al Task</h1>
 </header>
 <nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
    <a href="../index.html">Home</a>
    <a href="chapter-03.html">Modulo precedente (M03)</a>
-   <a href="chapter-04.html" aria-current="page">M04 - Variabili di processo e relazioni</a>
+   <a href="chapter-04.html" aria-current="page">M04 - Dalla Activity al Task</a>
    <a href="chapter-05.html">Modulo successivo (M05)</a>
 </nav>
 <main class="content">
@@ -22,66 +22,62 @@
   <section class="section-toc">
    <h2>Indice del modulo</h2>
    <ul>
-    <li><a href="#s01">1 Le variabili di processo</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Input e output</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Tempi, costi, volumi</a></li><li style="margin-left:1.1rem"><a href="#s04">1.3 Ruoli, sistemi, vincoli, rischi</a></li><li><a href="#s05">2 La matrice delle variabili</a></li><li style="margin-left:1.1rem"><a href="#s06">2.1 Struttura della matrice</a></li><li style="margin-left:1.1rem"><a href="#s07">2.2 Compilazione a partire dalla scheda processo</a></li><li><a href="#s08">3 Relazioni tra variabili</a></li><li style="margin-left:1.1rem"><a href="#s09">3.1 Dipendenze, cause, effetti</a></li><li style="margin-left:1.1rem"><a href="#s10">3.2 Eccezioni e colli di bottiglia</a></li><li><a href="#s11">4 Laboratorio</a></li>
+    <li><a href="#s01">1 Il livello Activity</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Definizione secondo il PCF</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Leggere codice e identificativo</a></li><li><a href="#s04">2 Il livello Task</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Perché il PCF si ferma alla Activity</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Criteri per individuare Task elementari</a></li><li><a href="#s07">3 Scomposizione pratica</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Dal verbo della Activity ai passi operativi</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Granularità: quando fermarsi</a></li><li><a href="#s10">4 Laboratorio</a></li>
    </ul>
   </section>
 <section class="study-section" id="s01">
-  <h2>1 Le variabili di processo</h2>
-  <p>Le variabili di processo sono le grandezze che descrivono come il processo si comporta. Servono a caratterizzarlo, confrontarlo nel tempo e individuare dove intervenire. Si raggruppano in poche famiglie ricorrenti.</p>
+  <h2>1 Il livello Activity</h2>
+  <p>La Activity è il quarto livello del PCF: un passo del Process che produce un risultato intermedio riconoscibile. «Analyze problems, requests, and inquiries» è una Activity del processo di customer service.</p>
+  <p>Le Activity sono descritte dal PCF con un verbo e un oggetto e con un identificativo numerico.</p>
 </section>
 <section class="study-section" id="s02">
-  <h3>1.1 Input e output</h3>
-  <p>Gli input sono ciò che il processo consuma per produrre il risultato: dati, documenti, materiali, autorizzazioni. Gli output sono ciò che consegna al cliente.</p>
-  <p>Descrivere input e output in modo concreto è la base per tutte le altre variabili.</p>
+  <h3>1.1 Definizione secondo il PCF</h3>
+  <p>Ogni Process del PCF è scomposto in un elenco ordinato di Activity. L&#x27;elenco è un riferimento, non un vincolo: un&#x27;organizzazione può eseguirne solo una parte o aggiungerne di proprie, mantenendo la tracciabilità verso il codice PCF.</p>
 </section>
 <section class="study-section" id="s03">
-  <h3>1.2 Tempi, costi, volumi</h3>
-  <p>Il tempo misura la durata dall&#x27;innesco alla chiusura, incluse le attese. Il costo somma le risorse assorbite: ore di lavoro, costo dei sistemi, materiali. Il volume esprime quante volte il processo viene eseguito in un periodo.</p>
-  <p>Insieme danno la dimensione economica del processo.</p>
+  <h3>1.2 Leggere codice e identificativo</h3>
+  <p>Una Activity si presenta come «6.2.2.2 Analyze problems, requests, and inquiries (13482)». Il codice 6.2.2.2 indica la posizione gerarchica; il numero tra parentesi è l&#x27;identificativo univoco APQC, utile per riferimenti stabili nel tempo.</p>
 </section>
 <section class="study-section" id="s04">
-  <h3>1.3 Ruoli, sistemi, vincoli, rischi</h3>
-  <p>I ruoli sono gli attori che eseguono le attività. I sistemi sono gli applicativi a supporto. I vincoli sono limiti operativi o normativi da rispettare. I rischi sono gli eventi che possono degradare l&#x27;esito o bloccare il flusso.</p>
+  <h2>2 Il livello Task</h2>
+  <p>Il Task è l&#x27;azione elementare che compone una Activity. Il PCF si ferma alla Activity perché i Task dipendono dall&#x27;organizzazione, dagli strumenti e dalle prassi locali. Individuare i Task è compito dell&#x27;analista di processo.</p>
 </section>
 <section class="study-section" id="s05">
-  <h2>2 La matrice delle variabili</h2>
-  <p>La matrice delle variabili raccoglie in una tabella unica tutte le famiglie, con una descrizione e un esempio riferito al processo in analisi. È lo strumento che rende confrontabili processi diversi.</p>
+  <h3>2.1 Perché il PCF si ferma alla Activity</h3>
+  <p>Sotto la Activity la variabilità tra organizzazioni diventa troppo alta per una tassonomia comune. Fissare i Task nel framework lo renderebbe rigido e poco riusabile.</p>
+  <p>La separazione mantiene stabile la parte condivisa e lascia libera quella specifica.</p>
 </section>
 <section class="study-section" id="s06">
-  <h3>2.1 Struttura della matrice</h3>
-  <p>Le righe sono le famiglie di variabili: input, output, tempi, costi, volumi, ruoli, sistemi, vincoli, rischi. Le colonne sono la descrizione generale e l&#x27;esempio concreto nel processo. Una riga aggiuntiva può annotare i colli di bottiglia.</p>
+  <h3>2.2 Criteri per individuare Task elementari</h3>
+  <p>Un Task è ben definito quando ha un esecutore unico, un esito verificabile e una durata breve rispetto alla Activity.</p>
+  <p>Se un presunto Task richiede più ruoli o più decisioni, va scomposto ulteriormente. Se due Task si eseguono sempre insieme e dallo stesso ruolo, possono essere accorpati.</p>
 </section>
 <section class="study-section" id="s07">
-  <h3>2.2 Compilazione a partire dalla scheda processo</h3>
-  <p>La matrice si compila leggendo la scheda processo e traducendone i contenuti in valori per ciascuna famiglia.</p>
-  <p>Dove un valore manca, la lacuna stessa è un risultato utile: indica un aspetto del processo non ancora governato.</p>
+  <h2>3 Scomposizione pratica</h2>
+  <p>La scomposizione parte dal verbo della Activity e lo articola nei passi necessari a completarla, nell&#x27;ordine in cui si presentano.</p>
 </section>
 <section class="study-section" id="s08">
-  <h2>3 Relazioni tra variabili</h2>
-  <p>Le variabili non sono indipendenti. Riconoscere le relazioni aiuta a prevedere l&#x27;effetto di un intervento.</p>
+  <h3>3.1 Dal verbo della Activity ai passi operativi</h3>
+  <p>Per «Analyze problems, requests, and inquiries» i Task possono essere: classificare la richiesta per tipologia e priorità; verificare storico cliente e SLA applicabili; determinare se serve escalation; assegnare la richiesta al ruolo competente.</p>
+  <p>Ogni Task è un&#x27;azione con esito osservabile.</p>
 </section>
 <section class="study-section" id="s09">
-  <h3>3.1 Dipendenze, cause, effetti</h3>
-  <p>Un aumento dei volumi allunga i tempi se la capacità resta invariata; un vincolo normativo introduce controlli che aumentano i costi; una classificazione errata a monte propaga errori a valle.</p>
-  <p>Mappare queste catene rende espliciti i punti in cui agire.</p>
+  <h3>3.2 Granularità: quando fermarsi</h3>
+  <p>Si smette di scomporre quando un ulteriore dettaglio non cambia responsabilità, tempi o strumenti. La granularità giusta è quella che rende il processo eseguibile e misurabile senza trasformarsi in un manuale di istruzioni.</p>
+  <div class="note-box">In <code>esempi-apqc/</code> ogni scheda riporta un esempio di scomposizione in Task di una Activity, segnalato esplicitamente come aggiunta didattica non presente nel PCF.</div>
 </section>
 <section class="study-section" id="s10">
-  <h3>3.2 Eccezioni e colli di bottiglia</h3>
-  <p>Le eccezioni sono i percorsi alternativi che il processo segue in casi particolari. I colli di bottiglia sono i punti in cui il lavoro si accumula.</p>
-  <p>Entrambi vanno individuati perché determinano gran parte della variabilità di tempi e costi.</p>
-  <div class="note-box">La scheda di ogni dominio in <code>esempi-apqc/</code> contiene una matrice delle variabili già compilata, utile come modello.</div>
-</section>
-<section class="study-section" id="s11">
   <h2>4 Laboratorio</h2>
-  <p>Costruire la matrice delle variabili per la Activity scomposta nel Modulo 3. Aggiungere una riga con almeno un collo di bottiglia e indicare una relazione causa-effetto tra due variabili.</p>
+  <p>Prendere una Activity di uno dei domini APQC e scomporla in quattro-sei Task, indicando per ciascuno l&#x27;esecutore e l&#x27;esito verificabile.</p>
+  <p>Confrontare le scomposizioni in aula e discutere le differenze di granularità.</p>
 </section>
   <section class="key-takeaways">
    <h2>Punti chiave</h2>
    <ul>
-    <li>Le variabili di processo si raggruppano in famiglie ricorrenti: input, output, tempi, costi, volumi, ruoli, sistemi, vincoli, rischi.</li>
-    <li>La matrice delle variabili raccoglie le famiglie in una tabella con descrizione ed esempio concreto.</li>
-    <li>Una lacuna nella matrice segnala un aspetto del processo non ancora governato.</li>
-    <li>Le variabili sono legate da dipendenze e catene causa-effetto; eccezioni e colli di bottiglia spiegano gran parte della variabilità.</li>
+    <li>La Activity è il quarto livello PCF: un passo del Process con esito intermedio, descritto da verbo e oggetto.</li>
+    <li>Il PCF non definisce i Task perché dipendono da organizzazione, strumenti e prassi locali.</li>
+    <li>Un Task ben definito ha esecutore unico, esito verificabile e durata breve rispetto alla Activity.</li>
+    <li>La scomposizione si ferma quando un dettaglio in più non cambia responsabilità, tempi o strumenti.</li>
    </ul>
   </section>
  </article>

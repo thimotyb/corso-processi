@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M02 - APQC PCF: Category, Process Group, Process</title>
+<title>M02 - Raccolta e documentazione dei requisiti</title>
 <link rel="stylesheet" href="../assets/css/main.css">
 <script defer src="../assets/js/back-to-top.js"></script>
 </head>
 <body>
 <header class="hero" id="top">
- <h1>M02 - APQC PCF: Category, Process Group, Process</h1>
+ <h1>M02 - Raccolta e documentazione dei requisiti</h1>
 </header>
 <nav class="primary-nav" id="primary-nav" aria-label="Navigazione">
    <a href="../index.html">Home</a>
    <a href="chapter-01.html">Modulo precedente (M01)</a>
-   <a href="chapter-02.html" aria-current="page">M02 - APQC PCF: Category, Process Group, Process</a>
+   <a href="chapter-02.html" aria-current="page">M02 - Raccolta e documentazione dei requisiti</a>
    <a href="chapter-03.html">Modulo successivo (M03)</a>
 </nav>
 <main class="content">
@@ -22,68 +22,93 @@
   <section class="section-toc">
    <h2>Indice del modulo</h2>
    <ul>
-    <li><a href="#s01">1 Il Process Classification Framework di APQC</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Origine e scopo</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 La versione Cross-Industry 8.0</a></li><li><a href="#s04">2 I livelli alti della gerarchia</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Category (livello 1)</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Process Group (livello 2)</a></li><li style="margin-left:1.1rem"><a href="#s07">2.3 Process (livello 3)</a></li><li><a href="#s08">3 Identificare le Category in azienda</a></li><li style="margin-left:1.1rem"><a href="#s09">3.1 Processi operativi, di gestione e di supporto</a></li><li style="margin-left:1.1rem"><a href="#s10">3.2 Esempi per dominio</a></li><li><a href="#s11">4 Laboratorio</a></li>
+    <li><a href="#s01">1 Dal processo ai requisiti</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Esigenze, vincoli e fonti dei requisiti</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Confini e livelli di dettaglio</a></li><li><a href="#s04">2 Dalle attività alle entità informative</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Letture, scritture e responsabilità</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 La matrice attività–informazioni</a></li><li><a href="#s07">3 Dalle entità ai requisiti funzionali</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Flusso principale e flussi alternativi</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Precondizioni, postcondizioni e verificabilità</a></li><li><a href="#s10">4 Caso SAEM: dalla criticità alla specifica</a></li><li style="margin-left:1.1rem"><a href="#s11">4.1 Esempio: gestione dell&#x27;ordine telematico</a></li><li style="margin-left:1.1rem"><a href="#s12">4.2 Iterazione e gestione delle varianti</a></li><li><a href="#s13">5 Laboratorio: costruire una scheda dei requisiti</a></li>
    </ul>
   </section>
 <section class="study-section" id="s01">
-  <h2>1 Il Process Classification Framework di APQC</h2>
-  <p>Il Process Classification Framework (PCF) di APQC è una tassonomia di processi aziendali organizzata in livelli gerarchici. Nasce per il benchmarking e viene usato come riferimento per mappare, confrontare e migliorare i processi.</p>
-  <p>La versione Cross-Industry è indipendente dal settore e raccoglie i processi comuni alla maggior parte delle organizzazioni.</p>
+  <h2>1 Dal processo ai requisiti</h2>
+  <p>La descrizione di un processo non si esaurisce nella rappresentazione del flusso. Per poterlo migliorare, digitalizzare o supportare con un sistema informativo è necessario esplicitare <strong>che cosa deve accadere</strong>, <strong>per chi</strong>, <strong>in quali condizioni</strong> e <strong>con quali risultati verificabili</strong>. Queste informazioni costituiscono la base per la raccolta dei requisiti.</p>
+  <p>Un requisito nasce da un&#x27;esigenza osservata o dichiarata e descrive una condizione che il processo o il sistema deve rispettare. Può riguardare il risultato del processo, una regola di business, un&#x27;informazione da conservare, un controllo, un&#x27;autorizzazione, un tempo di risposta oppure un comportamento che il sistema deve rendere possibile.</p>
+  <p>La raccolta parte dal <strong>modello di business</strong>: obiettivi, clienti, attività, ruoli, input, output, vincoli ed eccezioni. Solo dopo si selezionano le parti che devono essere supportate da applicazioni o archivi. In questo modo il sistema informativo resta al servizio del processo e non diventa il punto di partenza dell'analisi.</p>
+  <p>È utile distinguere due livelli collegati: i <strong>requisiti del processo</strong>, che descrivono il lavoro e il risultato atteso, e i <strong>requisiti informativi o IT</strong>, che descrivono le funzioni del sistema e i dati necessari. Il secondo livello deriva dal primo attraverso un passaggio di selezione e di dettaglio progressivo.</p>
+  <p>Per avviare la raccolta dei requisiti occorre chiedersi:</p>
+  <ul class="study-bullets"><li><strong>Quale esigenza</strong> ha dato origine al processo o alla modifica?</li><li><strong>Quale risultato</strong> deve essere ottenuto e da chi sarà utilizzato?</li><li><strong>Quali regole e vincoli</strong> devono essere rispettati?</li><li><strong>Quali informazioni</strong> servono per eseguire, controllare e concludere il lavoro?</li><li><strong>Quali errori, alternative ed eccezioni</strong> devono essere gestiti?</li><li><strong>Come si verificherà</strong> che il requisito sia stato soddisfatto?</li></ul>
 </section>
 <section class="study-section" id="s02">
-  <h3>1.1 Origine e scopo</h3>
-  <p>APQC è un&#x27;organizzazione di ricerca sul miglioramento delle prestazioni. Il PCF fornisce un elenco strutturato di processi con codici numerici stabili, così che organizzazioni diverse possano riferirsi agli stessi elementi.</p>
-  <p>Lo scopo dichiarato è rendere confrontabili le prestazioni di processo, all&#x27;interno di un&#x27;azienda e verso l&#x27;esterno.</p>
+  <h3>1.1 Esigenze, vincoli e fonti dei requisiti</h3>
+  <p>I requisiti possono essere esplicitamente dichiarati dal cliente o dagli utenti, ma possono anche derivare da esigenze note, requisiti cogenti, policy aziendali, accordi di servizio, rischi, errori ricorrenti e caratteristiche tecniche del prodotto o del servizio.</p>
+  <p>Una raccolta completa considera sia ciò che il cliente chiede sia ciò che è necessario per l&#x27;uso previsto. Nel caso di un ordine, per esempio, non basta registrare il prodotto richiesto: possono essere necessari dati sul cliente, condizioni di consegna, disponibilità, IVA, autorizzazioni, limiti di prezzo e modalità di evasione.</p>
+  <p>Ogni requisito dovrebbe avere una <strong>fonte</strong>: una richiesta, un documento, una regola, un'intervista, un'osservazione del lavoro, un indicatore di prestazione o un elemento del sistema esistente. La fonte permette di riesaminare la decisione e di distinguere ciò che è documentato da ciò che è stato inferito durante l'analisi.</p>
 </section>
 <section class="study-section" id="s03">
-  <h3>1.2 La versione Cross-Industry 8.0</h3>
-  <p>La versione Cross-Industry copre i processi comuni a quasi tutte le organizzazioni, dai processi operativi a quelli di gestione e supporto. Ogni voce ha un codice gerarchico, per esempio 6.2.2, e un identificativo numerico univoco.</p>
-  <p>È un punto di partenza da adattare al contesto specifico: alcune voci non si applicano, altre vanno aggiunte mantenendo la tracciabilità verso il codice PCF.</p>
+  <h3>1.2 Confini e livelli di dettaglio</h3>
+  <p>La raccolta deve mantenere il collegamento tra il requisito e il livello a cui si riferisce. Un obiettivo riguarda il processo nel suo insieme; una regola può riguardare una specifica attività; un requisito informativo può riguardare un singolo dato o una singola interazione con il sistema.</p>
+  <p>Un requisito troppo generale non è verificabile; uno troppo dettagliato può anticipare inutilmente una soluzione tecnica. Il livello corretto è quello che consente di comprendere il comportamento atteso, assegnare una responsabilità, verificare l&#x27;esito e mantenere aperte le scelte progettuali ancora non decise.</p>
 </section>
 <section class="study-section" id="s04">
-  <h2>2 I livelli alti della gerarchia</h2>
-  <p>Il PCF articola i processi su più livelli. I primi tre — Category, Process Group, Process — costituiscono l&#x27;ossatura con cui collocare qualsiasi attività aziendale.</p>
+  <h2>2 Dalle attività alle entità informative</h2>
+  <p>Dopo aver individuato le attività da analizzare, si osservano le informazioni che esse utilizzano e producono. Un&#x27;attività può leggere dati già disponibili, crearne di nuovi, aggiornarli, eliminarli o usarli per generare un documento, una comunicazione o una decisione.</p>
+  <p>Le <strong>entità informative</strong> rappresentano strutture dati o unità informative significative per il processo. Possono essere un cliente, un ordine, una riga d'ordine, un articolo, un'autorizzazione, un messaggio o un documento. In una prima analisi sono entità candidate: solo il successivo approfondimento stabilisce se saranno confermate, modificate, accorpate o eliminate.</p>
+  <p>Il collegamento tra attività ed entità rende visibile il rapporto tra lavoro e informazioni. Per ogni attività è possibile chiedere: quali dati deve leggere? quali dati produce? quali dati modifica? quali informazioni devono restare disponibili per il passaggio successivo o per un controllo successivo?</p>
+  <p>Questa analisi aiuta a evitare due errori opposti: descrivere attività senza sapere quali informazioni le rendono possibili oppure partire dalle tabelle esistenti senza comprendere quale bisogno del processo soddisfino.</p>
 </section>
 <section class="study-section" id="s05">
-  <h3>2.1 Category (livello 1)</h3>
-  <p>La Category è il raggruppamento più ampio, per esempio «Develop Vision and Strategy» o «Manage Customer Service». Rappresenta un&#x27;area di processi omogenea per finalità.</p>
-  <p>Le Category operative descrivono la catena del valore; quelle di gestione e supporto descrivono le funzioni abilitanti.</p>
+  <h3>2.1 Letture, scritture e responsabilità</h3>
+  <p>Le relazioni tra attività ed entità possono essere annotate come operazioni di lettura e scrittura. La lettura indica che l&#x27;attività usa informazioni già presenti; la scrittura indica che l&#x27;attività crea o modifica un&#x27;informazione che diventa disponibile per altri soggetti o attività.</p>
+  <p>L'annotazione deve essere accompagnata dal <strong>ruolo</strong> che esegue l'operazione e dallo scopo della lettura o della scrittura. Leggere i dati del cliente per autenticare l'utente è un requisito diverso dal leggerli per calcolare il prezzo o compilare la testata di un ordine.</p>
 </section>
 <section class="study-section" id="s06">
-  <h3>2.2 Process Group (livello 2)</h3>
-  <p>Il Process Group suddivide la Category in insiemi coerenti di processi. Dentro «Manage Customer Service» si trova, per esempio, «Plan and manage customer service contacts».</p>
-  <p>Il Process Group aiuta a navigare la Category senza ancora entrare nel dettaglio operativo.</p>
+  <h3>2.2 La matrice attività–informazioni</h3>
+  <p>Una matrice attività–informazioni mette in riga le attività e in colonna le entità o gli archivi. Nelle celle si annotano le operazioni compiute. La matrice fornisce una vista sintetica e consente di verificare che ogni informazione prodotta abbia un destinatario e che ogni informazione letta sia giustificata da un&#x27;attività.</p>
+  <p>Quando l'archivio è persistente, la matrice può essere dettagliata con la notazione <strong>CRUD</strong>: Create, Read, Update e Delete. La matrice non sostituisce la descrizione testuale, ma la integra e aiuta a validare la coerenza tra modello del processo e modello dei dati.</p>
 </section>
 <section class="study-section" id="s07">
-  <h3>2.3 Process (livello 3)</h3>
-  <p>Il Process è l&#x27;unità di analisi principale: ha un obiettivo, un innesco e un output, ed è governabile da un responsabile. «Manage customer service problems, requests, and inquiries» è un esempio di Process.</p>
-  <p>È a questo livello che si costruiscono scheda processo, SIPOC e diagramma.</p>
+  <h2>3 Dalle entità ai requisiti funzionali</h2>
+  <p>Le relazioni tra attività ed entità permettono di derivare i <strong>casi d'uso</strong>. Un caso d'uso descrive una funzionalità visibile dall'esterno, attivata da un attore e realizzata attraverso interazioni con il sistema e con le informazioni che il sistema gestisce.</p>
+  <p>Il caso d&#x27;uso traduce il processo in una domanda operativa: che cosa deve poter fare l&#x27;attore e quale risultato deve ottenere? La descrizione non deve limitarsi al nome della funzione, ma deve rendere espliciti il flusso normale, le condizioni iniziali, il risultato finale e i percorsi alternativi.</p>
+  <p>La specifica testuale dei requisiti può essere organizzata in asserzioni numerate. La numerazione deve seguire una struttura stabile e mantenere la distinzione tra categorie di requisito. Questo rende possibile riferirsi a un requisito durante progettazione, sviluppo, test e gestione delle modifiche.</p>
 </section>
 <section class="study-section" id="s08">
-  <h2>3 Identificare le Category in azienda</h2>
-  <p>Collocare i processi reali nel PCF richiede di partire dalle finalità, non dai reparti. Si individuano prima le Category presenti, poi i Process Group pertinenti, infine i Process effettivamente eseguiti.</p>
+  <h3>3.1 Flusso principale e flussi alternativi</h3>
+  <p>Il <strong>flusso principale</strong> descrive il percorso atteso quando i dati sono corretti e le condizioni sono soddisfatte. I <strong>flussi alternativi</strong> descrivono variazioni legittime del percorso, mentre le <strong>eccezioni</strong> descrivono errori, indisponibilità o condizioni che impediscono la conclusione normale.</p>
+  <p>Per ogni alternativa è utile indicare il punto del flusso in cui si attiva, il dato o la condizione che la determina, l&#x27;azione da compiere e il risultato prodotto. Questa struttura consente di trasformare le eccezioni in percorsi analizzabili invece di lasciarle come conoscenza implicita degli operatori.</p>
 </section>
 <section class="study-section" id="s09">
-  <h3>3.1 Processi operativi, di gestione e di supporto</h3>
-  <p>I processi operativi generano direttamente valore per il cliente esterno: sviluppare prodotti, vendere, consegnare. I processi di gestione e supporto rendono possibile l&#x27;operatività: gestire IT, risorse umane, risorse finanziarie.</p>
-  <p>La distinzione orienta le priorità di analisi e la scelta degli indicatori.</p>
+  <h3>3.2 Precondizioni, postcondizioni e verificabilità</h3>
+  <p>Le <strong>precondizioni</strong> indicano ciò che deve essere vero prima dell'avvio, per esempio utente autenticato, cliente attivo o dati disponibili. Le <strong>postcondizioni</strong> descrivono lo stato che deve risultare al termine, per esempio ordine registrato, messaggio inviato o autorizzazione aggiornata.</p>
+  <p>Un requisito è utile quando può essere verificato. Frequenza, criticità, tempi attesi, completezza dei dati e criteri di accettazione aiutano a stabilire la priorità e a progettare controlli e test. La documentazione deve poter rispondere alla domanda: come sapremo che il requisito è stato soddisfatto?</p>
 </section>
 <section class="study-section" id="s10">
-  <h3>3.2 Esempi per dominio</h3>
-  <p>Gli esempi del corso coprono sette domini: visione e strategia, vendite, acquisti, servizi, customer service, IT, finance. Ciascuno è collocato nei primi tre livelli PCF e poi sviluppato fino alla Activity.</p>
-  <div class="note-box">Per ogni dominio, <code>esempi-apqc/&lt;dominio&gt;/processo.md</code> riporta la collocazione PCF completa (Category → Process Group → Process → Activity) con i codici numerici originali.</div>
+  <h2>4 Caso SAEM: dalla criticità alla specifica</h2>
+  <p>Nel caso SAEM la raccolta dei requisiti parte dall&#x27;analisi del processo reale di gestione degli ordini. L&#x27;analisi evidenzia problemi nelle unità di misura, nella corrispondenza tra codici cliente e codici interni, nei tempi di evasione, nei resi e nelle modifiche telefoniche agli ordini.</p>
+  <p>Queste criticità vengono trasformate in esigenze del nuovo processo: rendere visibili le specifiche dell&#x27;ordine, cercare e selezionare l&#x27;articolo corretto, verificare la disponibilità, controllare i parametri economici, gestire l&#x27;evasione unica o parziale e ridurre gli errori di imputazione.</p>
+  <p>La tesi non si limita a elencare le funzionalità. Collega ciascuna attività alle informazioni utilizzate e prodotte. Per l&#x27;ordine telematico, per esempio, la creazione del carrello legge cliente, condizioni di consegna e parametri IVA; la conferma legge e verifica testata e righe; l&#x27;esito positivo crea l&#x27;ordine effettivo e trasferisce le righe.</p>
+  <p>Le operazioni sono poi formalizzate nelle Assembly Line e nelle tavole CRUD. Da queste relazioni vengono derivati i casi d&#x27;uso e le relative specifiche testuali, con attori, flussi, alternative, eccezioni, precondizioni, postcondizioni, frequenza e criticità.</p>
 </section>
 <section class="study-section" id="s11">
-  <h2>4 Laboratorio</h2>
-  <p>Scegliere un processo della propria organizzazione e collocarlo nei primi tre livelli del PCF, usando la tabella dei sette domini come riferimento. Motivare la scelta della Category in due righe.</p>
+  <h3>4.1 Esempio: gestione dell&#x27;ordine telematico</h3>
+  <p>L&#x27;attore cliente crea la testata del carrello, inserisce gli articoli, verifica disponibilità e condizioni, quindi conferma l&#x27;ordine. Il sistema legge le informazioni necessarie, segnala le righe non disponibili, ricalcola i dati economici e, se le verifiche hanno esito positivo, trasforma il carrello in ordine.</p>
+  <p>Le entità informative coinvolte includono cliente, condizioni di consegna, tabella IVA, carrello, righe del carrello, articoli, storico articoli, scadenze di magazzino, listini, ordine e messaggi. La loro presenza nel modello deve essere collegata all&#x27;attività che le legge o le scrive e alla fonte che documenta l&#x27;interazione.</p>
+</section>
+<section class="study-section" id="s12">
+  <h3>4.2 Iterazione e gestione delle varianti</h3>
+  <p>La documentazione dei requisiti evolve durante lo sviluppo. Una prima descrizione può essere breve; in seguito vengono aggiunti i dettagli delle interazioni, delle entità e degli scenari alternativi. Il confronto tra tavole CRUD e soluzioni diverse permette inoltre di rendere visibili le varianti progettuali.</p>
+  <p>Nel caso SAEM la modifica dell&#x27;ordine presenta alternative tra la soluzione sviluppata dai tecnici e quella proposta nell&#x27;analisi. Le differenze vengono evidenziate nella tavola CRUD e non devono essere confuse con requisiti già definitivamente approvati.</p>
+</section>
+<section class="study-section" id="s13">
+  <h2>5 Laboratorio: costruire una scheda dei requisiti</h2>
+  <p>Scegliere un processo semplice, come la gestione di una richiesta cliente o di un ordine. Descrivere prima l&#x27;obiettivo, i confini, gli attori, gli input e gli output; poi individuare le attività e le condizioni che modificano il flusso.</p>
+  <p>Per ogni attività compilare una scheda con: requisito, fonte, ruolo, input, output, entità lette, entità create o modificate, regola applicata, flusso alternativo, eccezione e criterio di verifica. Assegnare un identificativo stabile a ogni requisito.</p>
+  <p>Infine costruire una matrice attività–informazioni e confrontarla con la descrizione testuale. Ogni lettura o scrittura deve essere motivata da un&#x27;esigenza del processo; ogni output informativo deve avere un destinatario o un uso documentato.</p>
 </section>
   <section class="key-takeaways">
    <h2>Punti chiave</h2>
    <ul>
-    <li>Il PCF è una tassonomia gerarchica di processi con codici stabili, pensata per confronto e miglioramento.</li>
-    <li>I primi tre livelli sono Category, Process Group e Process; il Process è l&#x27;unità di analisi principale.</li>
-    <li>La collocazione parte dalle finalità del processo, non dai reparti che lo eseguono.</li>
-    <li>La distinzione tra processi operativi e processi di gestione e supporto orienta priorità e indicatori.</li>
+    <li>La raccolta dei requisiti parte dall&#x27;analisi del business e distingue requisiti di processo da requisiti informativi e IT.</li>
+    <li>Le Assembly Line collegano attività ed entità informative attraverso relazioni di lettura e scrittura.</li>
+    <li>La matrice CRUD valida la coerenza tra attività, dati e comportamento del sistema.</li>
+    <li>I casi d&#x27;uso documentano attori, flussi, alternative, eccezioni, precondizioni e postcondizioni.</li>
+    <li>Nel caso SAEM i requisiti evolvono iterativamente e sono collegati a fonti, dati e varianti progettuali.</li>
    </ul>
   </section>
  </article>
