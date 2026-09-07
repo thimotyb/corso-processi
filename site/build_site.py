@@ -416,7 +416,7 @@ CONTENT = {
    "I passaggi tra corsie rendono visibili gli handoff, spesso all'origine di ritardi ed errori.",
   ],None),
   (1,"3 Cenni a BPMN",[
-   "BPMN (Business Process Model and Notation) è lo standard OMG per rappresentare i processi in modo formale, con un insieme di simboli condiviso.",
+   "<a href=\"https://camunda.com/bpmn/reference/\" target=\"_blank\" rel=\"noopener noreferrer\">BPMN (Business Process Model and Notation)</a> è lo standard OMG per rappresentare i processi in modo formale, con un insieme di simboli condiviso. La <a href=\"https://camunda.com/bpmn/reference/\" target=\"_blank\" rel=\"noopener noreferrer\">BPMN Reference</a> presenta gli elementi principali della notazione e il loro significato.",
   ],None),
   (2,"3.1 Elementi di base",[
    "Gli elementi fondamentali sono l'evento (cerchio) per inizio, fine e accadimenti intermedi; l'attività (rettangolo arrotondato) per il lavoro svolto; il gateway (rombo) per le diramazioni; il flusso di sequenza (freccia) per l'ordine. Le corsie collocano gli elementi per responsabilità.",
@@ -478,6 +478,7 @@ CONTENT = {
   (1,"4 Laboratorio finale",[
    "Produrre la scheda processo completa di un dominio APQC a scelta: collocazione PCF, elenco attività, una Activity scomposta in Task, matrice delle variabili, due-tre KPI definiti, e il diagramma BPMN aperto in Camunda Modeler con almeno una modifica motivata.",
    "Presentare la scheda in aula in cinque minuti.",
+   "Come estensione facoltativa, aprire una Developer Edition speciale del percorso Trailhead <a href=\"https://trailhead.salesforce.com/content/learn/modules/flow-troubleshooting/review-flow-terminology-and-sign-up-for-a-special-org\" target=\"_blank\" rel=\"noopener noreferrer\">Flow Troubleshooting</a>. L'organizzazione contiene alcuni Flow già predisposti: analizzarne trigger, attività, decisioni e dati, quindi confrontare l'implementazione con la scheda processo e con il diagramma BPMN. Trailhead parla di Developer Edition o Playground, non di una Sandbox Salesforce tradizionale.",
   ],None),
  ],
  kt=[
