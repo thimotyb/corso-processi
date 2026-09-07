@@ -14,9 +14,8 @@
     var visible = thresholdPassed();
     controls.forEach(function (control) {
       control.classList.toggle("is-visible", visible);
-      control.setAttribute("aria-hidden", visible ? "false" : "true");
-      if (visible) control.removeAttribute("tabindex");
-      else control.setAttribute("tabindex", "-1");
+      control.setAttribute("aria-hidden", "false");
+      control.removeAttribute("tabindex");
     });
     isTicking = false;
   }

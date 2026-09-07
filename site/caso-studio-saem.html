@@ -63,9 +63,9 @@
   <section class="study-section" id="s04">
    <h2>4 I tre processi già sviluppati sul caso</h2>
    <ul class="study-bullets">
-    <li><strong>Selezione e qualifica fornitori</strong> &mdash; 4.0 &rarr; 4.2.3 Select suppliers and develop/maintain contracts &mdash; <a href="../caso-saem/esempi-apqc/03-acquisti/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/03-acquisti/processo.bpmn">processo.bpmn</a></li>
-    <li><strong>Ritiro prodotti, resi e riparazione deceleratori</strong> &mdash; 6.0 &rarr; 6.2.2 Manage customer service problems, requests, and inquiries &mdash; <a href="../caso-saem/esempi-apqc/05-customer-service/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/05-customer-service/processo.bpmn">processo.bpmn</a></li>
-    <li><strong>Fatturazione settimanale</strong> &mdash; 9.0 &rarr; 9.2.2 Invoice customer &mdash; <a href="../caso-saem/esempi-apqc/07-finance/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/07-finance/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Selezione e qualifica fornitori</strong> &mdash; 4.0 &rarr; 4.2.3 Select suppliers and develop/maintain contracts &mdash; <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/03-acquisti/processo.md">processo.md</a> / <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/03-acquisti/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Ritiro prodotti, resi e riparazione deceleratori</strong> &mdash; 6.0 &rarr; 6.2.2 Manage customer service problems, requests, and inquiries &mdash; <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/05-customer-service/processo.md">processo.md</a> / <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/05-customer-service/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Fatturazione settimanale</strong> &mdash; 9.0 &rarr; 9.2.2 Invoice customer &mdash; <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/07-finance/processo.md">processo.md</a> / <a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/esempi-apqc/07-finance/processo.bpmn">processo.bpmn</a></li>
    </ul>
    <p>Ogni scheda ripete la stessa struttura degli esempi astratti (collocazione PCF, Activity, scomposizione in Task, SIPOC, matrice delle variabili, scheda sintetica, BPMN) ma con scenario, ruoli e flusso presi dal caso reale — i diagrammi BPMN qui includono anche gateway che nella versione astratta non c'erano (es. esito del vendor rating, tipo di richiesta reso/riparazione, canale di fatturazione).</p>
   </section>
@@ -99,7 +99,7 @@
    <h2>6 SCOR: il framework usato dal caso originale</h2>
    <p>La tesi originale su cui è basato questo caso (Bozzoli, 2004-2005) non usava l'APQC PCF, ma il modello <strong>SCOR (Supply Chain Operations Reference)</strong> insieme a diagrammi UML — scelta naturale per un distributore di prodotti fisici, dato che SCOR è specializzato sui processi di supply chain (pianificazione, approvvigionamento, produzione, evasione ordini, logistica, resi), mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain (vendite, HR, IT, finance...).</p>
    <p>SCOR è mantenuto oggi dalla <strong>Association for Supply Chain Management (ASCM)</strong>, erede del Supply-Chain Council che lo creò nel 1996, sotto il nome di <strong>SCOR Digital Standard (SCOR-DS)</strong>. Il modello attuale organizza i processi su un livello Orchestrate (le tredici funzioni trasversali di governo della supply chain) e sei processi di primo livello: <strong>Plan, Order, Source, Transform, Fulfill, Return</strong> — la versione "classica" nota alla tesi del 2004-2005 aveva invece cinque processi macro (Plan, Source, Make, Deliver, Return).</p>
-   <p>Una sintesi completa dei processi SCOR-DS (livelli, categorie, elementi di processo) e una mappatura di prima approssimazione dei processi SAEM sui processi SCOR sono in <a href="../resources/scor-overview.md">resources/scor-overview.md</a>.</p>
+   <p>Una sintesi completa dei processi SCOR-DS (livelli, categorie, elementi di processo) e una mappatura di prima approssimazione dei processi SAEM sui processi SCOR sono in <a href="https://github.com/thimotyb/corso-processi/blob/main/resources/scor-overview.md">resources/scor-overview.md</a>.</p>
   </section>
 
   <section class="study-section" id="s07">
@@ -111,10 +111,10 @@
   <section class="study-section" id="s08">
    <h2>8 Fonti</h2>
    <ul class="reference-list">
-    <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="../resources/casoSAEM.pdf">PDF completo</a>.</li>
-    <li><a href="../caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
-    <li>ASCM, <em>"SCOR Digital Standard — Quick Reference Guide"</em>, © 2025, CC BY-NC-ND 4.0 — <a href="../resources/scor-ds-digital-guide_final.pdf">PDF completo</a>. Framework interattivo: <a href="https://scor.ascm.org" target="_blank" rel="noopener noreferrer">scor.ascm.org</a>.</li>
-    <li><a href="../resources/scor-overview.md">Sintesi SCOR ad uso didattico</a> (gerarchia dei processi, mappatura SAEM &rarr; SCOR).</li>
+    <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="https://github.com/thimotyb/corso-processi/blob/main/resources/casoSAEM.pdf">PDF completo</a>.</li>
+    <li><a href="https://github.com/thimotyb/corso-processi/blob/main/caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
+    <li>ASCM, <em>"SCOR Digital Standard — Quick Reference Guide"</em>, © 2025, CC BY-NC-ND 4.0 — <a href="https://github.com/thimotyb/corso-processi/blob/main/resources/scor-ds-digital-guide_final.pdf">PDF completo</a>. Framework interattivo: <a href="https://scor.ascm.org" target="_blank" rel="noopener noreferrer">scor.ascm.org</a>.</li>
+    <li><a href="https://github.com/thimotyb/corso-processi/blob/main/resources/scor-overview.md">Sintesi SCOR ad uso didattico</a> (gerarchia dei processi, mappatura SAEM &rarr; SCOR).</li>
    </ul>
   </section>
  </article>
@@ -122,6 +122,13 @@
 <div class="site-footer-note">
  <p>Caso di studio del corso <strong>processi-MOCI06 — Classificazione e analisi dei processi industriali</strong>. Affianca, senza sostituire, gli esempi APQC astratti.</p>
 </div>
+<button class="print-page" type="button" data-print-page aria-label="Stampa la pagina">Stampa</button>
 <a class="back-to-top" href="#top" data-back-to-top aria-hidden="true" tabindex="-1">Torna su</a>
+<div class="lightbox" id="lightbox" aria-hidden="true">
+ <figure class="lightbox-inner">
+  <img id="lightbox-image" alt="">
+  <figcaption id="lightbox-caption"></figcaption>
+ </figure>
+</div>
 </body>
 </html>

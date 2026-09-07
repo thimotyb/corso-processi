@@ -46,7 +46,7 @@
   <h2>Moduli</h2>
   <p>Sette moduli tematici derivati dai blocchi principali del programma. I moduli 6 e 7 usano i diagrammi BPMN e Camunda Modeler come laboratorio di visualizzazione sugli esempi APQC.</p>
   <ul class="chapter-list">
-          <li><a href="chapters/chapter-01.html">M01 - Concetto di processo e logica cross-industry</a></li>
+          <li><a href="chapters/chapter-01.html">M01 - Classificazione e architettura dei processi</a></li>
           <li><a href="chapters/chapter-02.html">M02 - APQC PCF: Category, Process Group, Process</a></li>
           <li><a href="chapters/chapter-03.html">M03 - Dalla Activity al Task</a></li>
           <li><a href="chapters/chapter-04.html">M04 - Variabili di processo e relazioni</a></li>
@@ -70,9 +70,9 @@
   <h2>Laboratori</h2>
   <p>Ogni modulo si chiude con un'esercitazione a esito verificabile. La guida su Camunda e assistente MCP è un annesso opzionale per chi vuole provare la generazione assistita dei diagrammi.</p>
   <div class="labs-grid">
-          <a class="lab-card" href="chapters/chapter-01.html#s11">
-            <h3>Laboratorio M01 - Confini di un processo</h3>
-            <p>Redigere la scheda sintetica di un processo reale: obiettivo, eventi di innesco e fine, input, output, cliente.</p>
+          <a class="lab-card" href="chapters/chapter-01.html#s14">
+            <h3>Laboratorio M01 - Prima mappa gerarchica</h3>
+            <p>Costruire una mappa a cinque livelli: Category, Process Group, Process, Activity e Task, definendo confini e risultato atteso.</p>
           </a>
           <a class="lab-card" href="chapters/chapter-02.html#s11">
             <h3>Laboratorio M02 - Collocazione nel PCF</h3>
@@ -102,7 +102,7 @@
             <h3>Guida - BPMN con Camunda e assistente MCP</h3>
             <p>Annesso opzionale: allestire l&#x27;ambiente (Claude, plugin MCP del Modeler, Camunda 8 in Docker) per generare le bozze BPMN dai prompt.</p>
           </a>
-          <a class="lab-card" href="../esempi-apqc/">
+          <a class="lab-card" href="https://github.com/thimotyb/corso-processi/tree/main/esempi-apqc/">
             <h3>Esempi di processo APQC</h3>
             <p>Sette processi reali, uno per dominio: scheda in processo.md e diagramma in processo.bpmn.</p>
           </a>
@@ -143,6 +143,13 @@
 <div class="site-footer-note">
  <p>Sito del corso <strong>processi-MOCI06 — Classificazione e analisi dei processi industriali</strong>. Struttura dei moduli e componenti di navigazione ripresi dalle convenzioni della skill di produzione corsi <em>claude-course-builder</em>; contenuti in italiano, coerenti con <code>sillabo_processi_MOCI06.docx</code>.</p>
 </div>
+<button class="print-page" type="button" data-print-page aria-label="Stampa la pagina">Stampa</button>
 <a class="back-to-top" href="#top" data-back-to-top aria-hidden="true" tabindex="-1">Torna su</a>
+<div class="lightbox" id="lightbox" aria-hidden="true">
+ <figure class="lightbox-inner">
+  <img id="lightbox-image" alt="">
+  <figcaption id="lightbox-caption"></figcaption>
+ </figure>
+</div>
 </body>
 </html>

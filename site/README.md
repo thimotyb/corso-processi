@@ -17,7 +17,7 @@ argomento tecnico a sé.
 
 ## Moduli
 
-1. M01 — Concetto di processo e logica cross-industry
+1. M01 — Classificazione e architettura dei processi
 2. M02 — APQC PCF: Category, Process Group, Process
 3. M03 — Dalla Activity al Task
 4. M04 — Variabili di processo e relazioni
@@ -37,6 +37,9 @@ NO_OPEN=1 ./start-site.sh # solo server, senza browser
 
 In alternativa aprire `index.html` direttamente in un browser. Nessuna dipendenza
 esterna, nessun build: il sito è servibile come file statici (anche via GitHub Pages).
+
+All'avvio `start-site.sh` esegue automaticamente `check_links.py`, che verifica i
+collegamenti locali e gli ancoraggi tra le pagine HTML.
 
 ## Rigenerazione
 

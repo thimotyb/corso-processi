@@ -102,6 +102,11 @@ section {
 .study-section p {
   margin: 0;
 }
+.study-section p + p,
+.study-section p + ul,
+.study-section ul + p {
+  margin-top: 0.85rem;
+}
 
 .study-section h2,
 .study-section h3 {
@@ -182,9 +187,9 @@ section {
   color: #fff;
   text-decoration: none;
   font-weight: 700;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;

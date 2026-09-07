@@ -13,9 +13,11 @@ ROOT = pathlib.Path("/home/thimoty/git/corso-processi/site")
 CH = ROOT / "chapters"
 
 COURSE = "processi-MOCI06 — Classificazione e analisi dei processi industriali"
+REPO_BLOB = "https://github.com/thimotyb/corso-processi/blob/main/"
+REPO_TREE = "https://github.com/thimotyb/corso-processi/tree/main/"
 
 MODULES = [
-    ("01", "M01 - Concetto di processo e logica cross-industry"),
+    ("01", "M01 - Classificazione e architettura dei processi"),
     ("02", "M02 - APQC PCF: Category, Process Group, Process"),
     ("03", "M03 - Dalla Activity al Task"),
     ("04", "M04 - Variabili di processo e relazioni"),
@@ -33,52 +35,88 @@ LAB_ANCHOR = {}
 CONTENT = {
 "01": dict(
  sections=[
-  (1,"1 Che cos'è un processo aziendale",[
-   "Un processo aziendale è un insieme ordinato di attività che trasforma input in output di valore per un cliente interno o esterno. Ha un obiettivo dichiarato, un punto di inizio e uno di fine, e attraversa spesso più funzioni organizzative.",
-   "La prospettiva per processi guarda al flusso di lavoro end-to-end, non alla singola unità che lo esegue. I confini del processo stabiliscono cosa è incluso e cosa resta fuori: l'evento che lo innesca e il risultato che lo chiude.",
-  ],None),
-  (2,"1.1 Obiettivo, confini, input e output",[
-   "L'obiettivo esprime il motivo per cui il processo esiste, in termini di risultato per il cliente. Gli input sono le risorse informative e materiali necessarie ad avviarlo; gli output sono i prodotti o servizi che consegna.",
-   "Input e output vanno nominati in modo concreto e verificabile, così da poterli riconoscere quando si presentano e da poterli misurare.",
+  (1,"1 Il processo aziendale",[
+   "Un <strong>processo aziendale</strong> è una sequenza strutturata e ripetibile di attività che consente all'organizzazione di raggiungere un obiettivo. Non è soltanto un elenco di operazioni: è un insieme coordinato di azioni, decisioni e passaggi che porta da una situazione iniziale a un risultato atteso.",
+   "Un processo può essere eseguito da <strong>persone</strong>, <strong>sistemi informativi</strong> o <strong>macchinari</strong> e, nella maggior parte dei casi, combina questi diversi esecutori. La sua utilità consiste nel rendere comprensibile come il lavoro viene svolto e in che modo le singole attività contribuiscono al risultato complessivo.",
+   "Ogni processo riceve uno o più <strong>input</strong> e li trasforma in <strong>output</strong>. Gli input possono essere dati, informazioni, documenti, materiali, richieste, autorizzazioni o altre risorse necessarie per iniziare e completare il lavoro. Gli output sono i risultati prodotti dal processo: un bene, un servizio, una decisione, un documento, una registrazione o un'informazione destinata a un altro soggetto.",
+   "Un output non è necessariamente il prodotto venduto al cliente finale. Può essere anche un <strong>risultato intermedio</strong> che alimenta un processo successivo. Per esempio, l'ordine registrato dall'ufficio vendite può diventare l'input per la verifica amministrativa, per la preparazione della merce e per la pianificazione della consegna.",
+   "Il processo è orientato a uno <strong>scopo</strong>. Le sue componenti principali possono essere osservate attraverso queste domande:",
+   "<ul class=\"study-bullets\"><li><strong>Obiettivo</strong>: perché il processo esiste e quale risultato deve rendere possibile?</li><li><strong>Attività</strong>: che cosa deve essere fatto per raggiungere il risultato?</li><li><strong>Ruoli</strong>: chi è responsabile delle diverse parti del lavoro?</li><li><strong>Regole</strong>: quali condizioni, vincoli o criteri devono essere rispettati?</li><li><strong>Indicatori</strong>: come si verifica se il risultato è raggiunto con tempi, costi e qualità accettabili?</li></ul>",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/eriksson-penker-process.svg\" alt=\"Schema di processo aziendale: input a sinistra, processo e attività al centro, output a destra, obiettivo sopra e controlli sotto\" data-caption=\"Schema didattico originale ispirato alla prospettiva di processo Eriksson-Penker.\"><figcaption>Schema didattico originale ispirato alla prospettiva di processo Eriksson-Penker: gli input alimentano il processo, le attività li trasformano e gli output vengono consegnati al cliente.</figcaption></figure>",
+   "Per analizzare un processo è necessario considerarlo come un <strong>percorso completo</strong>. Si individua l'evento o la condizione che lo avvia, si descrivono le attività e le decisioni che trasformano gli input, e si definiscono uno o più risultati di conclusione. I <strong>confini</strong> stabiliscono che cosa appartiene al processo e che cosa invece resta all'esterno.",
+   "La prospettiva <strong>end-to-end</strong> segue il risultato dall'innesco fino alla consegna al destinatario, anche quando il lavoro attraversa reparti, funzioni, sedi e applicazioni differenti. Per esempio, la gestione di un ordine cliente può coinvolgere vendite, amministrazione, magazzino, logistica e sistemi informativi. Osservare il processo completo permette di riconoscere attese, passaggi ridondanti, informazioni mancanti, responsabilità poco chiare e punti in cui il risultato può degradarsi.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/saem-fasi-inserimento-ordine.png\" alt=\"Fasi dell'inserimento dell'ordine in SAEM: arrivo dell'ordine, smistamento, verifica e inserimento a sistema, invio della conferma\" data-caption=\"Fasi dell'inserimento dell'ordine in SAEM. Fonte: C. Bozzoli, Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A., figura 5.8, p. 76.\"><figcaption>Fasi dell'inserimento dell'ordine in SAEM. Fonte: C. Bozzoli, <em>Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A.</em>, figura 5.8, p. 76.</figcaption></figure>",
+   "I processi non sono importanti soltanto perché descrivono il lavoro quotidiano. Se vengono progettati, documentati e migliorati con continuità, diventano una leva per la competitività e per la capacità dell'organizzazione di crescere senza perdere controllo:",
+   "<ul class=\"study-bullets\"><li><strong>Vantaggio competitivo</strong>: processi chiari e fluidi aumentano l'efficienza, riducono i tempi di risposta e possono migliorare qualità del prodotto, servizio al cliente ed eccellenza operativa.</li><li><strong>Efficienza dei costi</strong>: la revisione periodica mette in evidenza ridondanze, attese e attività che consumano risorse senza creare valore. Le risorse liberate possono essere riallocate dove producono un beneficio maggiore.</li><li><strong>Scalabilità</strong>: un processo ben progettato può gestire l'aumento dei volumi o della complessità senza dipendere soltanto dalla memoria o dall'esperienza di singole persone. Le attività manuali non strutturate tendono invece a diventare un limite quando l'organizzazione cresce.</li><li><strong>Conformità e gestione del rischio</strong>: regole, controlli e responsabilità esplicite aiutano a rispettare obblighi normativi, policy interne e standard di qualità, riducendo errori, violazioni e rischi operativi.</li><li><strong>Soddisfazione del cliente</strong>: un processo orientato al cliente rende più semplice acquistare, ricevere assistenza, ottenere una risposta o risolvere un problema. La qualità percepita dipende anche dalla continuità e dalla prevedibilità del percorso.</li><li><strong>Coinvolgimento e produttività delle persone</strong>: ruoli e responsabilità chiari riducono confusione, sovrapposizioni e rilavorazioni. Le persone possono concentrarsi sulle attività che richiedono competenza e giudizio, invece di ricostruire ogni volta come procedere.</li><li><strong>Innovazione e adattamento</strong>: un processo conosciuto e misurato è più facile da modificare quando cambiano tecnologie, mercato, prodotti o aspettative dei clienti. La standardizzazione non significa immobilità: crea una base dalla quale sperimentare miglioramenti.</li><li><strong>Gestione delle informazioni</strong>: un processo definisce quali dati servono, chi li produce, dove vengono registrati e come vengono utilizzati. Informazioni coerenti, tempestive e protette rendono più affidabili le decisioni e i controlli.</li></ul>",
+   "Questi benefici dipendono dal <strong>miglioramento continuo</strong>. Un processo non dovrebbe essere documentato una volta e poi dimenticato: deve essere osservato, misurato e aggiornato quando cambiano obiettivi, strumenti, vincoli o condizioni del contesto. La documentazione, i controlli e il feedback trasformano l'esperienza operativa in conoscenza riutilizzabile e rendono possibile intervenire prima che un problema diventi strutturale.",
+  ],"<strong>Il processo e la qualità secondo ISO 9001.</strong> Nel vocabolario ISO, la qualità riguarda il grado con cui le caratteristiche di un prodotto, servizio o processo soddisfano i requisiti. La norma collega questo concetto all'<strong>approccio per processi</strong>: l'organizzazione individua i processi, i loro input e output, le interazioni, i rischi, i controlli e i criteri di misurazione. Le <strong>informazioni documentate</strong> sostengono il funzionamento dei processi e forniscono evidenza che quanto pianificato è stato effettivamente svolto. La documentazione può assumere forme diverse, in funzione delle dimensioni dell'organizzazione, della complessità dei processi, dei rischi e delle competenze disponibili. In questo modo, il sistema di gestione consente di ottenere risultati conformi in modo controllato, verificabile e migliorabile nel tempo. Riferimenti: <a href=\"https://www.iso.org/standard/62085.html?iframeView=true\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 9001 — Quality management systems</a>, <a href=\"https://www.iso.org/iso/iso9001_2015_process_approach.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">ISO — The process approach in ISO 9001</a> e <a href=\"https://www.iso.org/files/live/sites/isoorg/files/standards/docs/en/iso_9001_2015_guidance_documented_information.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">ISO — Guidance on documented information</a>.",
+  ),
+  (2,"1.1 Obiettivi, confini, input e output",[
+   "La descrizione di un processo comincia dall'<strong>obiettivo</strong>: quale risultato deve produrre il processo e per quale esigenza organizzativa o del cliente? Un obiettivo ben formulato non coincide con l'elenco delle attività. Esprime il cambiamento atteso, per esempio consegnare un ordine completo entro una certa data, autorizzare una richiesta conforme ai criteri stabiliti o risolvere un problema del cliente.",
+   "L'obiettivo permette di valutare la coerenza del processo. Ogni attività dovrebbe contribuire al risultato oppure fornire un controllo necessario. Se un passaggio non ha una funzione riconoscibile, può essere una duplicazione, un'attesa o una consuetudine non più utile. L'obiettivo diventa quindi il riferimento per progettare il flusso, assegnare le responsabilità e scegliere le misure di prestazione.",
+   "I <strong>confini</strong> stabiliscono dove il processo comincia e dove termina. L'inizio può essere identificato da una richiesta del cliente, da un ordine ricevuto, da una scadenza, da un evento tecnico o dalla disponibilità di un input. La fine coincide con la consegna dell'output previsto, con la comunicazione dell'esito o con la registrazione della decisione. Definire i confini evita di estendere l'analisi senza limite e rende chiaro quali attività, ruoli e sistemi appartengono al processo.",
+   "Per delimitare correttamente un processo è utile indicare anche ciò che resta fuori. La progettazione del prodotto, per esempio, può essere un processo distinto dalla gestione dell'ordine; la manutenzione del sistema informativo può essere un servizio di supporto e non una fase interna alla vendita. La scelta dipende dall'obiettivo dell'analisi e dal livello di dettaglio richiesto, ma deve essere esplicita e coerente.",
+   "Gli <strong>input</strong> sono ciò che il processo riceve, consuma o utilizza per poter operare. Possono essere materiali, dati, documenti, informazioni, richieste, autorizzazioni, risorse economiche o capacità produttiva. Per ogni input è utile chiedersi da chi proviene, in quale formato arriva, se è completo e quali requisiti deve rispettare prima di essere utilizzato.",
+   "Gli <strong>output</strong> sono i risultati ottenuti al termine del processo o di una sua parte. Possono essere prodotti fisici, servizi erogati, decisioni, autorizzazioni, rapporti, comunicazioni, registrazioni o dati aggiornati. Un output deve essere descritto dal punto di vista del destinatario: deve essere chiaro che cosa viene consegnato, a chi, con quale livello di completezza, accuratezza, tempestività e conformità.",
+   "La relazione tra input e output può essere rappresentata come una trasformazione controllata:",
+   "<ul class=\"study-bullets\"><li><strong>Input</strong>: ciò che alimenta il processo.</li><li><strong>Attività e decisioni</strong>: il lavoro che trasforma, verifica o instrada gli input.</li><li><strong>Controlli</strong>: verifiche che prevengono errori o individuano risultati non conformi.</li><li><strong>Output</strong>: il risultato prodotto e consegnato al destinatario.</li><li><strong>Feedback</strong>: informazioni usate per correggere il processo e migliorarne le prestazioni.</li></ul>",
+   "Non è sufficiente elencare input e output: occorre definire i <strong>requisiti</strong> che li rendono utilizzabili. Un input incompleto può impedire l'avvio del lavoro; un output consegnato in ritardo o con dati errati può generare rilavorazioni, reclami o rischi. Per questo l'analisi deve considerare anche gli output indesiderati e le condizioni che possono compromettere la conformità del prodotto, del servizio o della decisione.",
+   "Infine, il processo deve essere osservabile e misurabile. A seconda del caso, si possono controllare tempi di attraversamento e di attesa, puntualità delle consegne, tasso di errore, scarti e rilavorazioni, costi, frequenza degli incidenti, soddisfazione dei destinatari e prestazioni dei fornitori. Le misure non servono soltanto a giudicare il risultato finale: aiutano a capire in quale punto del processo si genera la variabilità e dove conviene intervenire.",
   ],None),
   (2,"1.2 Clienti interni ed esterni",[
-   "Il cliente del processo è chi riceve e utilizza l'output. Può essere esterno all'organizzazione oppure un'altra funzione interna che a sua volta alimenta un processo successivo.",
-   "Riconoscere il cliente aiuta a stabilire quali caratteristiche dell'output contano davvero: tempestività, completezza, accuratezza, forma.",
+   "Il <strong>cliente del processo</strong> è il soggetto che riceve, utilizza o valuta l'output. Il cliente non coincide necessariamente con chi acquista il prodotto o con chi compare nel contratto commerciale: può essere una persona, un ufficio, un altro processo, un'organizzazione partner o il destinatario finale del servizio.",
+   "Il <strong>cliente esterno</strong> si trova fuori dall'organizzazione che esegue il processo. Può essere un acquirente, un cittadino, un paziente, un'azienda cliente, un ente o un altro soggetto destinatario del prodotto o del servizio. Le sue aspettative riguardano normalmente il risultato finale, ma possono riguardare anche il modo in cui il processo viene svolto: tempi di risposta, facilità di accesso, comunicazioni, trasparenza e gestione delle anomalie.",
+   "Il <strong>cliente interno</strong> è una persona, una funzione o un processo appartenente alla stessa organizzazione e destinatario di un output intermedio. Per esempio, l'amministrazione può essere cliente interno delle vendite quando riceve un ordine completo; il magazzino può essere cliente interno dell'amministrazione quando riceve l'autorizzazione a preparare la spedizione; la logistica può essere cliente interno del magazzino quando riceve merce e documenti pronti per la consegna.",
+   "La distinzione è importante perché molti processi attraversano più funzioni. L'output prodotto da una funzione diventa spesso l'input della funzione successiva: ogni passaggio può quindi essere letto come una relazione tra un <strong>fornitore</strong> e un <strong>cliente</strong>. Se il passaggio interno è incompleto, errato o tardivo, il problema si propaga nel flusso e può arrivare fino al cliente esterno.",
+   "Il cliente interno non è un destinatario di seconda importanza. La qualità del risultato finale dipende dalla qualità degli output intermedi. Un processo che consegna informazioni incomplete al processo successivo può sembrare efficiente nel proprio segmento, ma trasferisce lavoro, attese e rischi a valle. L'analisi deve quindi rendere visibili anche le esigenze dei clienti interni e gli accordi di servizio tra funzioni.",
+   "Per identificare il cliente di un processo è utile rispondere a queste domande:",
+   "<ul class=\"study-bullets\"><li><strong>Chi riceve l'output?</strong> Individuare il destinatario diretto e, se necessario, anche chi utilizza il risultato in una fase successiva.</li><li><strong>Che cosa si aspetta?</strong> Descrivere il risultato richiesto, non soltanto l'attività svolta dall'organizzazione.</li><li><strong>Quali requisiti deve rispettare l'output?</strong> Considerare completezza, accuratezza, formato, tempi, quantità, sicurezza e conformità.</li><li><strong>Come viene verificato il risultato?</strong> Individuare criteri di accettazione, controlli, reclami, richieste di correzione o indicatori di soddisfazione.</li><li><strong>Che cosa accade se l'output non è conforme?</strong> Tracciare rilavorazioni, rifiuti, escalation, ritardi e impatti sui processi successivi.</li></ul>",
+   "Un processo può avere più clienti e ciascuno può attribuire valore a caratteristiche diverse dello stesso output. Un ordine, per esempio, deve essere utile al cliente esterno che riceverà la merce, ma anche all'amministrazione che deve fatturare, al magazzino che deve preparare i colli e al vettore che deve organizzare la consegna. La scheda processo dovrebbe esplicitare questi destinatari quando hanno requisiti differenti o quando la loro mancata soddisfazione crea un rischio.",
+   "La prospettiva del cliente orienta la definizione delle <strong>misure di qualità</strong>. Non basta sapere quante attività sono state eseguite: occorre verificare se l'output è arrivato al destinatario giusto, nel momento concordato, nel formato utilizzabile e senza errori. Tempi di risposta, puntualità, completezza, accuratezza, numero di reclami e tasso di rilavorazione sono esempi di misure che collegano il funzionamento interno al valore percepito dal cliente.",
   ],None),
-  (2,"1.3 Evento di innesco ed evento finale",[
-   "Ogni processo parte da un evento identificabile: l'arrivo di un ordine, una richiesta, una scadenza temporale. Termina con un evento altrettanto netto: un pagamento registrato, un servizio erogato, un documento approvato.",
-   "Tra i due eventi si colloca tutto ciò che il processo governa. Definirli con precisione è la premessa per misurare durata, costi e responsabilità.",
+  (1,"2 Funzione, processo, attività e task",[
+   "Funzione, processo, attività e task sono livelli diversi. La funzione è un'unità organizzativa permanente; il processo è un flusso orientato a un risultato; l'attività è un passaggio del processo; il task è un'azione elementare e verificabile.",
   ],None),
-  (1,"2 Funzione, processo, attività, task",[
-   "Questi quattro termini descrivono livelli diversi. La funzione è un'unità organizzativa permanente (vendite, acquisti, IT). Il processo è un flusso di lavoro trasversale orientato a un risultato. L'attività è un passo del processo che produce un esito intermedio. Il task è l'azione elementare che compone un'attività.",
+  (2,"2.1 Come distinguere i livelli",[
+   "La funzione risponde alla domanda «chi»; il processo a «quale risultato si deve ottenere»; l'attività a «quale passaggio serve»; il task a «quale azione concreta viene eseguita».",
+   "Una funzione può partecipare a più processi e un processo può attraversare più funzioni. Un nome di processo efficace contiene normalmente un verbo e un oggetto, per esempio «gestire l'ordine cliente».",
   ],None),
-  (2,"2.1 Le quattro nozioni a confronto",[
-   "La funzione risponde alla domanda «chi»; il processo alla domanda «come si ottiene il risultato»; l'attività a «quale passo»; il task a «quale gesto operativo».",
-   "Una stessa funzione partecipa a più processi, e uno stesso processo impegna più funzioni.",
+  (1,"3 Classificazione cross-industry",[
+   "Una classificazione cross-industry usa una tassonomia comune per descrivere processi presenti in organizzazioni e settori diversi. La tassonomia rende confrontabili nomi, livelli e risultati senza cancellare le specificità dell'azienda.",
   ],None),
-  (2,"2.2 Errori tipici di classificazione",[
-   "Gli errori più comuni sono confondere il nome di una funzione con quello di un processo, descrivere un processo come elenco di reparti coinvolti anziché come sequenza di attività, e scendere al dettaglio del task quando serve ancora la vista d'insieme.",
-   "Un buon test è verificare che il nome del processo contenga un verbo e un oggetto: «evadere l'ordine cliente», non «ufficio ordini».",
+  (2,"3.1 Tassonomie e vocabolario comune",[
+   "Senza un riferimento condiviso, reparti e aziende possono usare nomi diversi per processi simili. Una tassonomia comune stabilisce categorie e relazioni gerarchiche, riducendo ambiguità e tempo di allineamento.",
   ],None),
-  (1,"3 Logica cross-industry",[
-   "Una classificazione cross-industry descrive i processi con un vocabolario comune valido per settori diversi. Permette di confrontare organizzazioni eterogenee, riusare schemi di analisi e comunicare senza ambiguità tra funzioni e consulenti.",
+  (2,"3.2 Perché classificare i processi",[
+   "Una classificazione ordinata sostiene analisi organizzative, miglioramento continuo, benchmarking, digitalizzazione, automazione e definizione di responsabilità e indicatori.",
   ],None),
-  (2,"3.1 Perché una tassonomia comune",[
-   "Senza un riferimento condiviso, ogni reparto nomina i processi a modo proprio e il confronto diventa impossibile. Una tassonomia comune fornisce nomi stabili e una gerarchia già definita, riducendo il tempo speso a mettersi d'accordo sui termini.",
+  (1,"4 Introduzione all'APQC Process Classification Framework",[
+   "L'APQC Process Classification Framework è una tassonomia cross-industry di riferimento per mappare e confrontare i processi aziendali. Il corso utilizza la gerarchia Category → Process Group → Process → Activity e aggiunge il livello Task per la descrizione operativa.",
+   "Il PCF aiuta a collocare un processo in una struttura comune; non sostituisce l'analisi dell'organizzazione e non definisce i task specifici di ogni azienda.",
   ],None),
-  (2,"3.2 Benefici: analisi, benchmarking, digitalizzazione",[
-   "Una vista ordinata dei processi supporta l'analisi organizzativa, il benchmarking con dati esterni, la definizione di responsabilità e indicatori, e le iniziative di digitalizzazione e automazione, che richiedono processi descritti in modo esplicito.",
-  ],"I sette esempi in <code>esempi-apqc/</code> mostrano processi reali collocati in questo schema, uno per dominio funzionale."),
-  (1,"4 Laboratorio",[
-   "Scegliere un processo reale o simulato del proprio contesto. Redigere una scheda di mezza pagina con: obiettivo, evento di innesco, evento finale, tre input principali, output, cliente.",
-   "Confrontare le schede in aula e discutere i confini scelti: dove un partecipante ha incluso un passo che un altro ha lasciato fuori, e perché.",
+  (2,"4.1 Le Category di processo",[
+   "La Category è il livello più ampio della classificazione e raggruppa processi con finalità omogenee. Le Category possono riguardare processi operativi, di gestione o di supporto.",
+  ],None),
+  (2,"4.2 Esempi di aree funzionali",[
+   "Nel corso si incontrano esempi relativi a visione e strategia, vendite, acquisti, servizi, customer service, finance, risorse umane e tecnologia informatica. La Category è scelta in base alla finalità del processo, non al nome del reparto.",
+  ],None),
+  (1,"5 Process Group, Process e risultati attesi",[
+   "Il Process Group raccoglie processi coerenti all'interno di una Category. Il Process rappresenta un flusso con obiettivo, confini, cliente e risultato atteso. Questa struttura permette di passare dalla vista generale alla descrizione del processo che sarà analizzato.",
+  ],None),
+  (2,"5.1 Dalla Category al Process",[
+   "La classificazione procede dal generale al particolare: si identifica l'area funzionale, si individua il Process Group, si seleziona il Process e si verifica che il risultato atteso descriva ciò che l'organizzazione deve effettivamente produrre.",
+  ],None),
+  (1,"6 Laboratorio: prima mappa gerarchica",[
+   "Scegliere un processo reale o simulato. Costruire una prima mappa a cinque livelli: Category, Process Group, Process, Activity e Task.",
+   "Per il momento sono sufficienti nomi, confini e risultati attesi. La scomposizione dettagliata delle Activity, le variabili e gli indicatori saranno approfonditi nei moduli successivi.",
   ],None),
  ],
  kt=[
-  "Un processo trasforma input in output di valore, con obiettivo, confini ed eventi di inizio e fine espliciti.",
-  "Funzione, processo, attività e task sono livelli distinti: il nome di un processo contiene un verbo e un oggetto.",
-  "Il cliente del processo, interno o esterno, determina quali caratteristiche dell'output sono rilevanti.",
-  "Una tassonomia cross-industry dà nomi stabili e una gerarchia condivisa, presupposto di confronto e digitalizzazione.",
+  "Un processo trasforma input in output per un cliente e ha obiettivo, confini, evento di avvio e risultato atteso.",
+  "Funzione, processo, attività e task sono livelli distinti: il processo esprime il risultato, il task l'azione elementare.",
+  "La classificazione cross-industry fornisce un vocabolario e una gerarchia comuni a organizzazioni diverse.",
+  "APQC organizza i processi in Category, Process Group, Process e Activity; il Task viene definito dall'organizzazione.",
+  "La prima esercitazione consiste nel costruire una mappa gerarchica a cinque livelli.",
  ]),
 
 "02": dict(
@@ -386,7 +424,14 @@ def page(title, body, depth):
 </head>
 <body>
 {body}
+<button class="print-page" type="button" data-print-page aria-label="Stampa la pagina">Stampa</button>
 <a class="back-to-top" href="#top" data-back-to-top aria-hidden="true" tabindex="-1">Torna su</a>
+<div class="lightbox" id="lightbox" aria-hidden="true">
+ <figure class="lightbox-inner">
+  <img id="lightbox-image" alt="">
+  <figcaption id="lightbox-caption"></figcaption>
+ </figure>
+</div>
 </body>
 </html>
 """
@@ -416,7 +461,11 @@ def chapter_html(code, full_title, prev_m, next_m, data):
         parts = [f'<section class="study-section" id="{anchor}">',
                  f"  <{tag}>{esc(title)}</{tag}>"]
         for p in paras:
-            parts.append(f"  <p>{p if '<code>' in p or '<a ' in p else esc(p)}</p>")
+            is_raw = any(marker in p for marker in ('<code>', '<a ', '<strong>', '<em>', '<ul', '<ol', '<div', '<figure'))
+            if p.lstrip().startswith(('<ul', '<ol', '<div', '<figure')):
+                parts.append(f"  {p}")
+            else:
+                parts.append(f"  <p>{p if is_raw else esc(p)}</p>")
         if note:
             parts.append(f'  <div class="note-box">{note}</div>')
         parts.append("</section>")
@@ -461,8 +510,8 @@ def index_html():
 
     def a(code): return f"chapters/chapter-{code}.html#{LAB_ANCHOR[code]}"
     labs = [
-        ("Laboratorio M01 - Confini di un processo", a("01"),
-         "Redigere la scheda sintetica di un processo reale: obiettivo, eventi di innesco e fine, input, output, cliente."),
+        ("Laboratorio M01 - Prima mappa gerarchica", a("01"),
+         "Costruire una mappa a cinque livelli: Category, Process Group, Process, Activity e Task, definendo confini e risultato atteso."),
         ("Laboratorio M02 - Collocazione nel PCF", a("02"),
          "Collocare un processo aziendale nei primi tre livelli del Process Classification Framework di APQC."),
         ("Laboratorio M03 - Dalla Activity ai Task", a("03"),
@@ -477,7 +526,7 @@ def index_html():
          "Produrre il pacchetto completo di deliverable per un dominio APQC e presentarlo in aula."),
         ("Guida - BPMN con Camunda e assistente MCP", "lab-camunda-mcp.html",
          "Annesso opzionale: allestire l'ambiente (Claude, plugin MCP del Modeler, Camunda 8 in Docker) per generare le bozze BPMN dai prompt."),
-        ("Esempi di processo APQC", "../esempi-apqc/",
+        ("Esempi di processo APQC", REPO_TREE + "esempi-apqc/",
          "Sette processi reali, uno per dominio: scheda in processo.md e diagramma in processo.bpmn."),
     ]
     lab_cards = "\n".join(
@@ -795,9 +844,9 @@ def caso_studio_html():
   <section class="study-section" id="s04">
    <h2>4 I tre processi già sviluppati sul caso</h2>
    <ul class="study-bullets">
-    <li><strong>Selezione e qualifica fornitori</strong> &mdash; 4.0 &rarr; 4.2.3 Select suppliers and develop/maintain contracts &mdash; <a href="../caso-saem/esempi-apqc/03-acquisti/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/03-acquisti/processo.bpmn">processo.bpmn</a></li>
-    <li><strong>Ritiro prodotti, resi e riparazione deceleratori</strong> &mdash; 6.0 &rarr; 6.2.2 Manage customer service problems, requests, and inquiries &mdash; <a href="../caso-saem/esempi-apqc/05-customer-service/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/05-customer-service/processo.bpmn">processo.bpmn</a></li>
-    <li><strong>Fatturazione settimanale</strong> &mdash; 9.0 &rarr; 9.2.2 Invoice customer &mdash; <a href="../caso-saem/esempi-apqc/07-finance/processo.md">processo.md</a> / <a href="../caso-saem/esempi-apqc/07-finance/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Selezione e qualifica fornitori</strong> &mdash; 4.0 &rarr; 4.2.3 Select suppliers and develop/maintain contracts &mdash; <a href="{REPO_BLOB}caso-saem/esempi-apqc/03-acquisti/processo.md">processo.md</a> / <a href="{REPO_BLOB}caso-saem/esempi-apqc/03-acquisti/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Ritiro prodotti, resi e riparazione deceleratori</strong> &mdash; 6.0 &rarr; 6.2.2 Manage customer service problems, requests, and inquiries &mdash; <a href="{REPO_BLOB}caso-saem/esempi-apqc/05-customer-service/processo.md">processo.md</a> / <a href="{REPO_BLOB}caso-saem/esempi-apqc/05-customer-service/processo.bpmn">processo.bpmn</a></li>
+    <li><strong>Fatturazione settimanale</strong> &mdash; 9.0 &rarr; 9.2.2 Invoice customer &mdash; <a href="{REPO_BLOB}caso-saem/esempi-apqc/07-finance/processo.md">processo.md</a> / <a href="{REPO_BLOB}caso-saem/esempi-apqc/07-finance/processo.bpmn">processo.bpmn</a></li>
    </ul>
    <p>Ogni scheda ripete la stessa struttura degli esempi astratti (collocazione PCF, Activity, scomposizione in Task, SIPOC, matrice delle variabili, scheda sintetica, BPMN) ma con scenario, ruoli e flusso presi dal caso reale — i diagrammi BPMN qui includono anche gateway che nella versione astratta non c'erano (es. esito del vendor rating, tipo di richiesta reso/riparazione, canale di fatturazione).</p>
   </section>
@@ -831,7 +880,7 @@ def caso_studio_html():
    <h2>6 SCOR: il framework usato dal caso originale</h2>
    <p>La tesi originale su cui è basato questo caso (Bozzoli, 2004-2005) non usava l'APQC PCF, ma il modello <strong>SCOR (Supply Chain Operations Reference)</strong> insieme a diagrammi UML — scelta naturale per un distributore di prodotti fisici, dato che SCOR è specializzato sui processi di supply chain (pianificazione, approvvigionamento, produzione, evasione ordini, logistica, resi), mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain (vendite, HR, IT, finance...).</p>
    <p>SCOR è mantenuto oggi dalla <strong>Association for Supply Chain Management (ASCM)</strong>, erede del Supply-Chain Council che lo creò nel 1996, sotto il nome di <strong>SCOR Digital Standard (SCOR-DS)</strong>. Il modello attuale organizza i processi su un livello Orchestrate (le tredici funzioni trasversali di governo della supply chain) e sei processi di primo livello: <strong>Plan, Order, Source, Transform, Fulfill, Return</strong> — la versione "classica" nota alla tesi del 2004-2005 aveva invece cinque processi macro (Plan, Source, Make, Deliver, Return).</p>
-   <p>Una sintesi completa dei processi SCOR-DS (livelli, categorie, elementi di processo) e una mappatura di prima approssimazione dei processi SAEM sui processi SCOR sono in <a href="../resources/scor-overview.md">resources/scor-overview.md</a>.</p>
+   <p>Una sintesi completa dei processi SCOR-DS (livelli, categorie, elementi di processo) e una mappatura di prima approssimazione dei processi SAEM sui processi SCOR sono in <a href="{REPO_BLOB}resources/scor-overview.md">resources/scor-overview.md</a>.</p>
   </section>
 
   <section class="study-section" id="s07">
@@ -843,10 +892,10 @@ def caso_studio_html():
   <section class="study-section" id="s08">
    <h2>8 Fonti</h2>
    <ul class="reference-list">
-    <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="../resources/casoSAEM.pdf">PDF completo</a>.</li>
-    <li><a href="../caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
-    <li>ASCM, <em>"SCOR Digital Standard — Quick Reference Guide"</em>, © 2025, CC BY-NC-ND 4.0 — <a href="../resources/scor-ds-digital-guide_final.pdf">PDF completo</a>. Framework interattivo: <a href="https://scor.ascm.org" target="_blank" rel="noopener noreferrer">scor.ascm.org</a>.</li>
-    <li><a href="../resources/scor-overview.md">Sintesi SCOR ad uso didattico</a> (gerarchia dei processi, mappatura SAEM &rarr; SCOR).</li>
+    <li>C. Bozzoli, <em>"Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A."</em>, tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri) — <a href="{REPO_BLOB}resources/casoSAEM.pdf">PDF completo</a>.</li>
+    <li><a href="{REPO_BLOB}caso-saem/caso-saem-compresso.md">Versione compressa del caso</a> (azienda, organizzazione, i quattro processi principali) usata come base per le schede.</li>
+    <li>ASCM, <em>"SCOR Digital Standard — Quick Reference Guide"</em>, © 2025, CC BY-NC-ND 4.0 — <a href="{REPO_BLOB}resources/scor-ds-digital-guide_final.pdf">PDF completo</a>. Framework interattivo: <a href="https://scor.ascm.org" target="_blank" rel="noopener noreferrer">scor.ascm.org</a>.</li>
+    <li><a href="{REPO_BLOB}resources/scor-overview.md">Sintesi SCOR ad uso didattico</a> (gerarchia dei processi, mappatura SAEM &rarr; SCOR).</li>
    </ul>
   </section>
  </article>

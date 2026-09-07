@@ -24,8 +24,31 @@ if ! command -v python3 >/dev/null 2>&1; then
   exit 1
 fi
 
-# porta occupata? prova le successive
-port_busy() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null && { exec 3>&- 3<&-; return 0; } || return 1; }
+if ! python3 "$SCRIPT_DIR/site/check_links.py"; then
+  echo "errore: correggere i link prima di avviare il sito." >&2
+  exit 1
+fi
+
+# porta occupata? prova le successive. Usiamo Python con timeout breve:
+# su alcuni ambienti /dev/tcp resta in attesa anche quando la porta è chiusa.
+port_busy() {
+  python3 - "$1" <<'PY'
+import socket
+import sys
+
+port = int(sys.argv[1])
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.settimeout(0.2)
+try:
+    sock.connect(("127.0.0.1", port))
+except OSError:
+    sys.exit(1)
+else:
+    sys.exit(0)
+finally:
+    sock.close()
+PY
+}
 tries=0
 while port_busy "$PORT" && (( tries < 20 )); do
   echo "porta $PORT occupata, provo $((PORT+1))"
