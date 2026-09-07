@@ -43,6 +43,8 @@ CONTENT = {
    "Il processo è orientato a uno <strong>scopo</strong>. Le sue componenti principali possono essere osservate attraverso queste domande:",
    "<ul class=\"study-bullets\"><li><strong>Obiettivo</strong>: perché il processo esiste e quale risultato deve rendere possibile?</li><li><strong>Attività</strong>: che cosa deve essere fatto per raggiungere il risultato?</li><li><strong>Ruoli</strong>: chi è responsabile delle diverse parti del lavoro?</li><li><strong>Regole</strong>: quali condizioni, vincoli o criteri devono essere rispettati?</li><li><strong>Indicatori</strong>: come si verifica se il risultato è raggiunto con tempi, costi e qualità accettabili?</li></ul>",
    "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/eriksson-penker-process.svg\" alt=\"Schema di processo aziendale: input a sinistra, processo e attività al centro, output a destra, obiettivo sopra e controlli sotto\" data-caption=\"Schema didattico originale ispirato alla prospettiva di processo Eriksson-Penker.\"><figcaption>Schema didattico originale ispirato alla prospettiva di processo Eriksson-Penker: gli input alimentano il processo, le attività li trasformano e gli output vengono consegnati al cliente.</figcaption></figure>",
+   "Un esempio concreto è il processo APQC <strong>Manage customer service problems, requests, and inquiries</strong>. Il diagramma seguente mostra come un processo reale possa essere scomposto in attività successive, ruoli, decisioni e risultati: la richiesta viene ricevuta, analizzata e risolta oppure indirizzata verso un'opportunità commerciale. In questo modo il modello rende visibile il passaggio dal processo generale alle attività che lo compongono.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/apqc-customer-service-process.png\" alt=\"Diagramma BPMN del processo APQC Manage customer service problems, requests, and inquiries\" data-caption=\"Esempio di processo APQC modellato in BPMN: Manage customer service problems, requests, and inquiries.\"><figcaption>Esempio di processo APQC modellato in BPMN: <em>Manage customer service problems, requests, and inquiries</em> (6.2.2). Diagramma prodotto con Camunda Modeler per il corso.</figcaption></figure>",
    "Per analizzare un processo è necessario considerarlo come un <strong>percorso completo</strong>. Si individua l'evento o la condizione che lo avvia, si descrivono le attività e le decisioni che trasformano gli input, e si definiscono uno o più risultati di conclusione. I <strong>confini</strong> stabiliscono che cosa appartiene al processo e che cosa invece resta all'esterno.",
    "La prospettiva <strong>end-to-end</strong> segue il risultato dall'innesco fino alla consegna al destinatario, anche quando il lavoro attraversa reparti, funzioni, sedi e applicazioni differenti. Per esempio, la gestione di un ordine cliente può coinvolgere vendite, amministrazione, magazzino, logistica e sistemi informativi. Osservare il processo completo permette di riconoscere attese, passaggi ridondanti, informazioni mancanti, responsabilità poco chiare e punti in cui il risultato può degradarsi.",
    "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/saem-fasi-inserimento-ordine.png\" alt=\"Fasi dell'inserimento dell'ordine in SAEM: arrivo dell'ordine, smistamento, verifica e inserimento a sistema, invio della conferma\" data-caption=\"Fasi dell'inserimento dell'ordine in SAEM. Fonte: C. Bozzoli, Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A., figura 5.8, p. 76.\"><figcaption>Fasi dell'inserimento dell'ordine in SAEM. Fonte: C. Bozzoli, <em>Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A.</em>, figura 5.8, p. 76.</figcaption></figure>",
@@ -451,6 +453,7 @@ def chapter_html(code, full_title, prev_m, next_m, data):
     toc_items = []
     sec_html = []
     sid = 0
+    figure_number = 0
     for lvl, title, paras, note in data["sections"]:
         sid += 1
         anchor = f"s{sid:02d}"
@@ -461,6 +464,11 @@ def chapter_html(code, full_title, prev_m, next_m, data):
         parts = [f'<section class="study-section" id="{anchor}">',
                  f"  <{tag}>{esc(title)}</{tag}>"]
         for p in paras:
+            if p.lstrip().startswith("<figure"):
+                figure_number += 1
+                figure_label = f"Figura M{code}.{figure_number:02d} — "
+                p = p.replace('data-caption="', f'data-caption="{figure_label}', 1)
+                p = p.replace("<figcaption>", f"<figcaption>{figure_label}", 1)
             is_raw = any(marker in p for marker in ('<code>', '<a ', '<strong>', '<em>', '<ul', '<ol', '<div', '<figure'))
             if p.lstrip().startswith(('<ul', '<ol', '<div', '<figure')):
                 parts.append(f"  {p}")

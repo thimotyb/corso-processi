@@ -41,6 +41,9 @@ esterna, nessun build: il sito è servibile come file statici (anche via GitHub 
 All'avvio `start-site.sh` esegue automaticamente `check_links.py`, che verifica i
 collegamenti locali e gli ancoraggi tra le pagine HTML.
 
+Le figure dei moduli hanno sempre una didascalia numerata automaticamente nel
+formato `Figura MXX.NN`, progressivo all'interno del modulo.
+
 ## Rigenerazione
 
 I contenuti HTML sono prodotti dallo script `build_site.py` (in questa cartella):
