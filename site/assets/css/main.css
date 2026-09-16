@@ -134,6 +134,59 @@ section {
   color: #1e3856;
 }
 
+.pcf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0 1.4rem;
+}
+
+.table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pcf-table th,
+.pcf-table td {
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.pcf-table th {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+}
+
+.pcf-table th:first-child,
+.pcf-table td:first-child {
+  width: 8.5rem;
+  white-space: nowrap;
+}
+
+.pcf-group-block {
+  margin: 1.6rem 0;
+  padding-top: 0.25rem;
+  border-top: 2px solid var(--border);
+}
+
+.pcf-group-block h4 {
+  margin-bottom: 0.35rem;
+  color: var(--accent-strong);
+}
+
+.pcf-kpi-table {
+  min-width: 1050px;
+}
+
+.pcf-kpi-table td {
+  min-width: 12rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .lightbox {
   position: fixed;
   inset: 0;
@@ -166,6 +219,14 @@ section {
   height: auto;
   object-fit: contain;
   border-radius: 0;
+}
+
+/* I diagrammi SVG Mermaid hanno uno sfondo trasparente: nello zoom il
+   pannello bianco mantiene leggibili frecce e testi scuri. */
+#lightbox-image[src$=".svg"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  background: #fff;
 }
 
 .lightbox-inner figcaption {

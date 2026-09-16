@@ -1,0 +1,25 @@
+flowchart TB
+  C["Level 1 - Category<br/><b>6.0 Manage Customer Service</b>"]
+  G1["Level 2 - Process Group<br/>6.1 Develop customer service strategy"]
+  G2["Level 2 - Process Group<br/>6.2 Plan and manage customer service contacts"]
+  G3["Level 2 - Process Group<br/>6.3 Service products after sales"]
+  P11["Level 3 - Process<br/>6.1.1 Define customer service requirements"]
+  P12["Level 3 - Process<br/>6.1.2 Define customer service experience"]
+  P21["Level 3 - Process<br/>6.2.1 Plan and manage customer service work force"]
+  P22["Level 3 - Process<br/>6.2.2 Manage problems, requests, and inquiries"]
+  P23["Level 3 - Process<br/>6.2.3 Manage customer complaints"]
+  P31["Level 3 - Process<br/>6.3.1 Register products"]
+  P32["Level 3 - Process<br/>6.3.2 Process warranty claims"]
+  P33["Level 3 - Process<br/>6.3.4 Service products"]
+
+  C --> G1 & G2 & G3
+  G1 --> P11 & P12
+  G2 --> P21 & P22 & P23
+  G3 --> P31 & P32 & P33
+
+  classDef category fill:#0a5368,color:#fff,stroke:#073c4c,stroke-width:2px;
+  classDef group fill:#dff3ff,color:#13253f,stroke:#0f6f8e;
+  classDef process fill:#f6f7fb,color:#13253f,stroke:#7b91aa;
+  class C category;
+  class G1,G2,G3 group;
+  class P11,P12,P21,P22,P23,P31,P32,P33 process;

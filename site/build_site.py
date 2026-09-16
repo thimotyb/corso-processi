@@ -8,9 +8,14 @@ la stampa. Contenuti in italiano per coerenza con sillabo_processi_MOCI06.docx.
 """
 import html
 import pathlib
+import re
+import urllib.parse
+
+from pypdf import PdfReader
 
 ROOT = pathlib.Path("/home/thimoty/git/corso-processi/site")
 CH = ROOT / "chapters"
+RESOURCES = ROOT.parent / "resources"
 
 COURSE = "processi-MOCI06 — Classificazione e analisi dei processi industriali"
 REPO_BLOB = "https://github.com/thimotyb/corso-processi/blob/main/"
@@ -22,13 +27,280 @@ MODULES = [
     ("03", "M03 - APQC PCF: Category, Process Group, Process"),
     ("04", "M04 - Dalla Activity al Task"),
     ("05", "M05 - Variabili di processo e relazioni"),
-    ("06", "M06 - Indicatori e misurazione"),
-    ("07", "M07 - Rappresentazione: SIPOC, process map, swimlane, BPMN"),
+    ("06", "M06 - Rappresentazione: SIPOC, process map, swimlane, BPMN"),
+    ("07", "M07 - Indicatori e misurazione"),
     ("08", "M08 - Scheda processo completa (laboratorio integrato)"),
 ]
 
 # id dell'ultima sezione (esercitazione) di ogni modulo — calcolato dal contenuto
 LAB_ANCHOR = {}
+
+APQC_LIBRARY = "https://www.apqc.org/resources/resource-library"
+
+PCF_CATEGORIES = [
+    ("1.0", "Develop Vision and Strategy", "Definisce il concetto d'impresa, la visione di lungo periodo, la strategia e le iniziative necessarie per attuarla."),
+    ("2.0", "Develop and Manage Products and Services", "Governa il portafoglio e lo sviluppo di prodotti e servizi, dall'idea fino alla preparazione del rilascio."),
+    ("3.0", "Market and Sell Products and Services", "Comprende l'analisi di mercati e clienti, il marketing, la strategia commerciale e la gestione delle vendite."),
+    ("4.0", "Manage Supply Chain for Physical Products", "Pianifica e gestisce approvvigionamento, produzione, logistica e magazzino dei prodotti fisici."),
+    ("5.0", "Deliver Services", "Definisce la governance, prepara le risorse e gestisce l'erogazione dei servizi ai clienti."),
+    ("6.0", "Manage Customer Service", "Governa assistenza post-vendita, richieste, reclami, richiami di prodotto e soddisfazione del cliente."),
+    ("7.0", "Develop and Manage Human Resources", "Pianifica e gestisce l'intero ciclo di vita delle persone, dalla selezione fino alla mobilità e all'uscita."),
+    ("8.0", "Manage Information Technology (IT)", "Allinea l'IT al business e gestisce informazioni, rischi, soluzioni, distribuzione e supporto tecnologico."),
+    ("9.0", "Manage Financial Resources", "Gestisce pianificazione economica, contabilità, ricavi, pagamenti, tesoreria, controlli e fiscalità."),
+    ("10.0", "Acquire, Construct, and Manage Assets", "Governa pianificazione, acquisizione, costruzione, manutenzione e fine vita degli asset aziendali."),
+    ("11.0", "Manage Enterprise Risk, Compliance, Remediation, and Resiliency", "Gestisce rischi d'impresa, conformità, azioni correttive e capacità di continuità e ripresa."),
+    ("12.0", "Manage External Relationships", "Cura le relazioni con investitori, autorità, settore, consiglio di amministrazione, comunità e media."),
+    ("13.0", "Develop and Manage Business Capabilities", "Sviluppa capacità trasversali per processi, progetti, qualità, cambiamento, conoscenza, dati, sicurezza e sostenibilità."),
+]
+
+PCF_PROCESS_GROUPS = {
+    "1.0": [
+        ("1.1", "Define the business concept and long-term vision", "Analizza contesto e capacità interne per chiarire identità, finalità e visione futura dell'organizzazione."),
+        ("1.2", "Develop business strategy", "Traduce visione e missione in opzioni, obiettivi e scelte strategiche coordinate."),
+        ("1.3", "Develop and measure strategic initiatives", "Seleziona, attua e misura le iniziative con cui realizzare la strategia."),
+        ("1.4", "Develop and maintain business models", "Definisce, governa e aggiorna il modo in cui l'organizzazione crea e sostiene valore."),
+    ],
+    "2.0": [
+        ("2.1", "Govern and manage product/service development program", "Governa portafoglio, ciclo di vita, proprietà intellettuale e dati principali di prodotti e servizi."),
+        ("2.2", "Generate and define new product/service ideas", "Raccoglie opportunità e bisogni e li trasforma in idee e requisiti per nuove offerte."),
+        ("2.3", "Develop products and services", "Progetta, prototipa, prova e prepara alla produzione o all'erogazione le nuove offerte."),
+    ],
+    "3.0": [
+        ("3.1", "Understand markets, customers, and capabilities", "Analizza mercato, clienti, concorrenti e capacità interne per individuare opportunità praticabili."),
+        ("3.2", "Develop marketing strategy", "Definisce proposta di valore, posizionamento, marchio, prezzi e canali di marketing."),
+        ("3.3", "Develop and manage marketing plans", "Pianifica ed esegue campagne, promozioni, contenuti e attività di relazione con il mercato."),
+        ("3.4", "Develop sales strategy", "Definisce segmenti, canali, obiettivi, modelli organizzativi e politiche della funzione vendite."),
+        ("3.5", "Develop and manage sales plans", "Gestisce previsioni, opportunità, proposte, ordini, partner commerciali e risultati di vendita."),
+    ],
+    "4.0": [
+        ("4.1", "Plan for and align supply chain resources", "Prevede domanda e capacità e coordina le risorse necessarie alla supply chain."),
+        ("4.2", "Procure materials and services", "Seleziona fonti e fornitori e gestisce ordini, ricezione e prestazioni degli approvvigionamenti."),
+        ("4.3", "Produce/Assemble/Test product", "Programma, produce, assembla, collauda e rilascia i prodotti secondo requisiti di qualità."),
+        ("4.4", "Manage logistics and warehousing", "Gestisce magazzino, trasporti, distribuzione, consegne e logistica inversa."),
+    ],
+    "5.0": [
+        ("5.1", "Establish service delivery governance and strategies", "Definisce regole, obiettivi e strategie con cui governare l'erogazione dei servizi."),
+        ("5.2", "Manage service delivery resources", "Prevede la domanda e pianifica, assegna e prepara persone e risorse di servizio."),
+        ("5.3", "Manage and Operate Service Delivery System", "Pianifica, avvia, conduce e controlla il sistema operativo di erogazione."),
+        ("5.4", "Deliver service to customer", "Avvia, esegue e conclude il servizio concordato, verificandone esito e completezza."),
+    ],
+    "6.0": [
+        ("6.1", "Develop customer service strategy", "Definisce requisiti, esperienza attesa, politiche, procedure e livelli di servizio."),
+        ("6.2", "Plan and manage customer service contacts", "Pianifica la forza lavoro e gestisce richieste, problemi, informazioni e reclami dei clienti."),
+        ("6.3", "Service products after sales", "Registra i prodotti e gestisce garanzie, riparazioni, resi e altri interventi post-vendita."),
+        ("6.4", "Manage product recalls and regulatory audits", "Pianifica ed esegue richiami di prodotto e supporta verifiche e audit regolamentari."),
+        ("6.5", "Evaluate customer service operations and customer satisfaction", "Misura prestazioni dell'assistenza, soddisfazione, garanzie e risultati dei richiami."),
+    ],
+    "7.0": [
+        ("7.1", "Develop and manage human resources planning, policies, and strategies", "Definisce strategia, piani, politiche, struttura e costi delle risorse umane."),
+        ("7.2", "Recruit, source, and select employees", "Pianifica il fabbisogno e ricerca, valuta, seleziona e assume le persone."),
+        ("7.3", "Manage employee onboarding, training, and development", "Inserisce le persone e ne sviluppa competenze, prestazioni e percorsi professionali."),
+        ("7.4", "Manage employee relations", "Gestisce relazioni di lavoro, istanze, benessere, sicurezza e rapporti con le rappresentanze."),
+        ("7.5", "Reward and retain employees", "Amministra retribuzione, benefit, riconoscimenti e iniziative di fidelizzazione."),
+        ("7.6", "Redeploy and retire employees", "Gestisce mobilità, riassegnazioni, pensionamenti, dimissioni e cessazioni."),
+        ("7.7", "Manage employee information and analytics", "Amministra dati e documenti del personale e produce analisi per le decisioni HR."),
+        ("7.8", "Manage employee communication", "Pianifica e realizza la comunicazione interna rivolta alle persone."),
+    ],
+    "8.0": [
+        ("8.1", "Develop and manage IT customer relationships", "Comprende bisogni degli utenti interni e concorda servizi, trasformazioni e livelli di servizio IT."),
+        ("8.2", "Develop and manage IT business strategy", "Allinea strategia, architettura, portafoglio e modello operativo IT alle priorità aziendali."),
+        ("8.3", "Develop and manage IT resilience and risk", "Gestisce continuità, sicurezza, privacy, rischi, controlli e identità digitali."),
+        ("8.4", "Manage information", "Definisce strategia, architettura, ciclo di vita e amministrazione delle informazioni aziendali."),
+        ("8.5", "Develop and manage services/solutions", "Progetta, sviluppa, integra, prova e governa il ciclo di vita delle soluzioni IT."),
+        ("8.6", "Deploy services/solutions", "Pianifica e realizza il rilascio delle soluzioni, il cambiamento e il passaggio in esercizio."),
+        ("8.7", "Create and manage support services/solutions", "Gestisce infrastrutture, esercizio, assistenza utenti e supporto continuativo ai servizi IT."),
+    ],
+    "9.0": [
+        ("9.1", "Perform planning and management accounting", "Svolge pianificazione, budgeting, forecasting, contabilità gestionale e analisi delle prestazioni."),
+        ("9.2", "Perform revenue accounting", "Gestisce credito, fatturazione, crediti verso clienti, incassi e rettifiche dei ricavi."),
+        ("9.3", "Perform general accounting and reporting", "Registra operazioni, chiude i conti, consolida e produce rendiconti finanziari e gestionali."),
+        ("9.4", "Manage fixed-asset project accounting", "Contabilizza progetti e costi connessi alla creazione o modifica di immobilizzazioni."),
+        ("9.5", "Process payroll", "Calcola retribuzioni, trattenute, versamenti e registrazioni collegate alle paghe."),
+        ("9.6", "Process accounts payable and expense reimbursements", "Gestisce debiti verso fornitori, fatture passive e rimborsi spese."),
+        ("9.7", "Manage treasury operations", "Governa liquidità, finanziamenti, investimenti, rischi finanziari e rapporti bancari."),
+        ("9.8", "Manage internal controls", "Definisce, applica, verifica e corregge i controlli interni di natura finanziaria."),
+        ("9.9", "Manage taxes", "Pianifica e amministra adempimenti, dichiarazioni, pagamenti e controversie fiscali."),
+        ("9.10", "Manage international funds/consolidation", "Gestisce movimenti finanziari internazionali, cambi e consolidamento tra entità del gruppo."),
+        ("9.11", "Perform global trade services", "Supporta operazioni commerciali internazionali, strumenti di pagamento e finanziamento degli scambi."),
+    ],
+    "10.0": [
+        ("10.1", "Plan and acquire assets", "Definisce fabbisogni, investimenti e modalità di acquisizione degli asset."),
+        ("10.2", "Design and construct assets", "Progetta e realizza asset e infrastrutture controllando tempi, costi, qualità e conformità."),
+        ("10.3", "Maintain assets", "Pianifica ed esegue manutenzione preventiva, correttiva e predittiva degli asset."),
+        ("10.4", "Manage asset end-of-life", "Gestisce dismissione, vendita, riciclo o sostituzione degli asset a fine vita."),
+    ],
+    "11.0": [
+        ("11.1", "Manage enterprise risk", "Definisce il quadro di enterprise risk management e identifica, valuta e tratta i rischi."),
+        ("11.2", "Manage compliance", "Individua obblighi, definisce controlli e verifica il rispetto di norme e politiche."),
+        ("11.3", "Manage remediation efforts", "Analizza non conformità e incidenti e governa azioni correttive e preventive."),
+        ("11.4", "Manage business resiliency", "Prepara continuità operativa, risposta alle crisi, disaster recovery e ripristino."),
+    ],
+    "12.0": [
+        ("12.1", "Build investor relationships", "Gestisce comunicazioni, informazioni e rapporti con investitori e comunità finanziaria."),
+        ("12.2", "Manage government and industry relationships", "Cura rapporti con istituzioni, regolatori, associazioni e organismi di settore."),
+        ("12.3", "Manage relations with board of directors", "Supporta il consiglio di amministrazione con governance, informazioni e adempimenti."),
+        ("12.4", "Manage legal and ethical issues", "Gestisce questioni legali, proprietà intellettuale, contenzioso ed etica aziendale."),
+        ("12.5", "Manage public relations program", "Pianifica relazioni pubbliche, comunicazioni esterne, media e gestione della reputazione."),
+    ],
+    "13.0": [
+        ("13.1", "Manage business processes", "Governa, definisce, misura e migliora i processi aziendali."),
+        ("13.2", "Manage portfolio, program, and project", "Seleziona e governa portafogli, programmi e progetti fino alla loro chiusura."),
+        ("13.3", "Manage enterprise quality", "Definisce piani, controlli e miglioramenti per garantire la qualità a livello aziendale."),
+        ("13.4", "Manage change", "Prepara, attua e consolida cambiamenti organizzativi e comportamentali."),
+        ("13.5", "Develop and manage enterprise-wide knowledge management (KM) capability", "Costruisce e mantiene capacità, governance e pratiche di gestione della conoscenza."),
+        ("13.6", "Manage Content", "Governa creazione, classificazione, conservazione, distribuzione e controllo dei contenuti."),
+        ("13.7", "Measure and benchmark", "Definisce sistemi di misurazione e confronta prestazioni interne ed esterne."),
+        ("13.8", "Develop, manage, and deliver analytics", "Trasforma dati e analisi in informazioni utilizzabili per decisioni e prestazioni."),
+        ("13.9", "Manage environmental health and safety (EHS)", "Gestisce ambiente, salute e sicurezza attraverso politiche, controlli e prevenzione."),
+        ("13.10", "Manage sustainability", "Integra obiettivi ambientali, sociali ed economici e ne misura i risultati."),
+    ],
+}
+
+def pcf_category_table():
+    rows = "".join(
+        f"<tr><td><code>{code}</code></td><td><strong>{name}</strong></td><td>{description}</td></tr>"
+        for code, name, description in PCF_CATEGORIES
+    )
+    return f'<div class="table-wrap"><table class="pcf-table"><thead><tr><th>Category</th><th>Nome</th><th>Spiegazione</th></tr></thead><tbody>{rows}</tbody></table></div>'
+
+def pcf_process_group_tables():
+    blocks = []
+    for code, category, _ in PCF_CATEGORIES:
+        query = urllib.parse.quote_plus(f"{code} {category} Definitions Key Measures PCF version 8.0")
+        rows = "".join(
+            f"<tr><td><code>{group_code}</code></td><td><strong>{name}</strong></td><td>{description}</td></tr>"
+            for group_code, name, description in PCF_PROCESS_GROUPS[code]
+        )
+        blocks.append(
+            f'<div class="pcf-group-block"><h4>{code} {category}</h4>'
+            f'<p><a href="{APQC_LIBRARY}?keys={query}" target="_blank" rel="noopener noreferrer">Cerca e scarica il PDF APQC della Category {code}</a> '
+            f'(aprire la risorsa della versione 8.0 e scegliere <em>View Now</em>).</p>'
+            f'<div class="table-wrap"><table class="pcf-table"><thead><tr><th>Process Group</th><th>Nome</th><th>Spiegazione</th></tr></thead><tbody>{rows}</tbody></table></div></div>'
+        )
+    return "".join(blocks)
+
+def pcf_support_categories_list():
+    items = "".join(
+        f"<li><code>{code}</code> <strong>{category}</strong></li>"
+        for code, category, _ in PCF_CATEGORIES[6:]
+    )
+    return f'<ul class="study-bullets">{items}</ul>'
+
+KPI_CATEGORIES = ("1.0", "3.0", "4.0", "5.0", "6.0", "8.0", "9.0")
+
+def kpi_description(name):
+    lower = name.lower()
+    if "cycle time" in lower or "average time" in lower:
+        return "Misura il tempo necessario per completare l'operazione indicata."
+    if "total cost" in lower or "cost per" in lower or "cost to perform" in lower:
+        return "Misura il costo sostenuto, normalizzato rispetto al volume indicato."
+    if "number of ftes" in lower:
+        return "Misura il personale equivalente a tempo pieno impiegato nel processo rispetto al volume indicato."
+    if " per fte" in lower:
+        return "Misura la produttività rapportando il volume elaborato a ogni addetto equivalente a tempo pieno."
+    if "percentage" in lower:
+        return "Misura la quota percentuale del fenomeno indicato rispetto al totale osservato."
+    if "rate" in lower:
+        return "Misura il tasso con cui si verifica il fenomeno indicato."
+    if "budget" in lower:
+        return "Misura l'entità del budget rispetto ai ricavi o alle risorse professionali indicate."
+    if "days sales outstanding" in lower:
+        return "Misura i giorni medi necessari per trasformare i crediti commerciali in incassi."
+    if "schedule adherence" in lower:
+        return "Misura quanto gli operatori rispettano la pianificazione assegnata."
+    if "utilization" in lower:
+        return "Misura il livello di utilizzo della capacità disponibile."
+    if "speed of answer" in lower or "handling time" in lower:
+        return "Misura la rapidità con cui i contatti dei clienti vengono presi in carico o gestiti."
+    if "forecast accuracy" in lower:
+        return "Misura la precisione della previsione rispetto al risultato effettivo."
+    if "downtime" in lower or "outages" in lower:
+        return "Misura l'indisponibilità non pianificata di impianti o servizi."
+    if "return on investment" in lower:
+        return "Misura il rendimento ottenuto rispetto al ritorno sull'investimento pianificato."
+    return "Misura la prestazione descritta dal KPI nel perimetro del Process Group."
+
+def extract_process_group_kpis():
+    """Estrae i KPI APQC dalle sette Category usate negli esempi di M03."""
+    pdfs = {}
+    for path in RESOURCES.glob("*Definitions*8.0*.pdf"):
+        match = re.search(r"_(\d+)\.0 ", path.name)
+        if match:
+            pdfs[f"{match.group(1)}.0"] = path
+
+    result = {}
+    for category_code in KPI_CATEGORIES:
+        source = pdfs.get(category_code)
+        if source is None:
+            raise FileNotFoundError(f"PDF APQC mancante per la Category {category_code}")
+        text = "\n".join(page.extract_text() or "" for page in PdfReader(source).pages)
+        groups = PCF_PROCESS_GROUPS[category_code]
+        for position, (group_code, group_name, _) in enumerate(groups):
+            heading = re.compile(
+                rf"(?m)^\s*{re.escape(group_code)}\s+{re.escape(group_name)}\s*\(\d+\)"
+            )
+            matches = list(heading.finditer(text))
+            if not matches:
+                raise ValueError(f"Process Group {group_code} non trovato in {source.name}")
+            start = matches[-1].start()
+            if position + 1 < len(groups):
+                next_code, next_name, _ = groups[position + 1]
+                next_heading = re.compile(
+                    rf"(?m)^\s*{re.escape(next_code)}\s+{re.escape(next_name)}\s*\(\d+\)"
+                )
+                following = [item for item in next_heading.finditer(text) if item.start() > start]
+                end = following[0].start() if following else len(text)
+            else:
+                end = len(text)
+            segment = text[start:end]
+            subgroup = re.search(rf"(?m)^\s*{re.escape(group_code)}\.\d+\s", segment)
+            group_intro = segment[:subgroup.start()] if subgroup else segment
+            table = re.search(
+                r"Suggested KPI(?:s)?\s*\n\s*Metric ID\s+KPI\s*\n(.*)",
+                group_intro,
+                re.S,
+            )
+            kpis = []
+            if table:
+                flattened = " ".join(line.strip() for line in table.group(1).splitlines())
+                for item in re.split(r"(?=\b\d{6}\s)", flattened):
+                    metric = re.match(r"(\d{6})\s+(.+)", item.strip())
+                    if metric:
+                        name = re.sub(
+                            r"\s+K\d+\s+\d+\s+©\d{4}\s+APQC\s+ALL RIGHTS RESERVED.*$",
+                            "",
+                            metric.group(2).strip(),
+                        )
+                        kpis.append((metric.group(1), name))
+            result[group_code] = kpis
+    return result
+
+def pcf_kpi_table():
+    kpis_by_group = extract_process_group_kpis()
+    rows = []
+    for category_code in KPI_CATEGORIES:
+        category_name = next(name for code, name, _ in PCF_CATEGORIES if code == category_code)
+        for group_code, group_name, _ in PCF_PROCESS_GROUPS[category_code]:
+            kpis = kpis_by_group[group_code]
+            if not kpis:
+                rows.append(
+                    f'<tr><td><code>{category_code}</code> {category_name}</td>'
+                    f'<td><code>{group_code}</code> {group_name}</td>'
+                    '<td colspan="2"><em>Nessun KPI proposto da APQC al livello del Process Group.</em></td></tr>'
+                )
+                continue
+            for metric_id, kpi_name in kpis:
+                rows.append(
+                    f'<tr><td><code>{category_code}</code> {category_name}</td>'
+                    f'<td><code>{group_code}</code> {group_name}</td>'
+                    f'<td><code>{metric_id}</code> {html.escape(kpi_name)}</td>'
+                    f'<td>{kpi_description(kpi_name)}</td></tr>'
+                )
+    return (
+        '<div class="table-wrap"><table class="pcf-table pcf-kpi-table">'
+        '<thead><tr><th>Category</th><th>Process Group</th><th>KPI APQC proposto</th><th>Descrizione</th></tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></div>'
+    )
 
 # ---- contenuto dei moduli -------------------------------------------------------
 # ogni modulo: lista di sezioni (livello, "numero titolo", [paragrafi], nota|None)
@@ -141,24 +413,33 @@ CONTENT = {
    "I requisiti possono essere esplicitamente dichiarati dal cliente o dagli utenti, ma possono anche derivare da esigenze note, requisiti cogenti, policy aziendali, accordi di servizio, rischi, errori ricorrenti e caratteristiche tecniche del prodotto o del servizio.",
    "Una raccolta completa considera sia ciò che il cliente chiede sia ciò che è necessario per l'uso previsto. Nel caso di un ordine, per esempio, non basta registrare il prodotto richiesto: possono essere necessari dati sul cliente, condizioni di consegna, disponibilità, IVA, autorizzazioni, limiti di prezzo e modalità di evasione.",
    "Ogni requisito dovrebbe avere una <strong>fonte</strong>: una richiesta, un documento, una regola, un'intervista, un'osservazione del lavoro, un indicatore di prestazione o un elemento del sistema esistente. La fonte permette di riesaminare la decisione e di distinguere ciò che è documentato da ciò che è stato inferito durante l'analisi.",
+   "Quando il requisito coinvolge dati persistenti, la fonte deve consentire anche di motivare le operazioni sui dati. La notazione <strong>CRUD</strong> distingue quattro operazioni: <strong>C - Create</strong>, creazione di una nuova istanza; <strong>R - Read</strong>, lettura senza modifica; <strong>U - Update</strong>, aggiornamento di un'istanza esistente; <strong>D - Delete</strong>, eliminazione di un'istanza. Una stessa attività può compiere più operazioni sulla stessa entità.",
+   "Il codice CRUD da solo non costituisce un requisito completo. Per ogni cella occorre indicare <strong>perché</strong> l'attività accede al dato, quale ruolo avvia l'operazione, quale condizione la rende necessaria e quale risultato deve essere verificabile.",
   ],None),
   (2,"4.2 Confini e livelli di dettaglio",[
    "La raccolta deve mantenere il collegamento tra il requisito e il livello a cui si riferisce. Un obiettivo riguarda il processo nel suo insieme; una regola può riguardare una specifica attività; un requisito informativo può riguardare un singolo dato o una singola interazione con il sistema.",
    "Un requisito troppo generale non è verificabile; uno troppo dettagliato può anticipare inutilmente una soluzione tecnica. Il livello corretto è quello che consente di comprendere il comportamento atteso, assegnare una responsabilità, verificare l'esito e mantenere aperte le scelte progettuali ancora non decise.",
+   "La <strong>matrice CRUD</strong> rende esplicito questo livello di dettaglio: dispone le entità o gli archivi sulle righe, le attività sulle colonne e registra nelle celle le operazioni compiute. Si legge sia per colonna, per controllare tutti i dati richiesti da un'attività, sia per riga, per verificare il ciclo di vita di ogni entità.",
+   "Nell'esempio SAEM dell'ordine telematico, la matrice deriva dall'Assembly Line e dalle prove dei moduli sul database di sviluppo. Mostra, per esempio, che la ricerca di un articolo legge <code>Articoli</code>, <code>Articoli_storico</code>, <code>Scadmag</code> e i listini, mentre la conferma crea movimenti e messaggi e legge, aggiorna o elimina dati del carrello. Le lettere descrivono operazioni del sistema TO-BE, non attività storiche dell'AS-IS.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/tavola-crud-d2a-ordine-telematico.png\" alt=\"Tavola CRUD SAEM D.2A: entità del database sulle righe, attività dell'ordine telematico sulle colonne e operazioni C, R, U e D nelle celle\" data-caption=\"Tavola CRUD dell'ordine telematico SAEM.\"><figcaption>Tavola CRUD D.2A dell'ordine telematico: la matrice sintetizza le operazioni compiute dalle attività sulle tabelle del sistema TO-BE.</figcaption></figure>",
   ],None),
   (1,"5 Dalle attività alle entità informative",[
-   "Dopo aver individuato le attività da analizzare, si osservano le informazioni che esse utilizzano e producono. Un'attività può leggere dati già disponibili, crearne di nuovi, aggiornarli, eliminarli o usarli per generare un documento, una comunicazione o una decisione.",
-   "Le <strong>entità informative</strong> rappresentano strutture dati o unità informative significative per il processo. Possono essere un cliente, un ordine, una riga d'ordine, un articolo, un'autorizzazione, un messaggio o un documento. In una prima analisi sono entità candidate: solo il successivo approfondimento stabilisce se saranno confermate, modificate, accorpate o eliminate.",
-   "Il collegamento tra attività ed entità rende visibile il rapporto tra lavoro e informazioni. Per ogni attività è possibile chiedere: quali dati deve leggere? quali dati produce? quali dati modifica? quali informazioni devono restare disponibili per il passaggio successivo o per un controllo successivo?",
-   "Questa analisi aiuta a evitare due errori opposti: descrivere attività senza sapere quali informazioni le rendono possibili oppure partire dalle tabelle esistenti senza comprendere quale bisogno del processo soddisfino.",
+   "Dopo aver scelto quali attività del processo possono essere supportate da un sistema IT nello scenario TO-BE, si passa dall'analisi di business alla mappatura dei requisiti informativi. Il passaggio è un processo di <strong>selezione</strong>: dal modello di business si individuano soltanto attività e informazioni pertinenti al sistema da progettare.",
+   "Le <strong>entità informative candidate</strong> sono strutture dati o unità informative la cui presenza appare significativa o probabile nel sistema di supporto. Possono essere un cliente, un ordine, una riga d'ordine, un articolo, un'autorizzazione o un messaggio. Sono candidate perché l'analisi successiva può confermarle, trasformarle, accorparle o eliminarle.",
+   "L'<strong>Assembly Line</strong> mette in relazione i due livelli. La parte superiore contiene la porzione del processo di business; la parte inferiore dispone le linee associate agli elementi informativi; la fascia intermedia collega le attività alle entità mediante relazioni dirette di lettura e scrittura. Le relazioni selezionate permettono poi di derivare i casi d'uso e i requisiti del sistema dal punto di vista dell'utente.",
+   "Nel caso SAEM le entità non sono semplici candidate: il progetto conserva il DBMS Emaxgest5 e il diagramma usa le tabelle effettivamente individuate nel database PostgreSQL. Questa precisazione riguarda il sistema TO-BE di MaxNet III e non autorizza ad attribuire retroattivamente le stesse tabelle alle attività storiche AS-IS.",
   ],None),
   (2,"5.1 Letture, scritture e responsabilità",[
-   "Le relazioni tra attività ed entità possono essere annotate come operazioni di lettura e scrittura. La lettura indica che l'attività usa informazioni già presenti; la scrittura indica che l'attività crea o modifica un'informazione che diventa disponibile per altri soggetti o attività.",
-   "L'annotazione deve essere accompagnata dal <strong>ruolo</strong> che esegue l'operazione e dallo scopo della lettura o della scrittura. Leggere i dati del cliente per autenticare l'utente è un requisito diverso dal leggerli per calcolare il prezzo o compilare la testata di un ordine.",
+   "Nell'Assembly Line una relazione di <strong>lettura</strong> indica che l'attività usa un'informazione già presente; una relazione di <strong>scrittura</strong> indica che crea o modifica un'informazione resa disponibile alle attività successive. I collegamenti non vanno aggiunti per semplice vicinanza grafica: ognuno deve corrispondere a un'interazione documentata.",
+   "La parte superiore della figura seguente mostra il flusso di inserimento dell'offerta; gli ovali centrali sono i casi d'uso candidati; le linee inferiori rappresentano le tabelle del database. I cerchi sulle intersezioni rendono visibile dove una funzione legge o scrive. La disposizione orizzontale facilita la lettura delle relazioni.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/assembly-line-d1-inserimento-offerta.png\" alt=\"Assembly Line SAEM D.1 ruotata in orizzontale: processo di inserimento offerta, casi d'uso candidati e tabelle collegate da letture e scritture\" data-caption=\"Assembly Line D.1 per l'inserimento dell'offerta.\"><figcaption>Assembly Line D.1 per l'inserimento dell'offerta: dal processo di business ai casi d'uso e alle tabelle del sistema TO-BE.</figcaption></figure>",
+   "Per interpretare il disegno si segue una singola attività dall'alto verso il basso: si identifica il caso d'uso che la supporta, quindi si osservano le entità raggiunte e il tipo di accesso. L'annotazione va infine completata con il <strong>ruolo</strong>, lo scopo dell'operazione e la fonte. Leggere i dati del cliente per autenticare l'utente è infatti un requisito diverso dal leggerli per compilare la testata di un'offerta.",
   ],None),
   (2,"5.2 La matrice attività–informazioni",[
    "Una matrice attività–informazioni mette in riga le attività e in colonna le entità o gli archivi. Nelle celle si annotano le operazioni compiute. La matrice fornisce una vista sintetica e consente di verificare che ogni informazione prodotta abbia un destinatario e che ogni informazione letta sia giustificata da un'attività.",
    "Quando l'archivio è persistente, la matrice può essere dettagliata con la notazione <strong>CRUD</strong>: Create, Read, Update e Delete. La matrice non sostituisce la descrizione testuale, ma la integra e aiuta a validare la coerenza tra modello del processo e modello dei dati.",
+   "La tavola D.1 mostra il passaggio dall'Assembly Line alla vista CRUD per l'inserimento dell'offerta. Le righe identificano le tabelle del sistema TO-BE, mentre le colonne rappresentano le attività applicative. Una cella può contenere più lettere quando la stessa attività compie operazioni diverse sulla medesima tabella.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/tavola-crud-d1-inserimento-offerta.png\" alt=\"Tavola CRUD SAEM D.1: tabelle sulle righe, attività di inserimento dell'offerta sulle colonne e operazioni C, R, U e D nelle celle\" data-caption=\"Tavola CRUD D.1 per l'inserimento dell'offerta.\"><figcaption>Tavola CRUD D.1 per l'inserimento dell'offerta: sintesi delle operazioni sulle tabelle del sistema TO-BE.</figcaption></figure>",
   ],None),
   (1,"6 Dalle entità ai requisiti funzionali",[
    "Le relazioni tra attività ed entità permettono di derivare i <strong>casi d'uso</strong>. Un caso d'uso descrive una funzionalità visibile dall'esterno, attivata da un attore e realizzata attraverso interazioni con il sistema e con le informazioni che il sistema gestisce.",
@@ -176,12 +457,18 @@ CONTENT = {
   (1,"7 Caso SAEM: dalla criticità alla specifica",[
    "Nel caso SAEM la raccolta dei requisiti parte dall'analisi del processo reale di gestione degli ordini. L'analisi evidenzia problemi nelle unità di misura, nella corrispondenza tra codici cliente e codici interni, nei tempi di evasione, nei resi e nelle modifiche telefoniche agli ordini.",
    "Queste criticità vengono trasformate in esigenze del nuovo processo: rendere visibili le specifiche dell'ordine, cercare e selezionare l'articolo corretto, verificare la disponibilità, controllare i parametri economici, gestire l'evasione unica o parziale e ridurre gli errori di imputazione.",
-   "La tesi non si limita a elencare le funzionalità. Collega ciascuna attività alle informazioni utilizzate e prodotte. Per l'ordine telematico, per esempio, la creazione del carrello legge cliente, condizioni di consegna e parametri IVA; la conferma legge e verifica testata e righe; l'esito positivo crea l'ordine effettivo e trasferisce le righe.",
+   "L'analisi collega ciascuna attività alle informazioni utilizzate e prodotte. Per l'ordine telematico, per esempio, la creazione del carrello legge cliente, condizioni di consegna e parametri IVA; la conferma legge e verifica testata e righe; l'esito positivo crea l'ordine effettivo e trasferisce le righe.",
    "Le operazioni sono poi formalizzate nelle Assembly Line e nelle tavole CRUD. Da queste relazioni vengono derivati i casi d'uso e le relative specifiche testuali, con attori, flussi, alternative, eccezioni, precondizioni, postcondizioni, frequenza e criticità.",
   ],None),
   (2,"7.1 Esempio: gestione dell'ordine telematico",[
    "L'attore cliente crea la testata del carrello, inserisce gli articoli, verifica disponibilità e condizioni, quindi conferma l'ordine. Il sistema legge le informazioni necessarie, segnala le righe non disponibili, ricalcola i dati economici e, se le verifiche hanno esito positivo, trasforma il carrello in ordine.",
    "Le entità informative coinvolte includono cliente, condizioni di consegna, tabella IVA, carrello, righe del carrello, articoli, storico articoli, scadenze di magazzino, listini, ordine e messaggi. La loro presenza nel modello deve essere collegata all'attività che le legge o le scrive e alla fonte che documenta l'interazione.",
+   "L'esempio D.2A permette di seguire la trasformazione completa dal processo ai requisiti. L'<strong>Assembly Line</strong> collega le attività alle tabelle e individua i casi d'uso candidati; il <strong>diagramma dei casi d'uso</strong> mostra attori e relazioni; la <strong>scheda testuale</strong> specifica comportamento, alternative e condizioni di un singolo caso d'uso.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/assembly-line-d2a-ordine-telematico.png\" alt=\"Assembly Line SAEM D.2A ruotata in orizzontale: attività di inserimento dell'ordine telematico, casi d'uso e tabelle collegate da letture e scritture\" data-caption=\"Assembly Line D.2A per l'inserimento dell'ordine telematico.\"><figcaption>Assembly Line D.2A: dalle attività di inserimento dell'ordine telematico ai casi d'uso candidati e alle tabelle del sistema TO-BE.</figcaption></figure>",
+   "Il diagramma derivato contiene sette casi d'uso. <strong>Crea nuovo carrello</strong>, <strong>Aggiungi articolo in carrello</strong> e <strong>Conferma ordine</strong> costituiscono il percorso principale; richiesta di offerta, modifica della riga e trasformazione del carrello intervengono come estensioni o varianti. Gli attori sono il Cliente, che avvia il processo via Internet, e il Sistema EDP.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/diagramma-casi-uso-d2a-ordine-telematico.png\" alt=\"Diagramma dei casi d'uso SAEM D.2A per l'ordine telematico con gli attori Cliente e Sistema EDP e sette casi d'uso collegati\" data-caption=\"Diagramma dei casi d'uso D.2A per l'inserimento dell'ordine telematico.\"><figcaption>Diagramma dei casi d'uso D.2A: attori, casi principali ed estensioni della gestione dell'ordine telematico.</figcaption></figure>",
+   "Come esempio di specifica testuale, il <strong>caso d'uso 11 - Conferma ordine</strong> descrive l'azione del Cliente e le verifiche del Sistema EDP: controllo degli scaduti, validità dell'offerta, disponibilità e importo minimo; in caso positivo il sistema aggiorna le disponibilità, salva il carrello come ordine, elimina il carrello e comunica il numero assegnato. La scheda registra anche alternative, precondizioni, postcondizioni, eccezioni, frequenza e criticità.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch02/scheda-caso-uso-11-conferma-ordine.png\" alt=\"Scheda SAEM del caso d'uso 11 Conferma ordine con attori, flusso degli eventi, alternative, condizioni, eccezioni, frequenza e criticità\" data-caption=\"Scheda del caso d'uso 11: Conferma ordine.\"><figcaption>Scheda del caso d'uso 11 - Conferma ordine: specifica testuale del comportamento mostrato nel diagramma D.2A.</figcaption></figure>",
   ],None),
   (2,"7.2 Iterazione e gestione delle varianti",[
    "La documentazione dei requisiti evolve durante lo sviluppo. Una prima descrizione può essere breve; in seguito vengono aggiunti i dettagli delle interazioni, delle entità e degli scenari alternativi. Il confronto tra tavole CRUD e soluzioni diverse permette inoltre di rendere visibili le varianti progettuali.",
@@ -212,30 +499,46 @@ CONTENT = {
    "La versione Cross-Industry è indipendente dal settore e raccoglie i processi comuni alla maggior parte delle organizzazioni.",
   ],None),
   (2,"1.1 Origine e scopo",[
-   "APQC è un'organizzazione di ricerca sul miglioramento delle prestazioni. Il PCF fornisce un elenco strutturato di processi con codici numerici stabili, così che organizzazioni diverse possano riferirsi agli stessi elementi.",
-   "Lo scopo dichiarato è rendere confrontabili le prestazioni di processo, all'interno di un'azienda e verso l'esterno.",
+   "APQC sviluppa strumenti e conoscenze per il benchmarking, la gestione dei processi e il miglioramento delle prestazioni. Il <strong>Process Classification Framework</strong>, sviluppato a partire dal 1992, offre un linguaggio comune per discutere, organizzare e confrontare il lavoro svolto dalle organizzazioni.",
+   "Il PCF è un <strong>elenco gerarchico di processi aziendali</strong>, non la sequenza con cui il lavoro deve essere eseguito. La versione cross-industry organizza il lavoro in tredici Category di alto livello, progressivamente articolate in Process Group, Process, Activity e Task. Ogni elemento possiede un identificativo stabile che permette di mantenere il riferimento anche quando nomi e formulazioni vengono adattati.",
+   "Un vocabolario condiviso riduce le ambiguità tra funzioni, sedi e organizzazioni. Lo stesso processo può infatti essere chiamato in modi diversi oppure essere distribuito tra reparti differenti: il PCF consente di descriverlo a partire dal risultato prodotto, senza dipendere dall'organigramma locale.",
+   "Le applicazioni principali sono il <strong>benchmarking</strong>, perché definizioni comuni rendono confrontabili misure e prestazioni; la <strong>gestione dei processi</strong>, perché il framework aiuta a costruire l'inventario dei processi e a definirne i confini; e la <strong>gestione dei contenuti</strong>, perché procedure, indicatori, rischi e documenti possono essere classificati secondo una struttura coerente.",
+   "<div class=\"note-box\"><strong>Approfondimenti APQC:</strong><ul class=\"study-bullets\"><li><a href=\"https://www.apqc.org/resource-library/resource-listing/introduction-apqcs-process-classification-framework-pcf\" target=\"_blank\" rel=\"noopener noreferrer\">Introduction to APQC's Process Classification Framework (PCF)</a></li><li><a href=\"https://www.apqc.org/process-frameworks\" target=\"_blank\" rel=\"noopener noreferrer\">Process Frameworks</a></li><li><a href=\"https://www.apqc.org/blog/what-are-different-types-process-models\" target=\"_blank\" rel=\"noopener noreferrer\">What are the different types of process models?</a></li><li><a href=\"https://www.apqc.org/process-frameworks/pcf-faqs\" target=\"_blank\" rel=\"noopener noreferrer\">PCF Frequently Asked Questions</a></li></ul></div>",
   ],None),
   (2,"1.2 La versione Cross-Industry 8.0",[
-   "La versione Cross-Industry copre i processi comuni a quasi tutte le organizzazioni, dai processi operativi a quelli di gestione e supporto. Ogni voce ha un codice gerarchico, per esempio 6.2.2, e un identificativo numerico univoco.",
-   "È un punto di partenza da adattare al contesto specifico: alcune voci non si applicano, altre vanno aggiunte mantenendo la tracciabilità verso il codice PCF.",
+   "La versione <strong>Cross-Industry</strong> è il modello più generale: può essere applicata a organizzazioni di qualsiasi settore e copre sia i processi operativi sia quelli di gestione e supporto. Le versioni <strong>industry-specific</strong> conservano la struttura di base e gli identificativi di riferimento, ma approfondiscono i processi caratteristici di uno specifico comparto.",
+   "La struttura comune permette di confrontarsi anche con organizzazioni di settori diversi; il dettaglio settoriale consente invece confronti più precisi con i propri pari. Il framework resta un punto di partenza da adattare: alcune voci possono non essere applicabili, mentre altre possono richiedere un'estensione locale mantenendo la tracciabilità verso il PCF.",
+   "APQC distribuisce il PCF in formato <strong>PDF</strong> ed <strong>Excel</strong>. Il PDF rende immediatamente leggibile la gerarchia ed è utile per presentare il framework e costruire consenso; il foglio Excel contiene definizioni in linea più complete ed è più adatto all'indicizzazione, all'integrazione e alla costruzione di modelli aziendali.",
+   "<div class=\"note-box\"><strong>Scarica il PCF Cross-Industry 8.0:</strong><ul class=\"study-bullets\"><li><a href=\"https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-13\" target=\"_blank\" rel=\"noopener noreferrer\">Versione PDF</a> - apre la scheda APQC con il comando <em>View Now</em>.</li><li><a href=\"https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-12\" target=\"_blank\" rel=\"noopener noreferrer\">Versione Excel</a> - apre la scheda APQC con il comando <em>View Now</em>.</li></ul></div>",
   ],None),
-  (1,"2 I livelli alti della gerarchia",[
-   "Il PCF articola i processi su più livelli. I primi tre — Category, Process Group, Process — costituiscono l'ossatura con cui collocare qualsiasi attività aziendale.",
+  (1,"2 I livelli della gerarchia",[
+   "Il PCF scompone il lavoro in cinque livelli: <strong>Category</strong>, <strong>Process Group</strong>, <strong>Process</strong>, <strong>Activity</strong> e <strong>Task</strong>. Ogni passaggio restringe il campo: dalla grande area di lavoro si arriva agli eventi chiave e alle azioni operative.",
+   "I primi tre livelli costituiscono l'ossatura con cui classificare i processi dell'organizzazione. Activity e Task aggiungono il dettaglio esecutivo e saranno approfonditi nel modulo successivo.",
+   "La gerarchia non implica che tutti gli elementi abbiano lo stesso peso. Il PCF non è <strong>uniformemente livellato</strong>: task collocati in rami diversi possono richiedere quantità di lavoro differenti e, quando serve, possono essere ulteriormente scomposti in sotto-task.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch03/livelli-pcf.png\" alt=\"Gerarchia APQC PCF articolata nei cinque livelli Category, Process Group, Process, Activity e Task\" data-caption=\"I cinque livelli gerarchici del Process Classification Framework.\"><figcaption>I cinque livelli del PCF: dalla Category al Task, con dettaglio progressivamente maggiore.</figcaption></figure>",
+   "Il diagramma seguente applica i primi tre livelli a un ramo reale. La Category <code>6.0 Manage Customer Service</code> si divide in Process Group; ciascun Process Group contiene a sua volta i Process che ne specificano il perimetro.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch03/pcf-primi-tre-livelli.svg\" alt=\"Diagramma ad albero dei primi tre livelli APQC PCF per la Category 6.0 Manage Customer Service, con Process Group e Process\" data-caption=\"Albero dei primi tre livelli del PCF applicato al Customer Service.\"><figcaption>Albero Mermaid dei primi tre livelli: Category, Process Group e Process nel ramo Customer Service.</figcaption></figure>",
   ],None),
   (2,"2.1 Category (livello 1)",[
-   "La Category è il raggruppamento più ampio, per esempio «Develop Vision and Strategy» o «Manage Customer Service». Rappresenta un'area di processi omogenea per finalità.",
+   "La <strong>Category</strong> rappresenta il livello più alto del PCF e identifica una grande area di lavoro, per esempio «Develop Vision and Strategy» o «Manage Customer Service». Le tredici Category della versione cross-industry forniscono una vista complessiva dell'organizzazione.",
    "Le Category operative descrivono la catena del valore; quelle di gestione e supporto descrivono le funzioni abilitanti.",
+   "La Category non coincide necessariamente con un reparto. Una stessa area di lavoro può attraversare più unità organizzative e coinvolgere ruoli differenti.",
+   "<div class=\"pcf-category-list\"><ol><li><strong>1.0 Develop Vision and Strategy</strong> - definisce il concetto d'impresa, la visione, la strategia e le iniziative strategiche.<ul><li><code>1.1</code> Define the business concept and long-term vision</li><li><code>1.2</code> Develop business strategy</li><li><code>1.3</code> Develop and measure strategic initiatives</li><li><code>1.4</code> Develop and maintain business models</li></ul></li><li><strong>2.0 Develop and Manage Products and Services</strong> - governa il portafoglio e il ciclo di sviluppo di prodotti e servizi, dall'idea alla preparazione del rilascio.<ul><li><code>2.1</code> Govern and manage product/service development program</li><li><code>2.2</code> Generate and define new product/service ideas</li><li><code>2.3</code> Develop products and services</li></ul></li><li><strong>3.0 Market and Sell Products and Services</strong> - comprende conoscenza del mercato, strategia e pianificazione di marketing e vendite.<ul><li><code>3.1</code> Understand markets, customers, and capabilities</li><li><code>3.2</code> Develop marketing strategy</li><li><code>3.3</code> Develop and manage marketing plans</li><li><code>3.4</code> Develop sales strategy</li><li><code>3.5</code> Develop and manage sales plans</li></ul></li><li><strong>4.0 Manage Supply Chain for Physical Products</strong> - pianifica e gestisce approvvigionamento, produzione, logistica e magazzino dei prodotti fisici.<ul><li><code>4.1</code> Plan for and align supply chain resources</li><li><code>4.2</code> Procure materials and services</li><li><code>4.3</code> Produce/Assemble/Test product</li><li><code>4.4</code> Manage logistics and warehousing</li></ul></li><li><strong>5.0 Deliver Services</strong> - definisce la governance, prepara le risorse e gestisce l'erogazione del servizio al cliente.<ul><li><code>5.1</code> Establish service delivery governance and strategies</li><li><code>5.2</code> Manage service delivery resources</li><li><code>5.3</code> Manage and Operate Service Delivery System</li><li><code>5.4</code> Deliver service to customer</li></ul></li><li><strong>6.0 Manage Customer Service</strong> - governa le interazioni successive alla vendita, le richieste, i reclami, l'assistenza e la soddisfazione del cliente.<ul><li><code>6.1</code> Develop customer service strategy</li><li><code>6.2</code> Plan and manage customer service contacts</li><li><code>6.3</code> Service products after sales</li><li><code>6.4</code> Manage product recalls and regulatory audits</li><li><code>6.5</code> Evaluate customer service operations and customer satisfaction</li></ul></li><li><strong>7.0 Develop and Manage Human Resources</strong> - pianifica e gestisce l'intero ciclo di vita delle persone, dalla selezione all'uscita.<ul><li><code>7.1</code> Develop and manage human resources planning, policies, and strategies</li><li><code>7.2</code> Recruit, source, and select employees</li><li><code>7.3</code> Manage employee onboarding, training, and development</li><li><code>7.4</code> Manage employee relations</li><li><code>7.5</code> Reward and retain employees</li><li><code>7.6</code> Redeploy and retire employees</li><li><code>7.7</code> Manage employee information and analytics</li><li><code>7.8</code> Manage employee communication</li></ul></li><li><strong>8.0 Manage Information Technology (IT)</strong> - allinea l'IT al business e gestisce informazioni, soluzioni, distribuzione e supporto tecnologico.<ul><li><code>8.1</code> Develop and manage IT customer relationships</li><li><code>8.2</code> Develop and manage IT business strategy</li><li><code>8.3</code> Develop and manage IT resilience and risk</li><li><code>8.4</code> Manage information</li><li><code>8.5</code> Develop and manage services/solutions</li><li><code>8.6</code> Deploy services/solutions</li><li><code>8.7</code> Create and manage support services/solutions</li></ul></li><li><strong>9.0 Manage Financial Resources</strong> - comprende pianificazione e contabilità, ricavi, pagamenti, tesoreria, controlli e fiscalità.<ul><li><code>9.1</code> Perform planning and management accounting</li><li><code>9.2</code> Perform revenue accounting</li><li><code>9.3</code> Perform general accounting and reporting</li><li><code>9.4</code> Manage fixed-asset project accounting</li><li><code>9.5</code> Process payroll</li><li><code>9.6</code> Process accounts payable and expense reimbursements</li><li><code>9.7</code> Manage treasury operations</li><li><code>9.8</code> Manage internal controls</li><li><code>9.9</code> Manage taxes</li><li><code>9.10</code> Manage international funds/consolidation</li><li><code>9.11</code> Perform global trade services</li></ul></li><li><strong>10.0 Acquire, Construct, and Manage Assets</strong> - governa pianificazione, acquisizione, costruzione, manutenzione e fine vita degli asset.<ul><li><code>10.1</code> Plan and acquire assets</li><li><code>10.2</code> Design and construct assets</li><li><code>10.3</code> Maintain assets</li><li><code>10.4</code> Manage asset end-of-life</li></ul></li><li><strong>11.0 Manage Enterprise Risk, Compliance, Remediation, and Resiliency</strong> - gestisce rischi, conformità, azioni correttive e continuità operativa.<ul><li><code>11.1</code> Manage enterprise risk</li><li><code>11.2</code> Manage compliance</li><li><code>11.3</code> Manage remediation efforts</li><li><code>11.4</code> Manage business resiliency</li></ul></li><li><strong>12.0 Manage External Relationships</strong> - cura le relazioni con investitori, autorità, settore, consiglio di amministrazione, comunità e media.<ul><li><code>12.1</code> Build investor relationships</li><li><code>12.2</code> Manage government and industry relationships</li><li><code>12.3</code> Manage relations with board of directors</li><li><code>12.4</code> Manage legal and ethical issues</li><li><code>12.5</code> Manage public relations program</li></ul></li><li><strong>13.0 Develop and Manage Business Capabilities</strong> - sviluppa capacità trasversali per processi, progetti, qualità, cambiamento, conoscenza, contenuti, misurazione, analytics, sicurezza e sostenibilità.<ul><li><code>13.1</code> Manage business processes</li><li><code>13.2</code> Manage portfolio, program, and project</li><li><code>13.3</code> Manage enterprise quality</li><li><code>13.4</code> Manage change</li><li><code>13.5</code> Develop and manage enterprise-wide knowledge management (KM) capability</li><li><code>13.6</code> Manage Content</li><li><code>13.7</code> Measure and benchmark</li><li><code>13.8</code> Develop, manage, and deliver analytics</li><li><code>13.9</code> Manage environmental health and safety (EHS)</li><li><code>13.10</code> Manage sustainability</li></ul></li></ol></div>",
   ],None),
   (2,"2.2 Process Group (livello 2)",[
-   "Il Process Group suddivide la Category in insiemi coerenti di processi. Dentro «Manage Customer Service» si trova, per esempio, «Plan and manage customer service contacts».",
-   "Il Process Group aiuta a navigare la Category senza ancora entrare nel dettaglio operativo.",
+   "Il <strong>Process Group</strong> è un insieme coerente di processi appartenenti alla stessa Category. Dentro «Manage Customer Service» si trova, per esempio, «Plan and manage customer service contacts».",
+   "Questo livello rende navigabile una Category e delimita un dominio gestionale abbastanza omogeneo da associare a responsabilità, indicatori e iniziative di miglioramento, senza entrare ancora nel dettaglio operativo delle singole attività.",
   ],None),
   (2,"2.3 Process (livello 3)",[
-   "Il Process è l'unità di analisi principale: ha un obiettivo, un innesco e un output, ed è governabile da un responsabile. «Manage customer service problems, requests, and inquiries» è un esempio di Process.",
-   "È a questo livello che si costruiscono scheda processo, SIPOC e diagramma.",
+   "Il <strong>Process</strong> è l'unità di analisi principale: riunisce gli elementi fondamentali necessari per conseguire un risultato e può comprendere varianti, controlli e rilavorazioni. «Manage customer service problems, requests, and inquiries» è un esempio di Process.",
+   "È a questo livello che normalmente si definiscono obiettivo, confini, input, output, responsabile e indicatori e si costruiscono scheda processo, SIPOC e diagramma.",
+   "Ogni elemento PCF possiede componenti standard: un <strong>identificativo numerico univoco</strong>, il titolo, una frase in corsivo che ne descrive il dominio, una descrizione dettagliata, eventuali riferimenti incrociati ad altri elementi e un <strong>codice gerarchico</strong> che ne indica la posizione, per esempio <code>4.3.1</code>. L'identificativo univoco sostiene il benchmarking anche quando nomi e definizioni vengono adattati.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch03/formato-elemento-pcf.png\" alt=\"Formato standard di un elemento PCF con identificativo univoco, titolo, dominio, descrizione e riferimenti incrociati\" data-caption=\"Componenti standard di un elemento del PCF.\"><figcaption>Come leggere un elemento PCF: identificativo stabile, titolo, dominio, descrizione e riferimenti ad altri elementi.</figcaption></figure>",
   ],None),
   (1,"3 Identificare le Category in azienda",[
    "Collocare i processi reali nel PCF richiede di partire dalle finalità, non dai reparti. Si individuano prima le Category presenti, poi i Process Group pertinenti, infine i Process effettivamente eseguiti.",
+   "Il PCF descrive <strong>che cosa</strong> fa l'organizzazione, ma non rappresenta il flusso con cui il lavoro viene eseguito. Non è quindi una process map, un flow chart o un diagramma a corsie; fornisce invece la struttura comune dalla quale questi modelli possono essere derivati e collegati.",
+   "La stessa struttura può collegare modelli diversi. Nell'enterprise architecture, per esempio, consente di chiedere quali sistemi sostengono un determinato processo e, in senso inverso, quali processi dipendono da uno specifico sistema. Questo rende più leggibili gli impatti di una modifica organizzativa o tecnologica.",
   ],None),
   (2,"3.1 Processi operativi, di gestione e di supporto",[
    "I processi operativi generano direttamente valore per il cliente esterno: sviluppare prodotti, vendere, consegnare. I processi di gestione e supporto rendono possibile l'operatività: gestire IT, risorse umane, risorse finanziarie.",
@@ -243,16 +546,24 @@ CONTENT = {
   ],None),
   (2,"3.2 Esempi per dominio",[
    "Gli esempi del corso coprono sette domini: visione e strategia, vendite, acquisti, servizi, customer service, IT, finance. Ciascuno è collocato nei primi tre livelli PCF e poi sviluppato fino alla Activity.",
+   "Per ciascuna delle tredici Category, APQC pubblica un documento <strong>Process Definitions and Key Measures</strong>. Questi documenti affiancano alla gerarchia le definizioni degli elementi e gli indicatori suggeriti, con un identificativo per ogni metrica.",
+   "Nell'esempio seguente, il Process Group <code>4.3 Produce/Assemble/Test product</code> è accompagnato da una definizione e da KPI relativi al costo e ai fermi macchina; subito sotto compare la definizione del Process <code>4.3.1 Schedule production</code>. La lettura combinata di gerarchia, definizione e misure aiuta a verificare che il processo aziendale sia collocato nel ramo corretto.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch03/definitions-key-measures.png\" alt=\"Esempio APQC di Process Definitions and Key Measures con definizione del Process Group 4.3, KPI suggeriti e definizione del Process 4.3.1\" data-caption=\"Esempio di definizioni e misure collegate alla gerarchia PCF.\"><figcaption>Definitions and Key Measures: definizione, KPI suggeriti e processo di livello inferiore nello stesso ramo della gerarchia.</figcaption></figure>",
+   "I dati comparativi associati ai KPI possono essere consultati negli strumenti di benchmarking APQC. Il codice del processo e l'identificativo della metrica garantiscono che organizzazioni diverse confrontino lo stesso perimetro di lavoro.",
   ],"Per ogni dominio, <code>esempi-apqc/&lt;dominio&gt;/processo.md</code> riporta la collocazione PCF completa (Category → Process Group → Process → Activity) con i codici numerici originali."),
   (1,"4 Laboratorio",[
-   "Scegliere un processo della propria organizzazione e collocarlo nei primi tre livelli del PCF, usando la tabella dei sette domini come riferimento. Motivare la scelta della Category in due righe.",
+   "Scegliere un processo della propria organizzazione e collocarlo nei primi tre livelli del PCF, usando la tabella dei sette domini come riferimento. Motivare la scelta della Category e del Process Group in due righe.",
+   "Registrare sia il codice gerarchico sia l'identificativo univoco del Process scelto. Consultare quindi il documento Definitions and Key Measures della Category per confrontare la definizione ufficiale con il perimetro del processo aziendale e selezionare almeno un KPI pertinente.",
   ],None),
  ],
  kt=[
   "Il PCF è una tassonomia gerarchica di processi con codici stabili, pensata per confronto e miglioramento.",
-  "I primi tre livelli sono Category, Process Group e Process; il Process è l'unità di analisi principale.",
+  "I cinque livelli sono Category, Process Group, Process, Activity e Task; il Process è l'unità di analisi principale.",
+  "Il PCF descrive che cosa fa l'organizzazione, ma non sostituisce una process map o un diagramma del flusso.",
+  "Identificativo univoco e codice gerarchico hanno funzioni diverse: il primo mantiene stabile il riferimento, il secondo indica la posizione nel modello.",
+  "La versione cross-industry favorisce confronti trasversali; le versioni settoriali approfondiscono il lavoro caratteristico di un'industria.",
   "La collocazione parte dalle finalità del processo, non dai reparti che lo eseguono.",
-  "La distinzione tra processi operativi e processi di gestione e supporto orienta priorità e indicatori.",
+  "Definitions and Key Measures collega gerarchia, definizioni e KPI per rendere confrontabile il perimetro misurato.",
  ]),
 
 "03": dict(
@@ -382,6 +693,20 @@ CONTENT = {
    "Per il customer service: tempo medio di risoluzione, risoluzione al primo contatto, soddisfazione del cliente. Per il ciclo attivo di finance: tempo di emissione fattura, percentuale di fatture con errori.",
    "Ogni dominio ha indicatori tipici da adattare al contesto.",
   ],"Le schede in <code>esempi-apqc/</code> includono una voce KPI coerente con l'obiettivo e i rischi del processo descritto."),
+  (2,"3.3 Il caso SAEM: dall'albero delle determinanti ai KPI",[
+   "Nel caso SAEM i KPI non sono scelti come un elenco isolato. Partono da un <strong>albero delle determinanti</strong> che collega la profittabilità di lungo periodo ai risultati strategici, ai fattori critici di successo e infine alle leve operative. A ogni driver vengono associati indicatori capaci di misurarne lo stato e le variazioni. La metrica deve essere intuitiva, comprensibile e calcolabile in modo stabile da chi ne cura la rilevazione.",
+   "Il cruscotto aziendale comprendeva già <strong>29 indicatori monitorati periodicamente</strong>. Per analizzare la ridefinizione della gestione ordini sono stati messi in evidenza due indicatori ulteriori, <strong>lead time offerta</strong> e <strong>lead time ordine</strong>, da leggere insieme alla percentuale di errori di imputazione già presente nel sistema qualità. In questo modo la misura collega la strategia del servizio al cliente alle attività concrete di preparazione dell'offerta, inserimento dell'ordine e invio della conferma.",
+   "Il primo ramo mostra come gli indicatori economici e commerciali scendano dalla profittabilità verso Market Share, Qualità, Servizio al cliente e Innovatività. ROI, ROE e ROS misurano il risultato complessivo; nuovi clienti, clienti persi e quota di mercato osservano il risultato commerciale; reclami, non conformità e valutazioni dei clienti rendono misurabili qualità e servizio.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/saem-albero-kpi-parte-1.png\" alt=\"Prima parte dell'albero KPI SAEM: profittabilità, Market Share, gestione magazzino, qualità, servizio al cliente e innovatività con i relativi indicatori\" data-caption=\"Albero delle determinanti e KPI del caso SAEM, parte 1.\"><figcaption>Albero delle determinanti e KPI del caso SAEM, parte 1: dagli obiettivi strategici agli indicatori di mercato, qualità, servizio e innovazione.</figcaption></figure>",
+   "Il secondo ramo porta il <strong>Servizio al cliente</strong> ai driver Tempestività e Competenza. La Tempestività viene osservata attraverso l'efficienza dell'evasione ordini, la gestione dei flussi informativi, gli approvvigionamenti e la velocità di gestione delle non conformità. La Competenza viene invece collegata alla formazione. Il disegno mostra quindi che un KPI appartiene a una leva precisa: per esempio, il tempo di risposta alle richieste di informazioni misura la gestione dei flussi informativi, mentre le ore di formazione misurano la capacità che sostiene il servizio.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/saem-albero-kpi-parte-2.png\" alt=\"Seconda parte dell'albero KPI SAEM: servizio al cliente, tempestività, competenza, evasione ordini, flussi informativi, approvvigionamenti, non conformità e formazione\" data-caption=\"Albero delle determinanti e KPI del caso SAEM, parte 2.\"><figcaption>Albero delle determinanti e KPI del caso SAEM, parte 2: gli indicatori che misurano tempestività, competenza e attività operative collegate al servizio al cliente.</figcaption></figure>",
+   "Il terzo ramo riguarda l'<strong>efficacia della gestione del magazzino</strong>. Rotazione delle scorte ed errori di magazzino misurano il risultato del processo; puntualità delle consegne in entrata e quota di ordini a fornitore in ritardo misurano la logistica in ingresso; non conformità aperte e voto ponderato sugli acquisti supportano rispettivamente la selezione e il monitoraggio dei fornitori.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/saem-albero-kpi-parte-3.png\" alt=\"Terza parte dell'albero KPI SAEM: gestione del magazzino, logistica in ingresso, manutenzione, selezione e monitoraggio dei fornitori con i relativi indicatori\" data-caption=\"Albero delle determinanti e KPI del caso SAEM, parte 3.\"><figcaption>Albero delle determinanti e KPI del caso SAEM, parte 3: misure per magazzino, logistica in ingresso e gestione dei fornitori.</figcaption></figure>",
+   "L'applicazione dei KPI può essere letta su tre livelli:",
+   "<ul class=\"study-bullets\"><li><strong>Attività</strong>: il dato nasce durante un'operazione osservabile, come inserire una riga d'ordine, inviare un'offerta, confermare un ordine o rispondere a una richiesta.</li><li><strong>Processo</strong>: i valori delle singole istanze vengono aggregati per valutare l'efficienza del sottoprocesso di inserimento ordini o del processo di evasione.</li><li><strong>Obiettivo</strong>: il risultato di processo viene ricondotto a tempestività, servizio al cliente, quota di mercato e profittabilità. Il KPI permette quindi di verificare se una modifica operativa produce l'effetto strategico atteso.</li></ul>",
+   "<div class=\"table-wrap\"><table class=\"pcf-table saem-kpi-table\"><thead><tr><th>KPI</th><th>Definizione operativa</th><th>Applicazione nel caso SAEM</th></tr></thead><tbody><tr><td><strong>% errori di imputazione ordini</strong></td><td><code>numero errori di imputazione / numero righe delle bolle</code>, espresso in percentuale e rilevato trimestralmente. Target: <code>0%</code>.</td><td>Misura la qualità dell'attività manuale di inserimento delle righe e, per aggregazione, l'efficienza dell'ufficio commerciale. Gli errori riguardano soprattutto quantità e codici articolo; le conversioni manuali delle unità di misura possono generare correzioni, ricircoli e costi. Il valore osservato più recente è <code>0,10%</code>, superiore al livello ottimale dello <code>0,05%</code>.</td></tr><tr><td><strong>Lead time offerta</strong></td><td>Media del tempo fra l'inizio della quotazione e l'invio dell'offerta, espressa in ore e rilevata trimestralmente. Target: risposta immediata.</td><td>Attraversa inserimento degli articoli, eventuale autorizzazione del Direttore Vendite e invio al cliente. Consente di distinguere il tempo di lavorazione dal tempo di attesa: un'offerta media richiede circa dieci minuti di inserimento, ma la stampa e l'invio differiti possono portare il tempo complessivo fino a un giorno.</td></tr><tr><td><strong>Lead time ordine</strong></td><td>Media del tempo fra ricevimento dell'ordine e invio della conferma, espressa in giorni e rilevata trimestralmente sugli ordini che prevedono conferma. Target: risposta immediata.</td><td>Misura end-to-end ricezione, smistamento, verifica, inserimento e conferma. Nel processo AS-IS varia indicativamente da <code>1,5</code> a <code>5 giorni</code>, anche per le attese legate alla disponibilità e alle date comunicate dai fornitori. Nel TO-BE telematico il cliente inserisce direttamente l'ordine e il sistema restituisce subito il codice: per un ordine medio il tempo stimato scende a circa <code>20 minuti</code>.</td></tr></tbody></table></div>",
+   "Il confronto mostra perché un KPI deve avere <strong>confini coerenti con il processo</strong>. Il lead time ordine non misura soltanto la digitazione: comprende anche code, passaggi organizzativi, verifiche di disponibilità e conferma. La percentuale di errori, invece, nasce a livello di riga ma valuta l'affidabilità dell'intero sottoprocesso. Nel TO-BE la tecnologia modifica attività, responsabilità e tempi; perciò il miglioramento atteso deve essere verificato mantenendo stabile la definizione dell'indicatore e confrontando AS-IS e TO-BE sullo stesso perimetro.",
+  ],None),
   (1,"4 Laboratorio",[
    "Definire due o tre KPI per il processo in analisi. Per ciascuno specificare formula, unità, frequenza, fonte del dato e un target motivato.",
   ],None),
@@ -391,6 +716,7 @@ CONTENT = {
   "Efficacia ed efficienza sono dimensioni distinte: un processo può eccellere in una e non nell'altra.",
   "Un KPI è definito solo se ha formula, unità, frequenza e fonte del dato; target e soglie richiedono un riferimento.",
   "Gli indicatori più utili nascono dalle variabili critiche e dai colli di bottiglia della matrice.",
+  "Nel caso SAEM l'albero delle determinanti collega KPI operativi, risultati di processo e obiettivi strategici; il confronto AS-IS/TO-BE mantiene stabile il perimetro della misura.",
  ]),
 
 "06": dict(
@@ -533,6 +859,61 @@ for old, new in reversed([
     CONTENT[new] = CONTENT.pop(old)
 CONTENT["02"] = dict(sections=requirements_sections, kt=requirements_kt)
 
+# Nel percorso didattico corrente la rappresentazione precede la misurazione:
+# M06 tratta SIPOC/BPMN, mentre M07 è il modulo dedicato ai KPI.
+CONTENT["06"], CONTENT["07"] = CONTENT["07"], CONTENT["06"]
+
+# Le Category e i Process Group di M03 sono mantenuti come dati strutturati
+# sopra, così le due sezioni possono essere aggiornate senza duplicare HTML.
+for index, (level, title, paragraphs, note) in enumerate(CONTENT["03"]["sections"]):
+    if title.startswith("2.1 "):
+        CONTENT["03"]["sections"][index] = (
+            level,
+            title,
+            [
+                "La <strong>Category</strong> è il livello più alto del PCF e identifica una grande area di lavoro. Le tredici Category offrono una vista complessiva dell'organizzazione e non coincidono necessariamente con i reparti.",
+                pcf_category_table(),
+            ],
+            note,
+        )
+    elif title.startswith("2.2 "):
+        CONTENT["03"]["sections"][index] = (
+            level,
+            title,
+            [
+                "Il <strong>Process Group</strong> riunisce processi coerenti che contribuiscono all'esecuzione di una Category. Le tabelle riportano numero gerarchico, nome ufficiale e una spiegazione sintetica in italiano.",
+                "I collegamenti aprono la ricerca della singola Category nella Resource Library ufficiale APQC; dalla scheda della versione 8.0 il comando <em>View Now</em> consente di scaricare il PDF con definizioni e misure.",
+                pcf_process_group_tables(),
+            ],
+            note,
+        )
+    elif title.startswith("3.1 "):
+        CONTENT["03"]["sections"][index] = (
+            level,
+            "3.1 Processi di gestione e supporto nel PCF",
+            [
+                "APQC divide il framework in due blocchi: le Category <strong>1.0-6.0</strong> rappresentano gli <strong>Operating Processes</strong>; le Category <strong>7.0-13.0</strong> costituiscono i <strong>Management and Support Services</strong>. Queste ultime forniscono persone, tecnologie, risorse, controlli e capacità necessarie ai processi operativi.",
+                "Le Category di gestione e supporto sono:",
+                pcf_support_categories_list(),
+                "Queste Category abilitano, governano, proteggono e migliorano il lavoro operativo. Il dettaglio dei rispettivi Process Group è già riportato nella sezione 2.2.",
+            ],
+            note,
+        )
+
+# La tabella delle misure APQC appartiene al modulo KPI, non al modulo PCF.
+for index, (level, title, paragraphs, note) in enumerate(CONTENT["07"]["sections"]):
+    if title.startswith("3.2 "):
+        CONTENT["07"]["sections"][index] = (
+            level,
+            title,
+            [
+                *paragraphs,
+                "La tabella seguente raccoglie, per ciascun Process Group disponibile nei documenti APQC caricati nelle risorse del corso, i KPI proposti e una breve descrizione in italiano.",
+                pcf_kpi_table(),
+            ],
+            note,
+        )
+
 # ---- template ----------------------------------------------------------------
 
 def esc(s): return html.escape(s, quote=True)
@@ -657,10 +1038,10 @@ def index_html():
          "Scomporre una Activity di un dominio APQC in quattro-sei Task con esecutore ed esito verificabile."),
         ("Laboratorio M05 - Matrice delle variabili", a("05"),
          "Costruire la matrice delle variabili con almeno un collo di bottiglia e una relazione causa-effetto."),
-        ("Laboratorio M06 - Definire i KPI", a("06"),
-         "Definire due-tre KPI con formula, unità, frequenza, fonte del dato e target motivato."),
-        ("Laboratorio M07 - Visualizzare in Camunda", a("07"),
+        ("Laboratorio M06 - Visualizzare in Camunda", a("06"),
          "Aprire due esempi .bpmn in Camunda Modeler, leggerne corsie ed eventi, aggiungere un ramo di eccezione."),
+        ("Laboratorio M07 - Definire i KPI", a("07"),
+         "Definire due-tre KPI con formula, unità, frequenza, fonte del dato e target motivato."),
         ("Laboratorio M08 - Scheda processo completa", a("08"),
          "Produrre il pacchetto completo di deliverable per un dominio APQC e presentarlo in aula."),
         ("Guida - BPMN con Camunda e assistente MCP", "lab-camunda-mcp.html",
@@ -676,7 +1057,11 @@ def index_html():
 
     siti = [
         ("APQC — Process Classification Framework", "https://www.apqc.org/process-frameworks"),
-        ("APQC — Cross Industry PCF (PDF 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-8"),
+        ("APQC — Introduction to the Process Classification Framework", "https://www.apqc.org/resource-library/resource-listing/introduction-apqcs-process-classification-framework-pcf"),
+        ("APQC — Types of process models", "https://www.apqc.org/blog/what-are-different-types-process-models"),
+        ("APQC — Process Classification Framework FAQ", "https://www.apqc.org/process-frameworks/pcf-faqs"),
+        ("APQC — Cross-Industry PCF (PDF 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-13"),
+        ("APQC — Cross-Industry PCF (Excel 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-12"),
         ("ASCM — SCOR Digital Standard (supply chain)", "https://www.ascm.org/corporate-solutions/standards-tools/scor-ds/"),
         ("Object Management Group — BPMN", "https://www.omg.org/spec/BPMN/"),
         ("BPMN.org — risorse introduttive", "https://www.bpmn.org/"),
