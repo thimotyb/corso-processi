@@ -691,42 +691,57 @@ CONTENT = {
 "04": dict(
  sections=[
   (1,"1 Le variabili di processo",[
-   "Le variabili di processo sono le grandezze che descrivono come il processo si comporta. Servono a caratterizzarlo, confrontarlo nel tempo e individuare dove intervenire. Si raggruppano in poche famiglie ricorrenti.",
+   "Le variabili di processo sono le grandezze osservabili che descrivono come un processo trasforma un input in un output. Rendono espliciti il perimetro del lavoro, le risorse assorbite, le condizioni operative e i risultati ottenuti. Servono a caratterizzare il processo, confrontarlo nel tempo o tra unità diverse e individuare interventi di miglioramento basati su evidenze.",
+   "L'approccio per processi di <a href=\"https://www.iso.org/iso/iso9001_2015_process_approach.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 9001</a> invita a identificare input, output, sequenza e interazioni, criteri di controllo, risorse, responsabilità, rischi e opportunità. La prospettiva di <em>Business Modeling with UML</em> di Eriksson e Penker aggiunge la lettura del processo come trasformazione orientata a un obiettivo e sottoposta a vincoli e controlli.",
+   "Nel corso la tassonomia è una sintesi operativa: non è una classificazione ufficiale APQC, ma una griglia comune per leggere le schede dei processi e collegare descrizione, analisi e misurazione.",
   ],None),
   (2,"1.1 Input e output",[
-   "Gli input sono ciò che il processo consuma per produrre il risultato: dati, documenti, materiali, autorizzazioni. Gli output sono ciò che consegna al cliente.",
-   "Descrivere input e output in modo concreto è la base per tutte le altre variabili.",
+   "Gli <strong>input</strong> sono gli elementi necessari per avviare o svolgere il processo: dati, documenti, richieste, materiali, autorizzazioni, disponibilità di una risorsa o risultato di un processo precedente. Per ogni input è utile indicare il fornitore, il formato, il momento di disponibilità e i controlli di completezza o qualità.",
+   "Gli <strong>output</strong> sono i risultati prodotti e consegnati a un cliente interno o esterno: una risposta, un ordine confermato, una decisione, un documento, un servizio o un'opportunità commerciale. Un output è descritto bene quando sono chiari destinatario, contenuto, criterio di accettazione e momento di consegna.",
+   "La distinzione input/output deve essere osservata dal punto di vista del processo analizzato: lo stesso oggetto può essere output di un processo e input di quello successivo. Il collegamento tra i due estremi permette di verificare se il processo risponde davvero al bisogno del cliente e costituisce la base per SIPOC, KPI e analisi delle interazioni.",
   ],None),
   (2,"1.2 Tempi, costi, volumi",[
-   "Il tempo misura la durata dall'innesco alla chiusura, incluse le attese. Il costo somma le risorse assorbite: ore di lavoro, costo dei sistemi, materiali. Il volume esprime quante volte il processo viene eseguito in un periodo.",
-   "Insieme danno la dimensione economica del processo.",
+   "Il <strong>tempo</strong> va distinto almeno in tempo di attraversamento (dall'innesco alla chiusura), tempo di lavorazione e tempo di attesa. La distinzione rende visibili code, passaggi autorizzativi e dipendenze esterne: un'attività che richiede dieci minuti può produrre un lead time di un giorno se l'output resta in attesa di stampa, firma o disponibilità.",
+   "Il <strong>costo</strong> comprende le risorse direttamente impiegate e, quando rilevante, una quota dei costi indiretti: ore delle persone, sistemi e licenze, materiali, rilavorazioni, trasferte ed errori. È importante dichiarare il perimetro del calcolo e distinguere costo per istanza da costo del periodo.",
+   "Il <strong>volume</strong> indica quante istanze, richieste, righe o transazioni vengono gestite in un intervallo. Va associato a una frequenza e, se necessario, alla distribuzione nel tempo: la media mensile può nascondere picchi giornalieri che generano sovraccarico e tempi di attesa.",
+   "Tempo, costo e volume si interpretano insieme: un aumento dei volumi può ridurre il costo unitario grazie alle economie di scala, ma può anche aumentare il lead time se la capacità non cresce; una rilavorazione aumenta contemporaneamente costo e tempo senza produrre valore per il cliente.",
   ],None),
   (2,"1.3 Ruoli, sistemi, vincoli, rischi",[
-   "I ruoli sono gli attori che eseguono le attività. I sistemi sono gli applicativi a supporto. I vincoli sono limiti operativi o normativi da rispettare. I rischi sono gli eventi che possono degradare l'esito o bloccare il flusso.",
+   "I <strong>ruoli</strong> identificano chi esegue, approva, fornisce informazioni o riceve l'output. È utile distinguere ruolo organizzativo, persona o team, responsabilità decisionale e responsabilità operativa; una matrice RACI può dettagliare la relazione tra attività e attori.",
+   "I <strong>sistemi</strong> sono applicativi, archivi, canali e strumenti che registrano dati o supportano l'esecuzione: CRM, ticketing, ERP, posta elettronica, portali e knowledge base. Per ciascun sistema si osservano dati inseriti, dati letti, integrazioni e passaggi manuali.",
+   "I <strong>vincoli</strong> sono condizioni da rispettare: SLA, normative, privacy, autorizzazioni, finestre temporali, budget, capacità, regole commerciali o dipendenze da fornitori. Un vincolo può introdurre un controllo necessario, ma anche un'attesa o un costo aggiuntivo.",
+   "I <strong>rischi</strong> sono eventi o condizioni che possono ridurre qualità, puntualità, conformità o continuità. Vanno collegati alla causa, all'effetto, alla probabilità e alla misura di prevenzione o rilevazione. Un collo di bottiglia è un caso particolare in cui capacità insufficiente o dipendenza da una risorsa concentra la variabilità e crea accumulo.",
   ],None),
   (1,"2 La matrice delle variabili",[
-   "La matrice delle variabili raccoglie in una tabella unica tutte le famiglie, con una descrizione e un esempio riferito al processo in analisi. È lo strumento che rende confrontabili processi diversi.",
+   "La matrice delle variabili traduce la scheda di processo in un quadro compatto e verificabile. Ogni riga rappresenta una famiglia; le colonne distinguono la definizione, il dato osservato, la fonte, il responsabile della rilevazione e le note su rischi o qualità del dato. In questo modo la descrizione narrativa diventa confrontabile tra processi e può alimentare la definizione dei KPI.",
+   "La matrice non sostituisce il diagramma BPMN o la scheda: li completa. Il diagramma mostra sequenza e responsabilità, mentre la matrice esplicita condizioni, risorse, grandezze e punti di misura.",
   ],None),
   (2,"2.1 Struttura della matrice",[
-   "Le righe sono le famiglie di variabili: input, output, tempi, costi, volumi, ruoli, sistemi, vincoli, rischi. Le colonne sono la descrizione generale e l'esempio concreto nel processo. Una riga aggiuntiva può annotare i colli di bottiglia.",
+   "Le righe minime sono: input, output, tempi, costi, volumi, ruoli, sistemi, vincoli e rischi/colli di bottiglia. Le colonne possono contenere la descrizione, l'esempio concreto, l'unità di misura, la fonte del dato e il proprietario dell'informazione. Per una prima analisi didattica bastano tre colonne: variabile, significato ed evidenza nel processo.",
+   "La qualità della matrice dipende dalla granularità: tutte le righe devono riferirsi allo stesso confine di processo, usare termini osservabili e distinguere fatti da ipotesi. Se un valore non è disponibile, si annota esplicitamente \"da rilevare\" invece di inventare una stima.",
   ],None),
   (2,"2.2 Compilazione a partire dalla scheda processo",[
-   "La matrice si compila leggendo la scheda processo e traducendone i contenuti in valori per ciascuna famiglia.",
-   "Dove un valore manca, la lacuna stessa è un risultato utile: indica un aspetto del processo non ancora governato.",
+   "La compilazione parte dai confini della scheda: evento di innesco, output finale, ruoli, sistemi, vincoli e rischi. Si leggono poi Activity e Task per ricavare tempi di lavorazione, attese, volumi e punti in cui nasce o si perde un'informazione. Infine si verifica che ogni riga sia sostenuta da una fonte: sistema informativo, documento, intervista, osservazione o dato storico.",
+   "L'esempio seguente riprende la matrice già preparata per la Category 6.0 <em>Manage Customer Service</em>, Process 6.2.2 <em>Manage customer service problems, requests, and inquiries</em>. La tabella mostra come una singola scheda APQC venga arricchita con ipotesi operative controllabili e collegamenti a rischi, ruoli e sistemi.",
+   "<div class=\"table-wrap\"><table class=\"pcf-table\"><thead><tr><th>Variabile</th><th>Descrizione</th><th>Esempio nella Category 6.0 — Manage Customer Service</th></tr></thead><tbody><tr><td><strong>Input</strong></td><td>Dati necessari ad avviare il processo.</td><td>Richiesta, problema o quesito del cliente; storico dei contatti; SLA contrattuali.</td></tr><tr><td><strong>Output</strong></td><td>Risultato consegnato dal processo.</td><td>Richiesta risolta e risposta al cliente; eventuale opportunità di upsell/cross-sell trasmessa alle vendite.</td></tr><tr><td><strong>Tempi</strong></td><td>Durata di lavorazione, attesa e attraversamento.</td><td>Da pochi minuti per una chat a più giorni per problemi complessi, nel rispetto dello SLA.</td></tr><tr><td><strong>Costi</strong></td><td>Risorse economiche assorbite per istanza o periodo.</td><td>Costo per contatto: ore dell'operatore, costo del canale e delle eventuali escalation.</td></tr><tr><td><strong>Volumi</strong></td><td>Quantità e frequenza delle istanze.</td><td>Centinaia o migliaia di contatti al mese, con possibili picchi per canale o periodo.</td></tr><tr><td><strong>Ruoli</strong></td><td>Attori che eseguono, approvano o ricevono il risultato.</td><td>Customer Service Representative; team Vendite per le opportunità commerciali.</td></tr><tr><td><strong>Sistemi</strong></td><td>Applicativi e strumenti che supportano il flusso.</td><td>CRM/ticketing, telefonia o chat, knowledge base.</td></tr><tr><td><strong>Vincoli</strong></td><td>Limiti operativi, contrattuali o normativi.</td><td>SLA, privacy, regole di gestione dei reclami e disponibilità degli specialisti.</td></tr><tr><td><strong>Rischi / colli di bottiglia</strong></td><td>Eventi o punti di accumulo che degradano il risultato.</td><td>Errata classificazione, escalation tardiva, mancato rispetto dello SLA, opportunità non trasmesse alle vendite.</td></tr></tbody></table></div>",
+   "La matrice evidenzia anche le lacune: per esempio, \"centinaia o migliaia\" è una descrizione iniziale, non ancora un dato misurato. Il passo successivo è definire fonte, periodo e unità, ad esempio numero di ticket per giorno e percentuale risolta entro SLA.",
   ],None),
   (1,"3 Relazioni tra variabili",[
-   "Le variabili non sono indipendenti. Riconoscere le relazioni aiuta a prevedere l'effetto di un intervento.",
+   "Le variabili non sono indipendenti: cambiare capacità, regole, canali o sistemi modifica tempi, costi, volumi gestibili e qualità degli output. L'analisi delle relazioni consente di formulare ipotesi causa-effetto e di scegliere quali dati osservare prima e dopo un intervento.",
+   "Nel caso SAEM, per esempio, la gestione telematica dell'ordine modifica l'attività di inserimento, riduce i passaggi manuali e può ridurre il lead time; l'effetto deve però essere verificato anche su errori di imputazione, carico degli operatori e qualità della conferma.",
   ],None),
   (2,"3.1 Dipendenze, cause, effetti",[
-   "Un aumento dei volumi allunga i tempi se la capacità resta invariata; un vincolo normativo introduce controlli che aumentano i costi; una classificazione errata a monte propaga errori a valle.",
-   "Mappare queste catene rende espliciti i punti in cui agire.",
+   "Le dipendenze si possono esprimere come catene: <em>causa → variabile intermedia → effetto osservabile</em>. Un aumento dei volumi allunga le code se la capacità resta invariata; un nuovo controllo normativo aumenta il tempo di attraversamento e il costo per istanza; una classificazione errata a monte genera riassegnazioni, escalation e ritardi a valle.",
+   "Per rendere la relazione verificabile si indicano almeno il verso atteso, la misura coinvolta e il perimetro temporale. Un'ipotesi come \"più richieste fanno aumentare il tempo\" diventa analizzabile se si confrontano volume giornaliero, coda media e percentile del lead time a parità di canale e SLA.",
   ],None),
   (2,"3.2 Eccezioni e colli di bottiglia",[
-   "Le eccezioni sono i percorsi alternativi che il processo segue in casi particolari. I colli di bottiglia sono i punti in cui il lavoro si accumula.",
-   "Entrambi vanno individuati perché determinano gran parte della variabilità di tempi e costi.",
-  ],"La scheda di ogni dominio in <code>esempi-apqc/</code> contiene una matrice delle variabili già compilata, utile come modello."),
+   "Le eccezioni sono percorsi alternativi attivati da condizioni specifiche: richiesta incompleta, cliente prioritario, escalation tecnica, opportunità commerciale o indisponibilità di un sistema. Vanno descritte con trigger, ruolo responsabile, output atteso e criterio di rientro nel flusso principale.",
+   "Un collo di bottiglia è un punto in cui la capacità disponibile è inferiore alla domanda o dipende da una risorsa difficile da sostituire. I segnali sono coda crescente, tempo di attesa elevato, rilavorazioni e attività che restano bloccate prima di un'approvazione o di un'escalation. Nella Category 6, una classificazione errata o un'escalation tardiva può accumulare ticket e compromettere lo SLA.",
+   "La scheda di ogni dominio in <code>esempi-apqc/</code> contiene una matrice già compilata. La si può usare come punto di partenza, aggiungendo poi fonte del dato, frequenza di rilevazione e responsabile della misura.",
+  ],None),
   (1,"4 Laboratorio",[
-   "Costruire la matrice delle variabili per la Activity scomposta nel Modulo 4. Aggiungere una riga con almeno un collo di bottiglia e indicare una relazione causa-effetto tra due variabili.",
+   "Costruire la matrice delle variabili per la Activity scomposta nel Modulo 4. Per ogni riga indicare almeno una fonte del dato e distinguere ciò che è osservato da ciò che deve ancora essere rilevato.",
+   "Aggiungere un collo di bottiglia, descriverne causa ed effetto e formulare una relazione tra due variabili. Infine proporre una modifica operativa e specificare quali misure confronterebbero situazione AS-IS e TO-BE.",
   ],None),
  ],
  kt=[
