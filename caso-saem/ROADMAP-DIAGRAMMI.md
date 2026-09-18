@@ -2,7 +2,7 @@
 
 Stato: pianificata il 6 settembre 2026. Questo documento definisce gli interventi; la revisione dei BPMN è ancora da eseguire.
 
-Fonte primaria: [tesi originale SAEM](../resources/casoSAEM.pdf). La [versione didattica compressa](caso-saem-compresso.md) serve da sintesi, ma omette parte dei requisiti informativi. I diagrammi Eriksson–Penker, gli Assembly Line, le matrici CRUD e le descrizioni originali devono quindi essere consultati direttamente.
+Documentazione di riferimento del caso SAEM: la [versione didattica compressa](caso-saem-compresso.md) serve da sintesi; per i requisiti informativi di dettaglio si consultano gli asset e i diagrammi archiviati nel repository. Gli Assembly Line, le matrici CRUD e le descrizioni dei processi devono essere letti insieme alle schede sviluppate.
 
 ## Inventario e priorità
 

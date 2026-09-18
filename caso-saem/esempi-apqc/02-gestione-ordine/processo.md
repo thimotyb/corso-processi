@@ -4,11 +4,11 @@ Modello didattico BPMN 2.0, non eseguibile, dalla richiesta commerciale alla spe
 
 ## Perimetro e fonti
 
-Il modello segue il macroprocesso TO-BE della tesi (PDF 95 / pagina stampata 83): D.1 offerta, D.2A/B acquisizione normale e urgente, D.2C variazioni, D.7 selezione spedizioniere, D.9A–C evasione, D.10 partenza e D.11 fatturazione. Il portale è rivolto ai clienti attivi. Le attività commerciali preliminari di laboratorio/omologazione, l'onboarding del nuovo cliente, l'approvvigionamento completo del fornitore e l'incasso successivo alla fatturazione sono fuori dal perimetro di questo modello; l'incasso al ritiro/contrassegno è invece rappresentato.
+Il modello segue il macroprocesso TO-BE documentato per SAEM: D.1 offerta, D.2A/B acquisizione normale e urgente, D.2C variazioni, D.7 selezione spedizioniere, D.9A–C evasione, D.10 partenza e D.11 fatturazione. Il portale è rivolto ai clienti attivi. Le attività commerciali preliminari di laboratorio/omologazione, l'onboarding del nuovo cliente, l'approvvigionamento completo del fornitore e l'incasso successivo alla fatturazione sono fuori dal perimetro di questo modello; l'incasso al ritiro/contrassegno è invece rappresentato.
 
 Fonti ed estrazioni sono conservate nel [dossier riutilizzabile](../../fonti-estratte/README.md): testo di 67 pagine, 17 rendering, relazioni strutturate e impronta del PDF. Per le prossime revisioni partire dal dossier; riesaminare il PDF solo per punti non ancora coperti o ambigui.
 
-Il processo attraversa più domini: offerta commerciale, acquisizione ordine, logistica e fatturazione. Non gli viene attribuito artificialmente un unico codice APQC. I riferimenti D.1–D.11 sono quelli della mappatura SCOR/UML della tesi. La fatturazione si raccorda anche alla [scheda SAEM già esistente](../07-finance/processo.md).
+Il processo attraversa più domini: offerta commerciale, acquisizione ordine, logistica e fatturazione. Non gli viene attribuito artificialmente un unico codice APQC. I riferimenti D.1–D.11 seguono la mappatura SCOR/UML del caso. La fatturazione si raccorda anche alla [scheda SAEM già esistente](../07-finance/processo.md).
 
 ## Viste disponibili
 
@@ -57,7 +57,7 @@ Indicatori utili: lead time offerta; tempo da conferma cliente ad acquisizione o
 
 ## Tracciabilità informativa
 
-Righe estratte dai commenti CRUD e dalle descrizioni/figure della tesi. I nomi delle attività sono traduzioni funzionali BPMN. Il campo «Relazione e dettaglio» specifica a quali tabelle si applicano le singole lettere, evitando di assegnare l'intero CRUD indiscriminatamente a tutti gli archivi del gruppo.
+Righe derivate dai commenti CRUD e dalle descrizioni/figure del caso. I nomi delle attività sono traduzioni funzionali BPMN. Il campo «Relazione e dettaglio» specifica a quali tabelle si applicano le singole lettere, evitando di assegnare l'intero CRUD indiscriminatamente a tutti gli archivi del gruppo.
 
 ### SAEM · Gestione ordine cliente · TO-BE
 

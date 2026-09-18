@@ -38,13 +38,22 @@ sequenza di attività.
 
 ## Come usare i file BPMN con Camunda
 
-Per gli esempi aziendali SAEM, l'[inventario e roadmap](caso-saem/ROADMAP-DIAGRAMMI.md) elenca i tre diagrammi già prodotti, gli interventi previsti e la convenzione di analisi delle relazioni fra attività, entità informative, sistemi e tabelle. La fonte completa è la [tesi SAEM](resources/casoSAEM.pdf), affiancata dalla [sintesi didattica](caso-saem/caso-saem-compresso.md).
+Per gli esempi aziendali SAEM, l'[inventario e roadmap](caso-saem/ROADMAP-DIAGRAMMI.md) elenca i tre diagrammi già prodotti, gli interventi previsti e la convenzione di analisi delle relazioni fra attività, entità informative, sistemi e tabelle. La documentazione del caso è affiancata dalla [sintesi didattica](caso-saem/caso-saem-compresso.md).
 
 1. Installare [Camunda Modeler](https://camunda.com/download/modeler/) (desktop, gratuito).
 2. Aprire il file `processo.bpmn` del dominio scelto: File → Open File.
 3. I diagrammi sono pronti per la proiezione in aula così come sono; possono anche essere usati come
    punto di partenza per un'esercitazione (es. chiedere ai partecipanti di aggiungere un ramo di
    eccezione, un ruolo mancante o un secondo livello di Task).
+
+Per la demo online usare come base la guida ufficiale [Camunda Web Modeler — Model your first diagram](https://docs.camunda.io/docs/components/modeler/web-modeler/modeling/model-your-first-diagram/),
+che introduce la creazione di un diagramma, gli elementi BPMN fondamentali e i collegamenti fra le attività.
+
+Per consultare la notazione usare anche la [BPMN Reference di Camunda](https://camunda.com/bpmn/reference/), che descrive gli elementi BPMN e il loro significato.
+
+Come esempio avanzato e blueprint da importare nel Web Modeler usare [Credit Card Fraud Dispute Handling](https://marketplace.camunda.com/en-US/apps/449510/credit-card-fraud-dispute-handling) del Camunda Marketplace; il file BPMN è disponibile anche nel [repository tutorial Camunda](https://raw.githubusercontent.com/camunda/camunda-platform-tutorials/main/solutions/bank-customer-complaint-dispute-handling/Bank_customer_complaint_dispute_handling.bpmn).
+
+Come secondo esempio e blueprint da importare nel Web Modeler usare [Loan Origination and Processing](https://marketplace.camunda.com/en-US/apps/450143/loan-origination-and-processing); il relativo [file BPMN](https://raw.githubusercontent.com/camunda/camunda-platform-tutorials/main/solutions/bank-loan-origination-and-processing/bank-loan-origination-and-processing.bpmn) è disponibile nel repository tutorial Camunda.
 
 Non è prevista alcuna esecuzione dei processi (nessun motore Camunda collegato): l'uso è puramente
 di modellazione/rappresentazione, coerente con il taglio metodologico e non tecnico del corso.

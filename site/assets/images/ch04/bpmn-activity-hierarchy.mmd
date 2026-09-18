@@ -1,0 +1,14 @@
+%% Gerarchia concettuale BPMN delle Activities
+flowchart TD
+    A["Activity<br/>lavoro nel flusso"]
+    A --> T["Task<br/>unità atomica"]
+    A --> S["Sub-Process<br/>flusso interno"]
+    A --> C["Call Activity<br/>processo o global task riusabile"]
+    S --> TR["Transaction<br/>Sub-Process con protocollo"]
+    S --> ES["Event Sub-Process<br/>attivato da un evento"]
+    classDef root fill:#0a5368,color:#fff,stroke:#073c4c,stroke-width:2px;
+    classDef activity fill:#dff3ff,color:#13253f,stroke:#0f6f8e,stroke-width:1.5px;
+    classDef special fill:#f6f7fb,color:#13253f,stroke:#7b91aa,stroke-width:1.5px;
+    class A root;
+    class T,S,C activity;
+    class TR,ES special;

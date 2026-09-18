@@ -1,6 +1,6 @@
 # Il caso SAEM S.p.A. (versione didattica compressa)
 
-*Adattato da: C. Bozzoli, "Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A.", tesi di laurea, Politecnico di Milano, A.A. 2004-2005 (relatore Prof. Ing. T. Barbieri). Versione compressa per uso didattico: azienda, organizzazione e processi reali; omessi SCOR/UML di dettaglio, cruscotto KPI, requisiti IT e mock-up delle interfacce, presenti nella tesi originale.*
+*Versione compressa per uso didattico: azienda, organizzazione e processi reali; omessi alcuni approfondimenti SCOR/UML, il cruscotto KPI, i requisiti IT e i mock-up delle interfacce.*
 
 ## 1. L'azienda
 
@@ -80,9 +80,9 @@ Le confidenze "Media"/"Bassa" segnalano codici verificati solo a livello di Cate
 
 ## 5. SCOR: il framework usato dal caso originale
 
-La tesi originale (Bozzoli, 2004-2005) non usava l'APQC PCF, ma il modello **SCOR (Supply Chain Operations Reference)** insieme a diagrammi UML — scelta naturale per un distributore di prodotti fisici, dato che SCOR è specializzato sui processi di supply chain (pianificazione, approvvigionamento, produzione, evasione ordini, logistica, resi), mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain.
+Il caso utilizza il modello **SCOR (Supply Chain Operations Reference)** insieme a diagrammi UML per la supply chain, mentre l'APQC PCF è una tassonomia generica cross-industry che copre anche le funzioni non di supply chain.
 
-SCOR è mantenuto oggi dall'**Association for Supply Chain Management (ASCM)** come **SCOR Digital Standard (SCOR-DS)**: Level 0 Orchestrate (tredici funzioni trasversali) + sei processi di Level 1 — Plan, Order, Source, Transform, Fulfill, Return (la versione "classica" nota alla tesi del 2004-2005 aveva cinque processi macro: Plan, Source, Make, Deliver, Return).
+SCOR è mantenuto oggi dall'**Association for Supply Chain Management (ASCM)** come **SCOR Digital Standard (SCOR-DS)**: Level 0 Orchestrate (tredici funzioni trasversali) + sei processi di Level 1 — Plan, Order, Source, Transform, Fulfill, Return.
 
 Sintesi completa dei processi SCOR-DS e mappatura di prima approssimazione dei processi SAEM su SCOR: [`resources/scor-overview.md`](../resources/scor-overview.md). Fonte: ASCM, "SCOR Digital Standard — Quick Reference Guide", © 2025, CC BY-NC-ND 4.0 ([`resources/scor-ds-digital-guide_final.pdf`](../resources/scor-ds-digital-guide_final.pdf)).
 

@@ -1,16 +1,16 @@
 # Scratchpad — requisiti del processo e requisiti informativi SAEM
 
-Questo scratchpad raccoglie le evidenze estratte dalla tesi di C. Bozzoli, *Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A.*, e le regole di analisi da riutilizzare senza ripetere il parsing del PDF.
+Questo scratchpad raccoglie le evidenze della documentazione SAEM di C. Bozzoli e T. Barbieri, *Reengineering del sistema di gestione ordini in ottica e-commerce: il caso SAEM S.p.A.*, e le regole di analisi da riutilizzare senza ripetere il parsing del PDF.
 
 Fonte primaria: `resources/casoSAEM.pdf`.
 
-Testo consultabile: [`testo-pagine.md`](testo-pagine.md). Le pagine indicate sono quelle stampate nella tesi, salvo diversa indicazione.
+Testo consultabile: [`testo-pagine.md`](testo-pagine.md). Le pagine indicate sono quelle riportate nella documentazione, salvo diversa indicazione.
 
-## Tesi interpretativa da conservare
+## Interpretazione da conservare
 
 La sezione didattica **2.1 Come distinguere i livelli** deve spiegare anche come passare dalla distinzione tra funzione, processo, attività e task all'**estrazione e documentazione dei requisiti del processo**.
 
-La tesi mostra una catena progressiva:
+La documentazione mostra una catena progressiva:
 
 ```text
 analisi del business
@@ -27,7 +27,7 @@ Questa catena deve guidare sia il testo di M1 sia l'analisi dei diagrammi BPMN d
 
 ## 1. Due livelli di requisito
 
-La tesi distingue, sul piano del metodo, due livelli collegati:
+La documentazione distingue, sul piano del metodo, due livelli collegati:
 
 - **Requisiti del processo aziendale**: obiettivo, confini, attività, ruoli, input, output, regole, vincoli, eccezioni, condizioni di avvio e di conclusione.
 - **Requisiti informativi e IT**: funzionalità che il sistema deve offrire e informazioni che deve leggere, creare, aggiornare o cancellare.
@@ -36,7 +36,7 @@ Il passaggio dai requisiti di business ai requisiti IT avviene per selezione e d
 
 ## 2. Raccolta dei requisiti di prodotto e servizio
 
-Nel capitolo III, pagina stampata 23, la tesi indica che il riesame dei requisiti deve considerare almeno:
+Nel capitolo III, pagina stampata 23, la documentazione indica che il riesame dei requisiti deve considerare almeno:
 
 - requisiti esplicitamente contenuti nell'anagrafica cliente;
 - requisiti non precisati dal cliente, ma necessari per l'uso specifico o conosciuto;
@@ -102,7 +102,7 @@ Codifica da conservare:
 - **U — Update**: aggiornamento di dati esistenti;
 - **D — Delete**: cancellazione di dati.
 
-Le tavole CRUD della tesi sono derivate dalle Assembly Line e da attività di testing sui moduli del sistema in sviluppo e sul database di prova. Servono a verificare l'interazione tra modello del processo e modello dei dati.
+Le tavole CRUD della documentazione sono derivate dalle Assembly Line e da attività di testing sui moduli del sistema in sviluppo e sul database di prova. Servono a verificare l'interazione tra modello del processo e modello dei dati.
 
 La matrice CRUD è il livello sintetico delle informazioni di accesso ai dati. Non costituisce una specifica SQL completa: non descrive da sola transazioni, concorrenza, vincoli tecnici o riconciliazioni.
 
@@ -158,7 +158,7 @@ Capitolo VII, paragrafo 7.3, pagine stampate 114-119 e successive.
 
 I casi d'uso descrivono il comportamento del sistema dal punto di vista dell'utente esterno. Rappresentano funzionalità ottenute dalle interazioni tra attori ed entità informative.
 
-Per ogni caso d'uso la tesi raccoglie:
+Per ogni caso d'uso la documentazione raccoglie:
 
 - **attori**;
 - **breve descrizione**;
@@ -176,7 +176,7 @@ Esempio: il caso d'uso “Imposta testata offerta” documenta selezione del cli
 
 ## 8. Numerazione e gestione evolutiva
 
-La tesi stabilisce che i requisiti sono descritti principalmente mediante asserzioni in linguaggio naturale e numerati secondo:
+La documentazione stabilisce che i requisiti sono descritti principalmente mediante asserzioni in linguaggio naturale e numerati secondo:
 
 - numerazione derivata dalla struttura del documento dei requisiti;
 - numerazione sequenziale all'interno della categoria del requisito.
@@ -196,7 +196,7 @@ Quando si aggiorna un diagramma BPMN:
 5. usare Data Object per documenti o informazioni che attraversano il flusso;
 6. usare Data Store Reference per archivi o sistemi persistenti;
 7. annotare le operazioni CRUD solo quando sono documentate dalla fonte;
-8. distinguere dati esplicitamente presenti nella tesi da inferenze didattiche;
+8. distinguere dati esplicitamente presenti nella documentazione da inferenze didattiche;
 9. ricondurre ogni requisito a una fonte e, quando possibile, a pagina e tabella;
 10. verificare che ogni entità collegata sia raggiungibile e coerente con l'attività.
 

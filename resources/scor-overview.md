@@ -8,7 +8,7 @@ SCOR è un framework di riferimento per la gestione della supply chain, dal forn
 
 A differenza dell'APQC PCF — tassonomia generica, cross-industry, che copre *tutti* i processi di un'azienda (vendite, HR, IT, finance...) — SCOR è **specializzato sulla supply chain fisica**: pianificazione, approvvigionamento, produzione, evasione ordini, logistica e resi. È quindi il framework più naturale per un'azienda manifatturiera o distributiva, mentre l'APQC PCF resta preferibile quando si vuole classificare l'intera organizzazione con un unico schema.
 
-> **Nota storica per il caso SAEM**: la tesi originale (2004-2005) su cui è basato `caso-saem/` usava proprio SCOR (nella versione "classica" dell'epoca, precedente al restyling Digital Standard) insieme a diagrammi UML, per lo stesso motivo — SAEM è un distributore fisico, e SCOR mappa i suoi processi di supply chain meglio di una tassonomia generica. La versione compressa del caso usata nel corso omette SCOR/UML a favore dell'APQC PCF, per coerenza con il resto del materiale; questo documento recupera SCOR come framework di confronto.
+> **Nota storica per il caso SAEM**: la documentazione del caso utilizza SCOR (nella versione "classica" dell'epoca, precedente al restyling Digital Standard) insieme a diagrammi UML, per lo stesso motivo — SAEM è un distributore fisico, e SCOR mappa i suoi processi di supply chain meglio di una tassonomia generica. La versione compressa del caso usata nel corso omette SCOR/UML a favore dell'APQC PCF, per coerenza con il resto del materiale; questo documento recupera SCOR come framework di confronto.
 
 ## Le quattro componenti del modello
 
@@ -37,7 +37,7 @@ Il modello si ferma al Level 3: il Level 4 (esecuzione operativa, specifica per 
 | **Fulfill** | Consegna il prodotto/servizio finito al cliente: prelievo, imballo, spedizione, installazione, fatturazione. | F1 Fulfill B2C · F2 Fulfill B2B · F3 Fulfill Intra-company |
 | **Return** | Gestisce il flusso inverso — resi dal cliente o verso il fornitore, diagnosi, disposizione, eventuale rilavorazione. | R1 Return Product · R2 Return Service · R3 Return MRO |
 
-*(Il modello "classico" pre-2022, quello presumibilmente noto alla tesi SAEM, aveva 5 processi macro — Plan, Source, Make, Deliver, Return — poi arricchiti con "Enable" come sesto. SCOR-DS li ha riorganizzati separando l'Order dal Deliver/Fulfill e rinominando Make in Transform, oltre ad aggiungere il livello Orchestrate.)*
+*(Il modello "classico" pre-2022 aveva 5 processi macro — Plan, Source, Make, Deliver, Return — poi arricchiti con "Enable" come sesto. SCOR-DS li ha riorganizzati separando l'Order dal Deliver/Fulfill e rinominando Make in Transform, oltre ad aggiungere il livello Orchestrate.)*
 
 ## Esempi di Level 3 (elementi di processo)
 
