@@ -21,66 +21,82 @@
   <section class="section-toc">
    <h2>Indice del modulo</h2>
    <ul>
-    <li><a href="#s01">1 La scheda processo sintetica</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 I campi della scheda</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Coerenza con i livelli gerarchici</a></li><li><a href="#s04">2 Costruire la scheda end-to-end</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Dalla collocazione PCF alla matrice delle variabili</a></li><li style="margin-left:1.1rem"><a href="#s06">2.2 Dalla matrice alla rappresentazione</a></li><li><a href="#s07">3 Output e template aziendale</a></li><li style="margin-left:1.1rem"><a href="#s08">3.1 Il pacchetto di deliverable</a></li><li style="margin-left:1.1rem"><a href="#s09">3.2 Riuso come template</a></li><li><a href="#s10">4 Laboratorio finale</a></li>
+    <li><a href="#s01">1 Costruire la scheda processo: percorso guidato</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Passo 1 — Collocazione nella gerarchia PCF</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 Passo 2 — Scelta delle Activity dal PCF</a></li><li style="margin-left:1.1rem"><a href="#s04">1.3 Passo 3 — Scomposizione in Task e requisiti IT</a></li><li style="margin-left:1.1rem"><a href="#s05">1.4 Passo 4 — Analisi SIPOC</a></li><li style="margin-left:1.1rem"><a href="#s06">1.5 Passo 5 — Matrice delle variabili</a></li><li style="margin-left:1.1rem"><a href="#s07">1.6 Passo 6 — Scheda sintetica del processo</a></li><li style="margin-left:1.1rem"><a href="#s08">1.7 Passo 7 — Disegno BPMN</a></li><li><a href="#s09">2 Il deliverable completo</a></li><li style="margin-left:1.1rem"><a href="#s10">2.1 Elementi del pacchetto e funzione</a></li><li style="margin-left:1.1rem"><a href="#s11">2.2 Riuso come template</a></li><li><a href="#s12">3 Laboratorio finale</a></li>
    </ul>
   </section>
 <section class="study-section" id="s01">
-  <h2>1 La scheda processo sintetica</h2>
-  <p>La scheda processo raccoglie in una pagina tutto ciò che serve per capire, governare e migliorare un processo. È il deliverable che integra i risultati dei moduli precedenti.</p>
+  <h2>1 Costruire la scheda processo: percorso guidato</h2>
+  <p>La scheda processo viene costruita per passi, usando come esempio la scheda completa della Category 6.0 <em>Manage Customer Service</em>, disponibile nel repository alla voce <a href="https://github.com/thimotyb/corso-processi/blob/main/esempi-apqc/05-customer-service/processo.md" target="_blank" rel="noopener noreferrer">05-customer-service/processo.md</a>.</p>
+  <p>Ogni passo aggiunge un&#x27;informazione verificabile e prepara quello successivo: prima si fissa il perimetro, poi si scelgono le Activity, si dettagliano i Task, si analizzano scambi e variabili, si sintetizza il processo e infine lo si rappresenta in BPMN.</p>
 </section>
 <section class="study-section" id="s02">
-  <h3>1.1 I campi della scheda</h3>
-  <p>I campi minimi sono: nome del processo con codice PCF, process owner, obiettivo, confini (evento di innesco ed evento finale), ruoli coinvolti, sistemi coinvolti, KPI, rischi e colli di bottiglia.</p>
-  <p>Ogni campo deve essere compilabile in poche righe.</p>
+  <h3>1.1 Passo 1 — Collocazione nella gerarchia PCF</h3>
+  <p>Si riportano Category, Process Group e Process con codice e nome ufficiale. La collocazione impedisce di descrivere un processo senza contesto e collega la scheda alla tassonomia APQC.</p>
+  <p>Per Category 6.0 la sequenza è: <code>6.0 Manage Customer Service</code> → <code>6.2 Plan and manage customer service contacts</code> → <code>6.2.2 Manage customer service problems, requests, and inquiries</code>. Si annotano inoltre trigger e output finale, che delimitano il processo.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-01-collocazione.svg" alt="Estratto della scheda processo con Category 6.0, Process Group 6.2 e Process 6.2.2" data-caption="Figura M08.01 — Passo 1: collocazione PCF."><figcaption>Figura M08.01 — Estratto della scheda: i tre livelli PCF definiscono l'identità e il perimetro gerarchico del processo.</figcaption></figure>
 </section>
 <section class="study-section" id="s03">
-  <h3>1.2 Coerenza con i livelli gerarchici</h3>
-  <p>Il nome e il codice collegano la scheda alla gerarchia PCF; l&#x27;elenco delle attività richiama le Activity del Process; la scomposizione in Task documenta il livello operativo.</p>
-  <p>La scheda è coerente quando questi riferimenti si corrispondono senza salti.</p>
+  <h3>1.2 Passo 2 — Scelta delle Activity dal PCF</h3>
+  <p>Si selezionano le Activity che realizzano il Process, mantenendo codice, nome e identificativo APQC. La scelta deve coprire il percorso end-to-end senza aggiungere attività estranee al perimetro.</p>
+  <p>Nel caso 6.2.2 le Activity vanno da <em>Receive</em> ad <em>Deliver opportunity to sales team</em>. L'elenco costituisce l'indice operativo del processo e diventa la base per Task, SIPOC e BPMN.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-02-activity.svg" alt="Estratto della scheda con l'elenco delle sei Activity APQC del processo 6.2.2" data-caption="Figura M08.02 — Passo 2: Activity del processo."><figcaption>Figura M08.02 — Estratto della scheda: elenco delle Activity selezionate dal ramo PCF 6.2.2.</figcaption></figure>
 </section>
 <section class="study-section" id="s04">
-  <h2>2 Costruire la scheda end-to-end</h2>
-  <p>La costruzione segue l&#x27;ordine dei moduli: collocazione, scomposizione, variabili, indicatori, rappresentazione.</p>
+  <h3>1.3 Passo 3 — Scomposizione in Task e requisiti IT</h3>
+  <p>Si sceglie almeno una Activity e la si scompone in Task osservabili, ciascuno con esecutore ed esito verificabile. Nel nostro esempio l'Activity <em>Analyze problems, requests, and inquiries</em> diventa classificare la richiesta, verificare storico e SLA, decidere l'escalation e assegnare il caso.</p>
+  <p>La scomposizione si collega ai requisiti IT del <a href="../chapter-02.html">Modulo 2</a>: per ogni Task si annotano ruolo, input/output, dati letti o scritti, operazioni CRUD, regole, eccezioni e criteri di verifica. Il PCF definisce Activity, mentre Task e requisiti IT dipendono dal contesto organizzativo e applicativo.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-03-task-requirements.svg" alt="Estratto della scheda con la scomposizione dell'Activity Analyze in quattro Task e i requisiti IT da verificare" data-caption="Figura M08.03 — Passo 3: Task e requisiti IT."><figcaption>Figura M08.03 — Estratto didattico: i Task operativi sono collegati a dati, ruoli, regole ed eccezioni da documentare nei requisiti IT.</figcaption></figure>
 </section>
 <section class="study-section" id="s05">
-  <h3>2.1 Dalla collocazione PCF alla matrice delle variabili</h3>
-  <p>Si parte dai primi tre livelli PCF per fissare identità e confini, si elencano le Activity, se ne scompone almeno una in Task, quindi si compila la matrice delle variabili.</p>
-  <p>A questo punto la scheda ha già obiettivo, confini, ruoli, sistemi e rischi.</p>
+  <h3>1.4 Passo 4 — Analisi SIPOC</h3>
+  <p>Si compilano Supplier, Input, Process, Output e Customer per fissare gli scambi ai bordi del processo. La colonna Process contiene macro-fasi, non tutti i Task; ogni input deve avere un fornitore e ogni output un destinatario.</p>
+  <p>Per il customer service i fornitori sono il cliente e i canali di contatto; gli input sono richiesta, storico e SLA; le macro-fasi seguono le Activity; gli output sono risposta, richiesta risolta ed eventuale lead; i clienti sono cliente finale e team Vendite.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-04-sipoc.svg" alt="Estratto della scheda con il SIPOC del processo APQC 6.2.2" data-caption="Figura M08.04 — Passo 4: SIPOC."><figcaption>Figura M08.04 — Estratto della scheda: il SIPOC delimita il processo e rende espliciti fornitori, scambi e destinatari.</figcaption></figure>
 </section>
 <section class="study-section" id="s06">
-  <h3>2.2 Dalla matrice alla rappresentazione</h3>
-  <p>Dalle variabili si ricavano i KPI e, dalle attività e dai ruoli, il SIPOC e il diagramma a corsie o BPMN.</p>
-  <p>Il diagramma verifica la coerenza della scheda: se un&#x27;attività non ha un ruolo o un esito, la lacuna emerge nel disegno.</p>
+  <h3>1.5 Passo 5 — Matrice delle variabili</h3>
+  <p>Si traducono nella matrice le grandezze che descrivono il processo: input, output, tempi, costi, volumi, ruoli, sistemi, vincoli e rischi/colli di bottiglia. Ogni riga deve riferirsi allo stesso perimetro e distinguere dato osservato da valore ancora da rilevare.</p>
+  <p>Nel caso 6.2.2 la matrice collega la richiesta e lo storico ai sistemi CRM/ticketing, agli SLA, ai ruoli Customer Service e Vendite e ai rischi di classificazione errata, escalation tardiva e perdita di opportunità.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-05-variabili.svg" alt="Estratto della scheda con la matrice delle variabili del customer service" data-caption="Figura M08.05 — Passo 5: matrice delle variabili."><figcaption>Figura M08.05 — Estratto della scheda: la matrice rende confrontabili risorse, condizioni operative, risultati e rischi.</figcaption></figure>
 </section>
 <section class="study-section" id="s07">
-  <h2>3 Output e template aziendale</h2>
-  <p>Il corso produce un pacchetto di deliverable riusabile come modello interno.</p>
+  <h3>1.6 Passo 6 — Scheda sintetica del processo</h3>
+  <p>Si ricompongono in una pagina le informazioni utili a governare il processo: nome e codice, owner, obiettivo, confini, ruoli, sistemi, KPI e rischi. La scheda sintetica non sostituisce i dettagli precedenti: li indicizza e li rende consultabili.</p>
+  <p>Per 6.2.2 l'owner è il Customer Service Manager; l'obiettivo è gestire richieste, problemi e reclami. I KPI includono il tempo medio di risoluzione, la <strong>FCR — First Contact Resolution</strong> (percentuale di richieste risolte al primo contatto), la <strong>CSAT — Customer Satisfaction Score</strong> (punteggio di soddisfazione del cliente) e il numero di lead trasmessi alle vendite.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/ch08/m08-step-06-scheda-sintetica.svg" alt="Estratto della scheda sintetica del processo APQC 6.2.2 con owner, obiettivo, confini, sistemi, KPI e rischi" data-caption="Figura M08.06 — Passo 6: scheda processo sintetica."><figcaption>Figura M08.06 — Estratto della scheda sintetica: i campi essenziali riassumono il processo per lettura e governo.</figcaption></figure>
 </section>
 <section class="study-section" id="s08">
-  <h3>3.1 Il pacchetto di deliverable</h3>
-  <p>Il pacchetto comprende: mappa gerarchica dei processi, scheda processo sintetica, elenco di attività e Task, matrice delle variabili e delle relazioni, diagramma di rappresentazione.</p>
-  <p>Insieme descrivono il processo a tutti i livelli utili.</p>
+  <h3>1.7 Passo 7 — Disegno BPMN</h3>
+  <p>Si rappresentano trigger, Activity/Task, gateway, corsie, eventi finali e flussi. Il diagramma deve rispettare il perimetro della scheda e rendere visibili responsabilità, percorso principale ed eccezioni.</p>
+  <p>Nel modello 6.2.2 il gateway distingue la risoluzione diretta dal ramo upsell/cross-sell; le corsie separano Customer Service Representative e Team Vendite. Il file completo è disponibile come <a href="https://github.com/thimotyb/corso-processi/blob/main/esempi-apqc/05-customer-service/processo.bpmn" target="_blank" rel="noopener noreferrer">processo.bpmn</a>.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/apqc-customer-service-process.png" alt="Diagramma BPMN del processo APQC 6.2.2 con corsie Customer Service Representative e Team Vendite" data-caption="Figura M08.07 — Passo 7: diagramma BPMN."><figcaption>Figura M08.07 — Rappresentazione BPMN del customer service: il diagramma verifica sequenza, ruoli, gateway e output del processo.</figcaption></figure>
 </section>
 <section class="study-section" id="s09">
-  <h3>3.2 Riuso come template</h3>
-  <p>Gli stessi campi e le stesse tabelle si applicano ad altri processi dell&#x27;organizzazione. Adottarli come formato standard rende i processi confrontabili e accelera le analisi successive.</p>
-  <div class="note-box">Le sette schede in <code>esempi-apqc/</code> sono esempi completi del pacchetto di deliverable, uno per dominio funzionale.</div>
+  <h2>2 Il deliverable completo</h2>
+  <p>La scheda finale non è un documento isolato: è un pacchetto coerente di viste, ciascuna con una funzione diversa. La scheda completa di riferimento è disponibile nel repository: <a href="https://github.com/thimotyb/corso-processi/blob/main/esempi-apqc/05-customer-service/processo.md" target="_blank" rel="noopener noreferrer">aprire 05-customer-service/processo.md</a>.</p>
+  <p>Il diagramma BPMN collegato alla scheda è disponibile in <a href="https://github.com/thimotyb/corso-processi/blob/main/esempi-apqc/05-customer-service/processo.bpmn" target="_blank" rel="noopener noreferrer">processo.bpmn</a>.</p>
 </section>
 <section class="study-section" id="s10">
-  <h2>4 Laboratorio finale</h2>
-  <p>Produrre la scheda processo completa di un dominio APQC a scelta: collocazione PCF, elenco attività, una Activity scomposta in Task, matrice delle variabili, due-tre KPI definiti, e il diagramma BPMN aperto in Camunda Modeler con almeno una modifica motivata.</p>
-  <p>Presentare la scheda in aula in cinque minuti.</p>
-  <p>Come estensione facoltativa, aprire una Developer Edition speciale del percorso Trailhead <a href="https://trailhead.salesforce.com/content/learn/modules/flow-troubleshooting/review-flow-terminology-and-sign-up-for-a-special-org" target="_blank" rel="noopener noreferrer">Flow Troubleshooting</a>. L'organizzazione contiene alcuni Flow già predisposti: analizzarne trigger, attività, decisioni e dati, quindi confrontare l'implementazione con la scheda processo e con il diagramma BPMN. Trailhead parla di Developer Edition o Playground, non di una Sandbox Salesforce tradizionale.</p>
-  <p>Come esempio di implementazione, osservare il Flow Salesforce <strong>Create New Customer</strong>: il processo business parte dalla raccolta delle informazioni del cliente, mentre il sistema esegue in sequenza la creazione di Account, Contact e Opportunity e restituisce una conferma. La figura rende visibili le interazioni tra attività del processo e operazioni sui dati del sistema.</p>
-  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/salesforce-flow-create-new-customer.png" alt="Salesforce Flow Builder: il flusso Create New Customer raccoglie le informazioni e crea Account, Contact e Opportunity prima di mostrare una conferma" data-caption="Figura M08.01 — Esempio di implementazione Salesforce Flow: Create New Customer."><figcaption>Figura M08.01 — Esempio di implementazione Salesforce Flow: il processo business di acquisizione di un nuovo cliente interagisce con il sistema creando Account, Contact e Opportunity.</figcaption></figure>
+  <h3>2.1 Elementi del pacchetto e funzione</h3>
+  <div class="table-wrap"><table class="pcf-table"><thead><tr><th>Elemento</th><th>Cosa contiene</th><th>A cosa serve</th><th>Collegamento nel caso 6.2.2</th></tr></thead><tbody><tr><td><strong>Mappa gerarchica dei processi</strong></td><td>Category, Process Group, Process, Activity e codici.</td><td>Colloca il processo e ne stabilisce il perimetro.</td><td>6.0 → 6.2 → 6.2.2 → Activity 6.2.2.1–6.2.2.6.</td></tr><tr><td><strong>Scheda processo sintetica</strong></td><td>Owner, obiettivo, confini, ruoli, sistemi, KPI e rischi.</td><td>Permette una lettura rapida e supporta il governo.</td><td>Customer Service Manager, SLA, CRM/ticketing, FCR (risoluzione al primo contatto) e CSAT (soddisfazione del cliente).</td></tr><tr><td><strong>Elenco di Activity e Task</strong></td><td>Activity PCF e scomposizione operativa con esecutore ed esito.</td><td>Collega classificazione, lavoro reale e requisiti IT.</td><td>Analyze → classificare, verificare, decidere escalation, assegnare.</td></tr><tr><td><strong>Matrice delle variabili e relazioni</strong></td><td>Input, output, tempi, costi, volumi, ruoli, sistemi, vincoli, rischi e dipendenze.</td><td>Rende confrontabili i processi e prepara KPI e miglioramento.</td><td>Tempi secondo SLA, sistemi CRM, rischi di classificazione ed escalation.</td></tr><tr><td><strong>Diagramma di rappresentazione</strong></td><td>Process map o BPMN con eventi, attività, gateway, corsie e flussi.</td><td>Verifica sequenza, responsabilità, eccezioni e handoff.</td><td>Gateway upsell/cross-sell e corsie Customer Service/Vendite.</td></tr></tbody></table></div>
+</section>
+<section class="study-section" id="s11">
+  <h3>2.2 Riuso come template</h3>
+  <p>Gli stessi sette passi e gli stessi campi si applicano agli altri domini APQC. Cambiano codici, ruoli, dati, KPI e diagrammi, ma resta costante la sequenza di costruzione. Le sette schede in <code>esempi-apqc/</code> sono esempi completi del pacchetto.</p>
+</section>
+<section class="study-section" id="s12">
+  <h2>3 Laboratorio finale</h2>
+  <p>Scegliere un dominio APQC diverso da Customer Service e replicare i sette passi: collocazione, Activity, Task e requisiti IT, SIPOC, matrice delle variabili, scheda sintetica e BPMN.</p>
+  <p>Consegnare la scheda in formato Markdown, il diagramma BPMN e una breve nota sulle decisioni progettuali. Usare il modello Category 6 come riferimento e verificare che ogni elemento della tabella finale abbia un corrispondente nella scheda.</p>
 </section>
   <section class="key-takeaways">
    <h2>Punti chiave</h2>
    <ul>
-    <li>La scheda processo integra in una pagina collocazione, attività, variabili, indicatori e rappresentazione.</li>
-    <li>La coerenza si verifica quando nome e codice, Activity e Task si corrispondono senza salti.</li>
-    <li>Il diagramma funziona da controllo: attività senza ruolo o senza esito emergono nel disegno.</li>
-    <li>Il pacchetto di deliverable del corso è riusabile come template aziendale per confrontare i processi.</li>
+    <li>La scheda processo si costruisce in sette passi progressivi, dalla collocazione PCF al diagramma BPMN.</li>
+    <li>Activity e Task hanno livelli diversi: le Activity vengono dal PCF, i Task sono scomposti dall&#x27;analista e collegati ai requisiti IT.</li>
+    <li>SIPOC e matrice delle variabili rendono espliciti scambi, risorse, condizioni e rischi.</li>
+    <li>La scheda sintetica indicizza il lavoro, mentre il BPMN verifica sequenza, ruoli, gateway ed eccezioni.</li>
+    <li>Il pacchetto di deliverable è riusabile come template per confrontare processi diversi.</li>
    </ul>
   </section>
  </article>

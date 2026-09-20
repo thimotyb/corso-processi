@@ -22,7 +22,7 @@
   <section class="section-toc">
    <h2>Indice del modulo</h2>
    <ul>
-    <li><a href="#s01">1 Rappresentazioni sintetiche</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Tabelle e matrici</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 SIPOC: struttura e uso</a></li><li><a href="#s04">2 Process map e swimlane</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Mappa di processo per fasi</a></li><li><a href="#s06">3 Cenni a BPMN</a></li><li style="margin-left:1.1rem"><a href="#s07">3.1 Elementi di base</a></li><li style="margin-left:1.1rem"><a href="#s08">3.2 Quando serve una notazione formale</a></li><li><a href="#s09">4 Visualizzare gli esempi con Camunda</a></li><li><a href="#s10">5 Laboratorio</a></li>
+    <li><a href="#s01">1 Rappresentazioni sintetiche</a></li><li style="margin-left:1.1rem"><a href="#s02">1.1 Tabelle e matrici</a></li><li style="margin-left:1.1rem"><a href="#s03">1.2 SIPOC: struttura e uso</a></li><li><a href="#s04">2 Process map e swimlane</a></li><li style="margin-left:1.1rem"><a href="#s05">2.1 Mappa di processo per fasi</a></li><li><a href="#s06">3 Cenni a BPMN</a></li><li style="margin-left:1.1rem"><a href="#s07">3.1 Elementi di base</a></li><li style="margin-left:1.1rem"><a href="#s08">3.2 Quando serve una notazione formale</a></li><li><a href="#s09">4 Visualizzare gli esempi con Camunda</a></li><li><a href="#s10">5 Laboratorio</a></li><li><a href="#s11">6 Esercizio ulteriore: Salesforce Flow</a></li>
    </ul>
   </section>
 <section class="study-section" id="s01">
@@ -98,6 +98,14 @@
   <h2>5 Laboratorio</h2>
   <p>Aprire due esempi APQC in Camunda Modeler. Per ciascuno: identificare corsie, evento di innesco, evento finale e gateway. Aggiungere un ramo di eccezione plausibile e salvarne una copia.</p>
 </section>
+<section class="study-section" id="s11">
+  <h2>6 Esercizio ulteriore: Salesforce Flow</h2>
+  <p>Dopo aver creato e modificato i processi in Camunda, ripetere l'esercizio con uno strumento applicativo diverso: <strong>Salesforce Flow</strong>. L'obiettivo non è sostituire BPMN, ma confrontare una rappresentazione standard del processo con una configurazione concreta di automazione.</p>
+  <p>Aprire una Developer Edition o un Playground seguendo il percorso Trailhead <a href="https://trailhead.salesforce.com/content/learn/modules/flow-troubleshooting/review-flow-terminology-and-sign-up-for-a-special-org" target="_blank" rel="noopener noreferrer">Flow Troubleshooting</a>. Analizzare nei Flow predisposti il trigger, le attività, le decisioni, i dati letti o scritti e l'esito restituito. Trailhead parla di Developer Edition o Playground, non di una Sandbox Salesforce tradizionale.</p>
+  <p>Come esempio di implementazione osservare il Flow Salesforce <strong>Create New Customer</strong>: il processo business parte dalla raccolta delle informazioni del cliente, mentre il sistema esegue in sequenza la creazione di Account, Contact e Opportunity e restituisce una conferma. Confrontare il Flow con la scheda processo e con il diagramma BPMN: evidenziare quali passaggi sono attività di processo, quali sono operazioni sui dati e dove sono modellate le decisioni.</p>
+  <figure class="chapter-figure"><img class="zoomable" src="../assets/images/salesforce-flow-create-new-customer.png" alt="Salesforce Flow Builder: il flusso Create New Customer raccoglie le informazioni e crea Account, Contact e Opportunity prima di mostrare una conferma" data-caption="Figura M06.03 — Esercizio Salesforce Flow: Create New Customer."><figcaption>Figura M06.03 — Esempio di implementazione Salesforce Flow: il processo business di acquisizione di un nuovo cliente interagisce con il sistema creando Account, Contact e Opportunity.</figcaption></figure>
+  <p>Consegna: produrre una breve tabella di confronto Camunda/Salesforce con trigger, attività, decisioni, oggetti dati, responsabilità e output. Indicare almeno una differenza tra il modello BPMN e l&#x27;implementazione applicativa.</p>
+</section>
   <section class="key-takeaways">
    <h2>Punti chiave</h2>
    <ul>
@@ -105,6 +113,7 @@
     <li>La process map mostra sequenza e decisioni; le corsie aggiungono la responsabilità e rendono visibili gli handoff.</li>
     <li>BPMN è lo standard OMG: evento, attività, gateway, flusso di sequenza e corsie sono gli elementi di base.</li>
     <li>I file .bpmn del corso servono a visualizzare e discutere gli esempi; un assistente AI via MCP può produrre una bozza, ma la revisione è dell&#x27;analista.</li>
+    <li>Salesforce Flow offre un esercizio complementare: confrontare il modello BPMN con un&#x27;automazione applicativa che esegue attività, decisioni e operazioni sui dati.</li>
    </ul>
   </section>
  </article>
