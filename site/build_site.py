@@ -754,25 +754,38 @@ CONTENT = {
 "05": dict(
  sections=[
   (1,"1 Perché misurare un processo",[
-   "Misurare serve a sapere se il processo raggiunge il suo obiettivo, a confrontarne le prestazioni nel tempo e a decidere dove intervenire con dati anziché con impressioni. Senza misura, il miglioramento non è verificabile.",
+   "Misurare serve a sapere se il processo raggiunge il suo obiettivo, a confrontarne le prestazioni nel tempo e a decidere dove intervenire con dati anziché con impressioni. Senza misura, il miglioramento non è verificabile: non si distingue un risultato occasionale da una prestazione stabile e non si può controllare se una modifica abbia prodotto l'effetto atteso.",
+   "Secondo <a href=\"https://www.apqc.org/blog/what-are-key-performance-indicators-kpis\" target=\"_blank\" rel=\"noopener noreferrer\">APQC</a>, un KPI è una misura specifica che valuta una componente quantificabile della prestazione a livello di organizzazione, funzione, processo o attività. Il KPI deve essere collegato a un obiettivo o a un fattore critico di successo: un numero isolato non è ancora un indicatore utile alla gestione.",
   ],None),
   (2,"1.1 Controllo, confronto, miglioramento",[
-   "Il controllo verifica che il processo resti entro limiti attesi. Il confronto mette a paragone periodi, sedi o organizzazioni. Il miglioramento usa la misura come riferimento prima e dopo un intervento.",
-   "I tre usi richiedono indicatori stabili e definiti in modo univoco.",
+   "Il <strong>controllo</strong> verifica che il processo resti entro limiti attesi; il <strong>confronto</strong> mette a paragone periodi, sedi, prodotti o organizzazioni; il <strong>miglioramento</strong> usa la misura come riferimento prima e dopo un intervento. La stessa metrica può quindi servire al controllo operativo e alla valutazione direzionale, purché il perimetro resti esplicito.",
+   "Gli indicatori devono essere stabili, definiti in modo univoco e accompagnati da contesto: periodo, volume, popolazione osservata, fonte e soglia. APQC raccomanda di privilegiare misure affidabili, rilevanti per gli obiettivi, osservabili nel tempo, accessibili e familiari agli utilizzatori.",
   ],None),
   (2,"1.2 Efficienza ed efficacia",[
-   "L'efficacia misura quanto l'output soddisfa il cliente: tempestività, qualità, completezza. L'efficienza misura quante risorse sono servite a produrlo: costo unitario, tempo di lavorazione.",
-   "Un processo può essere efficace ma inefficiente, o viceversa.",
+   "L'<strong>efficacia</strong> misura quanto l'output raggiunge il risultato atteso e soddisfa il cliente: tempestività, qualità, completezza, rispetto dello SLA. L'<strong>efficienza</strong> misura quante risorse servono per produrlo: costo unitario, tempo di lavorazione, produttività, automazione e rilavorazioni.",
+   "Un processo può essere efficace ma inefficiente, per esempio quando risolve ogni richiesta ma impiega troppe ore; oppure efficiente ma inefficace, quando chiude rapidamente casi senza risolvere il problema. Un set equilibrato deve quindi includere indicatori di risultato e indicatori diagnostici, evitando di ottimizzare una dimensione a scapito dell'altra.",
+   "<a href=\"https://www.apqc.org/What-Are-the-Best-Metrics-to-Measure-Process-Performance\" target=\"_blank\" rel=\"noopener noreferrer\">APQC</a> raggruppa le misure di processo in quattro famiglie: efficacia dei costi, produttività del personale, efficienza del processo e tempo di ciclo. La scelta va adattata all'obiettivo e ai confini del processo.",
   ],None),
   (1,"2 Definire un KPI",[
-   "Un indicatore chiave di prestazione è una misura scelta perché rappresentativa dell'obiettivo del processo. Va definito in modo che due persone diverse, con gli stessi dati, ottengano lo stesso valore.",
+   "Un KPI è una misura scelta perché rappresentativa di un obiettivo importante del processo. Va definito in modo che due persone diverse, con gli stessi dati e lo stesso perimetro, ottengano lo stesso valore e sappiano quale decisione supporta.",
+   "È utile distinguere tre termini: una <strong>misura</strong> è l'osservazione definita della prestazione; una <strong>metrica</strong> è il risultato quantificato della misura, normalmente espresso come numero, percentuale o rapporto; un <strong>KPI</strong> è una misura di rilievo strategico o gestionale scelta per seguire un obiettivo. La distinzione è illustrata da <a href=\"https://www.apqc.org/blog/ask-us-answered-whats-difference-between-kpi-measure-and-metric\" target=\"_blank\" rel=\"noopener noreferrer\">APQC</a>.",
+   "La misura deve avere un proprietario, una fonte, una regola di calcolo, una frequenza e una decisione associata. Se nessuno agisce quando il valore cambia, l'indicatore è probabilmente descrittivo ma non ancora un KPI di gestione.",
   ],None),
   (2,"2.1 Formula, unità, frequenza, fonte del dato",[
-   "La definizione di un KPI comprende la formula di calcolo, l'unità di misura, la frequenza di rilevazione e la fonte da cui provengono i dati.",
-   "Senza questi quattro elementi l'indicatore è ambiguo e non confrontabile.",
+   "La scheda di un KPI comprende almeno: nome, obiettivo collegato, formula, numeratore e denominatore, unità di misura, perimetro, frequenza, periodo di riferimento, fonte del dato, responsabile, direzione desiderata e regola per i valori mancanti.",
+   "La definizione deve chiarire se il tempo è di lavorazione o di attraversamento, se il costo è totale o unitario e se la percentuale usa tutte le istanze o solo quelle chiuse. <a href=\"https://www.iso.org/standard/56847.html\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 22400-1</a> fornisce un quadro terminologico per definire e utilizzare KPI; è orientata alle operations manifatturiere, ma i criteri di chiarezza e composizione sono riutilizzabili come riferimento metodologico.",
+   "Senza formula, unità, frequenza e fonte l'indicatore è ambiguo e non confrontabile. Una definizione corretta permette di ricostruire il valore, verificarne la qualità e confrontare AS-IS e TO-BE sullo stesso perimetro.",
   ],None),
   (2,"2.2 Target e soglie",[
-   "Il target è il valore atteso; le soglie delimitano le fasce di attenzione e di allarme. Target e soglie vanno fissati con un riferimento — storico interno, benchmark esterno, requisito contrattuale — e riesaminati periodicamente.",
+   "Il <strong>target</strong> è il valore atteso; le <strong>soglie</strong> delimitano le fasce di attenzione e di allarme. Target e soglie vanno fissati con un riferimento — storico interno, benchmark esterno, requisito contrattuale, SLA o obiettivo strategico — e riesaminati periodicamente.",
+   "La direzione desiderata dipende dall'indicatore: per il tasso di risoluzione più alto è normalmente migliore, mentre per il tempo di attesa o il tasso di errore è migliore un valore più basso. Le soglie devono generare un'azione: analisi della causa, riassegnazione di capacità, escalation o revisione del processo.",
+  ],None),
+  (2,"2.3 Dal KPI al cruscotto direzionale",[
+   "Un cruscotto direzionale è una vista sintetica che permette di monitorare lo stato dell'organizzazione o di un processo e di decidere dove approfondire. Non è il deposito di tutti i dati: mostra pochi indicatori prioritari, il valore corrente, il confronto con il target, il trend e un collegamento al dettaglio.",
+   "Le <a href=\"https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards-design-tips\" target=\"_blank\" rel=\"noopener noreferrer\">linee guida Microsoft per i dashboard</a> raccomandano di considerare il pubblico, raccontare la situazione in una schermata, mettere in evidenza le informazioni più importanti e scegliere la visualizzazione in funzione della domanda. Il <a href=\"https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards\" target=\"_blank\" rel=\"noopener noreferrer\">dashboard Power BI</a> è descritto come una sintesi collegata a report e modelli sottostanti: il cruscotto segnala, il report consente di diagnosticare.",
+   "Una struttura didattica efficace comprende: intestazione con periodo e perimetro; schede KPI con valore, target, scostamento e trend; semaforo o soglia per lo stato; grafico di andamento; filtro per dominio o responsabile; link alla scheda processo e alla fonte del dato. L'uso del colore deve essere coerente e non l'unico modo per comunicare lo stato.",
+   "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/power-bi-marketing-sample-dashboard.png\" alt=\"Esempio di dashboard direzionale Power BI Marketing con schede KPI, grafici, filtri e indicatori di andamento\" data-caption=\"Esempio di dashboard direzionale Power BI.\"><figcaption>Esempio di dashboard direzionale Power BI: schede sintetiche, grafici e filtri organizzano indicatori diversi in una vista unica. <a href=\"https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards-design-tips\" target=\"_blank\" rel=\"noopener noreferrer\">Documentazione Microsoft sui suggerimenti di progettazione</a>.</figcaption></figure>",
+   "Il visual KPI di Power BI richiede un valore, un obiettivo e un asse temporale o di trend. La <a href=\"https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi\" target=\"_blank\" rel=\"noopener noreferrer\">documentazione Microsoft sui KPI visuali</a> è un esempio concreto di questa relazione tra valore attuale, target, direzione e distanza dall'obiettivo.",
   ],None),
   (1,"3 Collegare KPI e variabili",[
    "Gli indicatori più utili sono quelli legati alle variabili critiche del processo individuate nella matrice.",
@@ -785,10 +798,16 @@ CONTENT = {
    "Per il customer service: tempo medio di risoluzione, risoluzione al primo contatto, soddisfazione del cliente. Per il ciclo attivo di finance: tempo di emissione fattura, percentuale di fatture con errori.",
    "Ogni dominio ha indicatori tipici da adattare al contesto.",
   ],"Le schede in <code>esempi-apqc/</code> includono una voce KPI coerente con l'obiettivo e i rischi del processo descritto."),
-  (2,"3.3 Il caso SAEM: dall'albero delle determinanti ai KPI",[
+  (2,"3.3 Balanced Scorecard e allineamento strategico",[
+   "La <strong>Balanced Scorecard</strong> collega strategia, obiettivi, indicatori, target e iniziative. Il modello di Kaplan e Norton nasce per superare la lettura della performance basata soltanto sui risultati finanziari e propone una vista bilanciata delle dimensioni che creano valore.",
+   "Le quattro prospettive tradizionali sono: <strong>finanziaria</strong> (risultati economici e uso delle risorse), <strong>cliente/stakeholder</strong> (valore percepito, soddisfazione, fidelizzazione), <strong>processi interni</strong> (qualità, efficienza, innovazione e tempi) e <strong>apprendimento e crescita</strong> (competenze, persone, tecnologia e capacità organizzativa). Il <a href=\"https://balancedscorecard.org/staging/bsc-basics/articles-videos/the-four-perspectives-of-the-balanced-scorecard/\" target=\"_blank\" rel=\"noopener noreferrer\">Balanced Scorecard Institute</a> descrive le prospettive come lenti complementari per leggere l'organizzazione come sistema.",
+   "Per costruire una scorecard si parte da missione e strategia, si definiscono obiettivi per prospettiva, si scelgono pochi KPI, si assegnano target e iniziative e si rendono esplicite le relazioni causa-effetto. Un KPI operativo deve poter risalire a un obiettivo di processo e, quando rilevante, a un obiettivo strategico.",
+   "La fonte originaria è l'articolo di <a href=\"https://hbr.org/2005/07/the-balanced-scorecard-measures-that-drive-performance\" target=\"_blank\" rel=\"noopener noreferrer\">Kaplan e Norton su Harvard Business Review</a>. La Balanced Scorecard non sostituisce il cruscotto: definisce la logica strategica e le prospettive; il dashboard presenta in modo operativo i valori e gli scostamenti.",
+  ],None),
+  (2,"3.4 Il caso SAEM: dall'albero delle determinanti ai KPI",[
    "Nel caso SAEM i KPI non sono scelti come un elenco isolato. Partono da un <strong>albero delle determinanti</strong> che collega la profittabilità di lungo periodo ai risultati strategici, ai fattori critici di successo e infine alle leve operative. A ogni driver vengono associati indicatori capaci di misurarne lo stato e le variazioni. La metrica deve essere intuitiva, comprensibile e calcolabile in modo stabile da chi ne cura la rilevazione.",
    "Il cruscotto aziendale comprendeva già <strong>29 indicatori monitorati periodicamente</strong>. Per analizzare la ridefinizione della gestione ordini sono stati messi in evidenza due indicatori ulteriori, <strong>lead time offerta</strong> e <strong>lead time ordine</strong>, da leggere insieme alla percentuale di errori di imputazione già presente nel sistema qualità. In questo modo la misura collega la strategia del servizio al cliente alle attività concrete di preparazione dell'offerta, inserimento dell'ordine e invio della conferma.",
-   "Il primo ramo mostra come gli indicatori economici e commerciali scendano dalla profittabilità verso Market Share, Qualità, Servizio al cliente e Innovatività. ROI, ROE e ROS misurano il risultato complessivo; nuovi clienti, clienti persi e quota di mercato osservano il risultato commerciale; reclami, non conformità e valutazioni dei clienti rendono misurabili qualità e servizio.",
+   "Il primo ramo mostra come gli indicatori economici e commerciali scendano dalla profittabilità verso Market Share, Qualità, Servizio al cliente e Innovatività. Il <strong>ROI</strong> (<em>Return on Investment</em>) misura il rendimento del capitale investito, rapportando il risultato operativo agli investimenti impiegati; il <strong>ROE</strong> (<em>Return on Equity</em>) misura il rendimento del capitale proprio, rapportando l'utile netto al patrimonio netto; il <strong>ROS</strong> (<em>Return on Sales</em>) misura la redditività delle vendite, rapportando il risultato operativo ai ricavi. Insieme descrivono dimensioni diverse della profittabilità; nuovi clienti, clienti persi e quota di mercato osservano il risultato commerciale; reclami, non conformità e valutazioni dei clienti rendono misurabili qualità e servizio.",
    "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/saem-albero-kpi-parte-1.png\" alt=\"Prima parte dell'albero KPI SAEM: profittabilità, Market Share, gestione magazzino, qualità, servizio al cliente e innovatività con i relativi indicatori\" data-caption=\"Albero delle determinanti e KPI del caso SAEM, parte 1.\"><figcaption>Albero delle determinanti e KPI del caso SAEM, parte 1: dagli obiettivi strategici agli indicatori di mercato, qualità, servizio e innovazione.</figcaption></figure>",
    "Il secondo ramo porta il <strong>Servizio al cliente</strong> ai driver Tempestività e Competenza. La Tempestività viene osservata attraverso l'efficienza dell'evasione ordini, la gestione dei flussi informativi, gli approvvigionamenti e la velocità di gestione delle non conformità. La Competenza viene invece collegata alla formazione. Il disegno mostra quindi che un KPI appartiene a una leva precisa: per esempio, il tempo di risposta alle richieste di informazioni misura la gestione dei flussi informativi, mentre le ore di formazione misurano la capacità che sostiene il servizio.",
    "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch07/saem-albero-kpi-parte-2.png\" alt=\"Seconda parte dell'albero KPI SAEM: servizio al cliente, tempestività, competenza, evasione ordini, flussi informativi, approvvigionamenti, non conformità e formazione\" data-caption=\"Albero delle determinanti e KPI del caso SAEM, parte 2.\"><figcaption>Albero delle determinanti e KPI del caso SAEM, parte 2: gli indicatori che misurano tempestività, competenza e attività operative collegate al servizio al cliente.</figcaption></figure>",
@@ -806,7 +825,9 @@ CONTENT = {
  kt=[
   "La misura rende il miglioramento verificabile e sostituisce le impressioni con i dati.",
   "Efficacia ed efficienza sono dimensioni distinte: un processo può eccellere in una e non nell'altra.",
-  "Un KPI è definito solo se ha formula, unità, frequenza e fonte del dato; target e soglie richiedono un riferimento.",
+  "Un KPI è definito solo se ha formula, unità, frequenza, fonte del dato, proprietario e decisione associata; target e soglie richiedono un riferimento.",
+  "Un cruscotto direzionale sintetizza pochi indicatori con valore, target, scostamento e trend e rimanda al dettaglio per la diagnosi.",
+  "La Balanced Scorecard collega KPI e obiettivi attraverso le prospettive finanziaria, cliente, processi interni e apprendimento/crescita.",
   "Gli indicatori più utili nascono dalle variabili critiche e dai colli di bottiglia della matrice.",
   "Nel caso SAEM l'albero delle determinanti collega KPI operativi, risultati di processo e obiettivi strategici; il confronto AS-IS/TO-BE mantiene stabile il perimetro della misura.",
  ]),
@@ -1176,12 +1197,23 @@ def index_html():
         ("APQC — Introduction to the Process Classification Framework", "https://www.apqc.org/resource-library/resource-listing/introduction-apqcs-process-classification-framework-pcf"),
         ("APQC — Types of process models", "https://www.apqc.org/blog/what-are-different-types-process-models"),
         ("APQC — Process Classification Framework FAQ", "https://www.apqc.org/process-frameworks/pcf-faqs"),
+        ("APQC — What are Key Performance Indicators?", "https://www.apqc.org/blog/what-are-key-performance-indicators-kpis"),
+        ("APQC — Difference between KPI, measure, and metric", "https://www.apqc.org/blog/ask-us-answered-whats-difference-between-kpi-measure-and-metric"),
+        ("APQC — Best metrics to measure process performance", "https://www.apqc.org/What-Are-the-Best-Metrics-to-Measure-Process-Performance"),
+        ("APQC — PCF Process Definitions and Key Measures collection", "https://www.apqc.org/resource-library/resource-collection/pcf-version-80-process-definitions-and-key-measures-collection"),
         ("APQC — Cross-Industry PCF (PDF 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-13"),
         ("APQC — Cross-Industry PCF (Excel 8.0)", "https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-12"),
         ("ASCM — SCOR Digital Standard (supply chain)", "https://www.ascm.org/corporate-solutions/standards-tools/scor-ds/"),
         ("Object Management Group — BPMN", "https://www.omg.org/spec/BPMN/"),
         ("BPMN.org — risorse introduttive", "https://www.bpmn.org/"),
         ("ASQ — SIPOC+CM Diagram", "https://asq.org/quality-resources/sipoc"),
+        ("ISO — ISO 22400-1 KPI terminology and concepts", "https://www.iso.org/standard/56847.html"),
+        ("Harvard Business Review — The Balanced Scorecard", "https://hbr.org/2005/07/the-balanced-scorecard-measures-that-drive-performance"),
+        ("Balanced Scorecard Institute — Four perspectives", "https://balancedscorecard.org/staging/bsc-basics/articles-videos/the-four-perspectives-of-the-balanced-scorecard/"),
+        ("Balanced Scorecard Institute — Basics", "https://balancedscorecard.org/bsc-basics-overview/"),
+        ("Microsoft Learn — Power BI dashboard design tips", "https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards-design-tips"),
+        ("Microsoft Learn — Introduction to Power BI dashboards", "https://learn.microsoft.com/en-us/power-bi/create-reports/service-dashboards"),
+        ("Microsoft Learn — KPI visualizations in Power BI", "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi"),
         ("Camunda — BPMN tutorial e process modeling", "https://camunda.com/bpmn/"),
         ("Camunda — BPMN Reference", "https://camunda.com/bpmn/reference/"),
         ("Camunda Docs — User tasks e Camunda Forms", "https://docs.camunda.io/docs/components/modeler/bpmn/user-tasks/"),
@@ -1239,13 +1271,6 @@ def index_html():
    <li>Scomporre le attività in task operativi e verificabili.</li>
    <li>Individuare variabili di processo, input, output, vincoli, indicatori e relazioni.</li>
    <li>Produrre documentazione sintetica e modelli di rappresentazione leggibili.</li>
-  </ul>
-  <h3>Informazioni</h3>
-  <ul class="study-bullets">
-   <li><strong>Modalità di erogazione</strong>: in aula o Live Virtual Classroom.</li>
-   <li><strong>Durata</strong>: 2 giorni.</li>
-   <li><strong>Prerequisiti</strong>: nessuno. È utile una conoscenza generale dell'organizzazione aziendale e dei principali flussi operativi.</li>
-   <li><strong>Destinatari</strong>: analisti funzionali, referenti di processo, consulenti, project manager, figure di organizzazione, qualità, operations e trasformazione digitale.</li>
   </ul>
   <div class="note-box">Il corso non richiede competenze tecniche di programmazione. Il focus è metodologico e funzionale: capire come descrivere un processo, come scomporlo, come rappresentarlo e come renderlo confrontabile, misurabile e migliorabile.</div>
  </section>
