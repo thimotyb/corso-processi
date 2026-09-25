@@ -930,7 +930,7 @@ CONTENT = {
   ],None),
   (2,"1.3 Passo 3 — Scomposizione in Task e requisiti IT",[
    "Si sceglie almeno una Activity e la si scompone in Task osservabili, ciascuno con esecutore ed esito verificabile. Nel nostro esempio l'Activity <em>Analyze problems, requests, and inquiries</em> diventa classificare la richiesta, verificare storico e SLA, decidere l'escalation e assegnare il caso.",
-   "La scomposizione si collega ai requisiti IT del <a href=\"../chapter-02.html\">Modulo 2</a>: per ogni Task si annotano ruolo, input/output, dati letti o scritti, operazioni CRUD, regole, eccezioni e criteri di verifica. Il PCF definisce Activity, mentre Task e requisiti IT dipendono dal contesto organizzativo e applicativo.",
+   "La scomposizione si collega ai requisiti IT del <a href=\"chapter-02.html\">Modulo 2</a>: per ogni Task si annotano ruolo, input/output, dati letti o scritti, operazioni CRUD, regole, eccezioni e criteri di verifica. Il PCF definisce Activity, mentre Task e requisiti IT dipendono dal contesto organizzativo e applicativo.",
    "<figure class=\"chapter-figure\"><img class=\"zoomable\" src=\"../assets/images/ch08/m08-step-03-task-requirements.svg\" alt=\"Estratto della scheda con la scomposizione dell'Activity Analyze in quattro Task e i requisiti IT da verificare\" data-caption=\"Passo 3: Task e requisiti IT.\"><figcaption>Estratto didattico: i Task operativi sono collegati a dati, ruoli, regole ed eccezioni da documentare nei requisiti IT.</figcaption></figure>",
   ],None),
   (2,"1.4 Passo 4 — Analisi SIPOC",[
