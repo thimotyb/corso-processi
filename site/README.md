@@ -2,7 +2,7 @@
 
 Sito statico di studio per il corso **processi-MOCI06 — Classificazione e analisi dei
 processi industriali**. I moduli sono derivati dai blocchi principali del sillabo
-(`../sillabo_processi_MOCI06.docx`); BPMN e Camunda Modeler sono usati come
+(`../resources/sillabo_processi_MOCI06.docx`); BPMN e Camunda Modeler sono usati come
 laboratorio di visualizzazione sugli esempi APQC (`../esempi-apqc/`), non come
 argomento tecnico a sé.
 

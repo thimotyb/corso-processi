@@ -1,7 +1,7 @@
 # Esempi di processo APQC — corso processi-MOCI06
 
 Materiale di supporto per il corso **processi-MOCI06 - Classificazione e analisi dei processi industriali**
-(sillabo: `sillabo_processi_MOCI06.docx`, cartella Dropbox `corsi/processi`).
+(sillabo: `resources/sillabo_processi_MOCI06.docx`, cartella Dropbox `corsi/processi`).
 
 Per ciascuno dei 7 domini APQC scelti, la cartella `esempi-apqc/<dominio>/` contiene:
 

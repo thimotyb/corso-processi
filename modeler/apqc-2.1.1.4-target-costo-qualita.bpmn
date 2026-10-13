@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc_1="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/BPMN/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:process id="Process_1" name="APQC 2.1.1.4 — Definire obiettivi di costo e qualità" isExecutable="false">
+    <bpmn:documentation>Fonte: APQC PCF Cross-Industry v8.0, file K016808 Excel, foglio Combined, riga 138; ID APQC 10073, attività 2.1.1.4 Plan and develop cost and quality targets. La definizione richiede target di budget/costo di sviluppo e qualità per nuove o rinnovate offerte, piano della spesa, confronto con standard interni e concorrenti, coinvolgendo direzione, finanza, progettazione, produzione/erogazione e qualità. Questo BPMN è una scomposizione didattica ipotizzata: task, database, gateway di approvazione e ciclo di revisione non sono prescritti dal PCF. Service Task = potenzialmente automatizzabile, User Task = decisione e lavoro umano. Processo non eseguibile.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_APQC_2114">
+      <bpmn:lane id="Lane_Direzione" name="Direzione e funzioni specialistiche">
+        <bpmn:flowNodeRef>Activity_0bjewpw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0kv5nvz</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Prodotto" name="Responsabile prodotto/servizio">
+        <bpmn:flowNodeRef>Activity_11v8s3o</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0om00ed</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Automazioni" name="Sistemi informativi (automazioni)">
+        <bpmn:flowNodeRef>Activity_0sidqhv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_16vgsn2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_12mo8xj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_05l4mmi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0a9mfub</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_05l4mmi" name="Portafoglio o idee di offerta da valutare">
+      <bpmn:documentation>Innesco didattico ipotizzato: revisione del portafoglio o valutazione di nuove offerte. Il PCF elenca le attività ma non impone un ordine sequenziale rigido; i target di costo e qualità possono anche alimentare la prioritizzazione dei concetti (2.1.1.3).</bpmn:documentation>
+      <bpmn:outgoing>Flow_02h5gol</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_0sidqhv" name="Estrarre baseline interna">
+      <bpmn:documentation>AUTOMATIZZABILE (ipotesi). Lettura da PLM/Portfolio DB: catalogo offerte, specifiche e standard vigenti; ERP/Costing DB: consuntivi e budget storici di sviluppo; QMS/Quality DB: difetti, reclami, indicatori di qualità. Output: baseline tracciabile per costo e qualità. Non presuppone che tali sistemi esistano nell'azienda.</bpmn:documentation>
+      <bpmn:incoming>Flow_02h5gol</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lwzlin</bpmn:outgoing>
+      <bpmn:property id="Property_1f8u5rz" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_042wyah">
+        <bpmn:sourceRef>DataStoreReference_0pdjk7p</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1f8u5rz</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_16vgsn2" name="Simulare scenari costo-qualità">
+      <bpmn:documentation>AUTOMATIZZABILE (ipotesi). Lettura da ERP/Costing DB per costi e risorse, QMS/Quality DB per livelli di qualità, Market Intelligence DB curato per benchmark dei concorrenti. Calcola scenari e scostamenti; le stime restano da valutare da persone. Il database concorrenti è un'ipotesi, non una fonte APQC.</bpmn:documentation>
+      <bpmn:incoming>Flow_0lwzlin</bpmn:incoming>
+      <bpmn:outgoing>Flow_07jvt2y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_11v8s3o" name="Definire target e piano di spesa">
+      <bpmn:documentation>HUMAN. Product/Service Manager, Controller/Finance e responsabile Qualità definiscono budget di sviluppo, obiettivi misurabili di qualità e piano della spesa per nuove o rinnovate offerte. APQC richiede questi risultati; assegnazione e forma del task sono ipotesi didattiche.</bpmn:documentation>
+      <bpmn:incoming>Flow_07jvt2y</bpmn:incoming>
+      <bpmn:incoming>Flow_1233x9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l7cfv9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0bjewpw" name="Valutare con direzione e funzioni">
+      <bpmn:documentation>HUMAN. La direzione e i responsabili di finanza/budget, progettazione, produzione o erogazione e controllo qualità valutano coerenza, fattibilità e compromessi. Il gateway successivo rappresenta una decisione di validazione ipotizzata, non un passo imposto dal PCF.</bpmn:documentation>
+      <bpmn:incoming>Flow_1l7cfv9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cng0un</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0kv5nvz" name="Obiettivi validati?">
+      <bpmn:incoming>Flow_1cng0un</bpmn:incoming>
+      <bpmn:outgoing>Flow_03yvupg</bpmn:outgoing>
+      <bpmn:outgoing>Flow_017cgyq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_12mo8xj" name="Registrare target approvati">
+      <bpmn:documentation>AUTOMATIZZABILE (ipotesi). Scrittura dei target approvati in PLM/Portfolio DB (specifiche e qualità prevista), PPM/Budget Planning DB (piano di spesa) e QMS/Quality DB (indicatori e soglie da monitorare). Conservare versione, data e approvatori; l'integrazione effettiva va progettata e autorizzata.</bpmn:documentation>
+      <bpmn:incoming>Flow_03yvupg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j3orph</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0a9mfub" name="Target e budget disponibili">
+      <bpmn:incoming>Flow_1j3orph</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0om00ed" name="Rivedere la proposta">
+      <bpmn:documentation>HUMAN. Se gli obiettivi non sono validati, il Product/Service Manager con Finance e Qualità rivede target e piano di spesa alla luce delle osservazioni, poi ripresenta la proposta.</bpmn:documentation>
+      <bpmn:incoming>Flow_017cgyq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1233x9f</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_02h5gol" sourceRef="Event_05l4mmi" targetRef="Activity_0sidqhv" />
+    <bpmn:sequenceFlow id="Flow_0lwzlin" sourceRef="Activity_0sidqhv" targetRef="Activity_16vgsn2" />
+    <bpmn:sequenceFlow id="Flow_07jvt2y" sourceRef="Activity_16vgsn2" targetRef="Activity_11v8s3o" />
+    <bpmn:sequenceFlow id="Flow_1l7cfv9" sourceRef="Activity_11v8s3o" targetRef="Activity_0bjewpw" />
+    <bpmn:sequenceFlow id="Flow_1cng0un" sourceRef="Activity_0bjewpw" targetRef="Gateway_0kv5nvz" />
+    <bpmn:sequenceFlow id="Flow_03yvupg" name="Sì" sourceRef="Gateway_0kv5nvz" targetRef="Activity_12mo8xj" />
+    <bpmn:sequenceFlow id="Flow_1j3orph" sourceRef="Activity_12mo8xj" targetRef="Event_0a9mfub" />
+    <bpmn:sequenceFlow id="Flow_017cgyq" name="No" sourceRef="Gateway_0kv5nvz" targetRef="Activity_0om00ed" />
+    <bpmn:sequenceFlow id="Flow_1233x9f" name="Nuova proposta" sourceRef="Activity_0om00ed" targetRef="Activity_11v8s3o" />
+    <bpmn:dataStoreReference id="DataStoreReference_0pdjk7p" name="PLM Sogei">
+      <bpmn:extensionElements />
+    </bpmn:dataStoreReference>
+    <bpmn:textAnnotation id="TextAnnotation_1mqsib1">
+      <bpmn:text>AUTO · legge DB PLM/Portfolio, ERP Costing, QMS</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1v2sqwe" sourceRef="TextAnnotation_1mqsib1" targetRef="Activity_0sidqhv" />
+    <bpmn:textAnnotation id="TextAnnotation_145vdto">
+      <bpmn:text>AUTO · legge DB ERP, QMS e benchmark concorrenti curati</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1hqt1yc" sourceRef="TextAnnotation_145vdto" targetRef="Activity_16vgsn2" />
+    <bpmn:textAnnotation id="TextAnnotation_1esih84">
+      <bpmn:text>AUTO · scrive DB PLM, PPM/Budget, QMS</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_01uoz1w" sourceRef="TextAnnotation_1esih84" targetRef="Activity_12mo8xj" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Lane_Direzione_di" bpmnElement="Lane_Direzione" isHorizontal="true">
+        <dc_1:Bounds x="150" y="620" width="1900" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Prodotto_di" bpmnElement="Lane_Prodotto" isHorizontal="true">
+        <dc_1:Bounds x="150" y="360" width="1900" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Automazioni_di" bpmnElement="Lane_Automazioni" isHorizontal="true">
+        <dc_1:Bounds x="150" y="100" width="1900" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05l4mmi_di" bpmnElement="Event_05l4mmi">
+        <dc_1:Bounds x="222" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="198" y="255" width="86" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sidqhv_di" bpmnElement="Activity_0sidqhv">
+        <dc_1:Bounds x="390" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16vgsn2_di" bpmnElement="Activity_16vgsn2">
+        <dc_1:Bounds x="620" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11v8s3o_di" bpmnElement="Activity_11v8s3o">
+        <dc_1:Bounds x="860" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bjewpw_di" bpmnElement="Activity_0bjewpw">
+        <dc_1:Bounds x="1100" y="690" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0kv5nvz_di" bpmnElement="Gateway_0kv5nvz" isMarkerVisible="true">
+        <dc_1:Bounds x="1365" y="705" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="1425" y="723" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12mo8xj_di" bpmnElement="Activity_12mo8xj">
+        <dc_1:Bounds x="1560" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a9mfub_di" bpmnElement="Event_0a9mfub">
+        <dc_1:Bounds x="1802" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="1782" y="255" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0om00ed_di" bpmnElement="Activity_0om00ed">
+        <dc_1:Bounds x="670" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0pdjk7p_di" bpmnElement="DataStoreReference_0pdjk7p">
+        <dc_1:Bounds x="415" y="290" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="414" y="335" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1mqsib1_di" bpmnElement="TextAnnotation_1mqsib1">
+        <dc_1:Bounds x="300" y="105" width="100" height="86" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_145vdto_di" bpmnElement="TextAnnotation_145vdto">
+        <dc_1:Bounds x="550" y="105" width="100" height="86" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1esih84_di" bpmnElement="TextAnnotation_1esih84">
+        <dc_1:Bounds x="1480" y="105" width="100" height="72" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_042wyah_di" bpmnElement="DataInputAssociation_042wyah">
+        <di:waypoint x="440" y="290" />
+        <di:waypoint x="440" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02h5gol_di" bpmnElement="Flow_02h5gol">
+        <di:waypoint x="258" y="230" />
+        <di:waypoint x="390" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lwzlin_di" bpmnElement="Flow_0lwzlin">
+        <di:waypoint x="490" y="230" />
+        <di:waypoint x="620" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07jvt2y_di" bpmnElement="Flow_07jvt2y">
+        <di:waypoint x="720" y="230" />
+        <di:waypoint x="910" y="230" />
+        <di:waypoint x="910" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l7cfv9_di" bpmnElement="Flow_1l7cfv9">
+        <di:waypoint x="910" y="530" />
+        <di:waypoint x="910" y="730" />
+        <di:waypoint x="1100" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cng0un_di" bpmnElement="Flow_1cng0un">
+        <di:waypoint x="1200" y="730" />
+        <di:waypoint x="1365" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03yvupg_di" bpmnElement="Flow_03yvupg">
+        <di:waypoint x="1390" y="705" />
+        <di:waypoint x="1390" y="230" />
+        <di:waypoint x="1560" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="1400" y="430" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j3orph_di" bpmnElement="Flow_1j3orph">
+        <di:waypoint x="1660" y="230" />
+        <di:waypoint x="1802" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_017cgyq_di" bpmnElement="Flow_017cgyq">
+        <di:waypoint x="1390" y="755" />
+        <di:waypoint x="1390" y="850" />
+        <di:waypoint x="720" y="850" />
+        <di:waypoint x="720" y="530" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="1400" y="785" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1233x9f_di" bpmnElement="Flow_1233x9f">
+        <di:waypoint x="770" y="490" />
+        <di:waypoint x="860" y="490" />
+        <bpmndi:BPMNLabel>
+          <dc_1:Bounds x="785" y="465" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1v2sqwe_di" bpmnElement="Association_1v2sqwe">
+        <di:waypoint x="400" y="155" />
+        <di:waypoint x="440" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1hqt1yc_di" bpmnElement="Association_1hqt1yc">
+        <di:waypoint x="650" y="155" />
+        <di:waypoint x="670" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_01uoz1w_di" bpmnElement="Association_01uoz1w">
+        <di:waypoint x="1580" y="155" />
+        <di:waypoint x="1610" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

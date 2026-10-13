@@ -13,3 +13,11 @@ Thumbs.db
 
 # Windows download metadata (alternate data stream sidecar files)
 *:Zone.Identifier
+*:com.dropbox.attrs
+
+# Render temporanei delle fonti
+tmp/
+
+# Screenshot originali duplicati dagli asset del sito
+resources/Screenshot 2026-09-18 225242.png
+resources/Screenshot 2026-09-18 231246.png

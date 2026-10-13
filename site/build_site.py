@@ -894,6 +894,7 @@ CONTENT = {
    "Per chi vuole approfondire, un assistente AI collegato a Camunda tramite MCP può generare la prima bozza del diagramma da una scheda processo. La revisione del diagramma resta sempre a carico dell'analista.",
   ],"La guida <a href=\"../lab-camunda-mcp.html\">Laboratorio BPMN con Camunda e assistente MCP</a> raccoglie prerequisiti, installazione e primo esempio per chi vuole provare la generazione assistita."),
   (1,"5 Laboratorio",[
+   "Per svolgere l'esercizio, scaricare <a href=\"https://docs.camunda.io/downloads/\" target=\"_blank\" rel=\"noopener noreferrer\">Camunda Desktop Modeler dalla pagina ufficiale Camunda Downloads</a>.",
    "Aprire due esempi APQC in Camunda Modeler. Per ciascuno: identificare corsie, evento di innesco, evento finale e gateway. Aggiungere un ramo di eccezione plausibile e salvarne una copia.",
   ],None),
   (1,"6 Esercizio ulteriore: Salesforce Flow",[
@@ -1259,7 +1260,7 @@ def index_html():
     libri_html = "\n".join(f"          <li>{x}</li>" for x in libri)
 
     strumenti = [
-        ('Camunda Modeler (desktop, gratuito)', 'https://camunda.com/download/modeler/'),
+        ('Camunda Modeler (desktop, gratuito)', 'https://docs.camunda.io/downloads/'),
         ('Model Context Protocol — specifica', 'https://modelcontextprotocol.io/'),
         ('Camunda 8 — documentazione Self-Managed e Docker Compose', 'https://docs.camunda.io/docs/self-managed/quickstart/developer-quickstart/docker-compose/'),
         ('Plugin camunda-mcp per il Desktop Modeler', 'https://github.com/JesseLeresche/Camunda-mcp'),
@@ -1319,6 +1320,7 @@ def index_html():
  <section id="laboratori">
   <h2>Laboratori</h2>
   <p>Ogni modulo si chiude con un'esercitazione a esito verificabile. La guida su Camunda e assistente MCP è un annesso opzionale per chi vuole provare la generazione assistita dei diagrammi.</p>
+  <p>Per gli esercizi BPMN: <a href="https://docs.camunda.io/downloads/" target="_blank" rel="noopener noreferrer">scaricare Camunda Desktop Modeler</a>.</p>
   <div class="labs-grid">
 {lab_cards}
   </div>
@@ -1393,7 +1395,7 @@ def lab_html():
    <ul class="study-bullets">
     <li>Docker Desktop con backend WSL2 — <code>docker</code> &ge; 20.10.16, <code>docker compose</code> &ge; 2.24.</li>
     <li>Node.js &ge; 20 e npm &ge; 9 (solo per la build del plugin dai sorgenti).</li>
-    <li>Camunda Desktop Modeler 5.x — da <a href="https://camunda.com/download/modeler/" target="_blank" rel="noopener noreferrer">camunda.com/download/modeler</a>.</li>
+    <li>Camunda Desktop Modeler 5.x — dalla pagina ufficiale <a href="https://docs.camunda.io/downloads/" target="_blank" rel="noopener noreferrer">Camunda Downloads</a>.</li>
     <li>Claude Code, oppure Claude Desktop con transport MCP HTTP.</li>
     <li>Circa 4–6 GB di RAM liberi per lo stack Camunda 8.</li>
    </ul>
